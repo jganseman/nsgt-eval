@@ -1,0 +1,8 @@
+.. |rr_image_source_separation_big_dataset| replace:: `rr_image_source_separation_big_dataset`
+.. _rr_image_source_separation_big_dataset: /rr/image_source_separation/rr_image_source_separation_big_dataset.php
+.. |rr_image_source_separation| replace:: `rr_image_source_separation`
+.. _rr_image_source_separation: /rr/image_source_separation/rr_image_source_separation.php
+.. |rr_gabfirdual| replace:: `rr_gabfirdual`
+.. _rr_gabfirdual: /rr/gdwuco/rr_gabfirdual.php
+.. |rr_lrtv_hsi| replace:: `rr_lrtv_hsi`
+.. _rr_lrtv_hsi: /rr/lrtv_hsi/rr_lrtv_hsi.php

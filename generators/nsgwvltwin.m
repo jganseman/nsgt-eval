@@ -1,0 +1,158 @@
+function [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun)
+
+% NSGWVLTWIN.M - Christoph Wiesmeyr, Nicki Holighaus 01.06.12
+% 
+% [g,shift,M] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun)
+%
+% Given the function the necessary parameters described below, this
+% wrapper function computes a painless Wavlet system. If you do not know 
+% how to use this function, please use 'WVLTtrans.m' instead.
+%
+% Input: 
+%           fmin        : Desired minimum center frequency (in Hz)
+%           bw          : Desired bandwidth in the first frequency band 
+%                         (in Hz)
+%           bins        : Desired number of bins per octave
+%           sr          : Sampling rate of f (in Hz)
+%           Ls          : signal length
+%           winfun      : window function to be used, the following are 
+%			  available:
+%                       @hannwin    - Hann window (default)
+%                       @gausscw    - Gaussian window
+%                       @wp2inp     - Uncertainty minimizer 
+%           
+%
+% Output: 
+%           g           : Cell array of Fourier transforms of the analysis 
+%                         Wavelets
+%           shift       : Vector of frequency shifts
+%           M           : Number of time channels
+%           fb          : frame bounds of the system
+%
+%
+% More information about the functions used can be found at:
+% http://nuhag.eu/nonstatgab/
+
+% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
+% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
+% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+
+% Check input parameters
+
+if nargin < 6
+    winfun = @hannwin;
+    if nargin < 5
+	error('Not enough input arguments');
+    end
+end
+
+%% Set preliminaries
+a = 2^(1/bins);
+fmin = fmin*Ls/sr;
+bw = bw*Ls/sr;
+delta = 1/fmin;
+
+bwd = bw*delta;
+
+gamma = 1/2*(bwd+sqrt(bwd^2+4));
+k = .5 * log(a)/log(gamma);
+
+bl=1/gamma;
+br=gamma;
+
+bl=bl/delta;
+br=br/delta;
+BL = bl;
+BR = br;
+
+% Determine number of scales
+scales = floor(log2(Ls/2/br)*bins)+1;
+
+% Prepare Wavelet system container
+g = cell(2*scales+2,1);
+M = zeros(2*scales+2,1);
+timepos = M;
+
+%% Compute the Wavelet system parameters for all scales
+pow2 = 2.^((0:scales-1)/bins)';
+bl = bl*pow2;
+br = br*pow2;
+bw = bw*pow2;
+
+% The translation factors are taken to be the bandwidth (in samples) 
+% rounded up
+
+M(2:scales+1) = ceil(bw);                            
+M(end:-1:scales+3) = M(2:scales+1);
+
+% Cunstruct the Wavelets as log-warped functions of type 'winfun'
+
+points = arrayfun(@(x,y) ceil(x)*delta:delta:y*delta,bl,br,'UniformOutput',0);
+points = arrayfun(@(x) k*(log(points{x})/log(a)-x+1),1:scales,'UniformOutput',0);
+
+g(2:scales+1) = cellfun(winfun,points,'UniformOutput',0);                                                        
+g(2:scales+1) = arrayfun(@(x) g{x}/sqrt(M(x)),2:scales+1,'UniformOutput',0);
+g(end:-1:scales+3) = cellfun(@(x) flipud(x),g(2:scales+1),'UniformOutput',0);
+g = cellfun(@(x) ifftshift(x),g,'UniformOutput',0);
+
+Lg = cellfun(@length,points)';
+
+% Construct positions and relative shifts of the Wavelets
+
+timepos(1) = 1;
+timepos(scales+2) = floor(Ls/2)+1;
+timepos(2:scales+1) = ceil(bl) + floor(Lg/2)+1;
+timepos(end:-1:scales+3) = Ls-timepos(2:scales+1) ...
+                                + 1 + mod(Lg-1,2);
+
+shift = [Ls-mod(timepos(end)-1,Ls);diff(timepos)];
+
+%% Compute 'scaling' or 'padding' functions for the 0- and
+%% Nyquist-frequency
+
+% Construct the diagonal of the 'incomplete' frame operator matrix
+% explicitly
+
+diagonal=zeros(Ls,1);
+for ii = 2:scales+1
+  win_range = mod(timepos(ii)+(-floor(length(g{ii})/2):ceil(length(g{ii})/2)-1)-1,Ls)+1;
+  diagonal(win_range) = diagonal(win_range) + M(ii)*fftshift(g{ii}).^2 ;   
+end
+for ii = scales+3:2*scales+2
+  win_range = mod(timepos(ii)+(-floor(length(g{ii})/2):ceil(length(g{ii})/2)-1)-1,Ls)+1;
+  diagonal(win_range) = diagonal(win_range) + M(ii)*fftshift(g{ii}).^2 ;   
+end
+
+% Compute the padding functions ('scaling functions'), this functions will
+% be chosen such that they work well with a window set having 3/4 overlap.
+% In this case, the result should be a tight frame.
+% In other cases of non-zero overlap, the padding windows will produce a
+% frame, but might be non-smooth.
+ 
+ maxX = max(diagonal);
+ 
+ LowLim = ceil(BL*2^(3/bins));
+ UppLim = ceil(Ls/2-BR*2^((scales-4)/bins));
+ 
+ M(1) = 2*LowLim;
+ g{1} = sqrt((maxX-diagonal([1:LowLim,end-LowLim+1:end]))/M(1)); 
+ 
+ M(scales+2) = 2*UppLim;
+ g{scales+2} = sqrt((maxX-diagonal(floor(Ls/2)+[1:UppLim,-UppLim+1:0]))/M(scales+2));
+ 
+ %% Compute the frame bounds if output parameter 'fb' is desired
+ if nargout == 4
+ 
+    % Finalize the construction of the diagonal 
+    Lg = cellfun(@length,g);
+    
+    for ii = [1,scales+2]
+      range = mod(timepos(ii)+(-floor(Lg(ii)/2):ceil(Lg(ii)/2)-1)-1,Ls)+1;
+      diagonal(range) = diagonal(range) + (fftshift(g{ii}).^2)*M(ii);   
+    end
+    
+    % Since the system is painless, the minimum and maximum of the diagonal
+    % equal the frame bounds
+    
+    fb = [min(diagonal) max(diagonal)];
+ end
