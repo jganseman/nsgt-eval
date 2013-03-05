@@ -1,35 +1,35 @@
-function [] = plotnsgtf(c,shift,sr,fmin,fmax,bins,cutout,dynrange)
-
-% This variation of LTFATs plotndgt allows to plot only a part of the 
-% spectrogram obtained from the frequency side version of the
-% non-stationary Gabor transform and also accepting matrix array
-% input. If runs with the necessary input parameters (fmin,fmax,bins) of
-% the transform, it adjusts the plot labels according to those parameters.
-%
-%   PLOTNSGTF Plot spectrogram from nonstationary Gabor coefficients
-%   Usage:  plotnsgtf(c,shift,sr,fmin,fmax,bins,cutout,dynrange);
+function plotnsgtf(c,shift,sr,fmin,fmax,bins,cutout,dynrange)
+%PLOTNSGTF  Plot nonstationary Gabor filterbank coefficients
+%   Usage:  plotnsgtf(c,shift,sr,fmin,fmax,bins,cutout,dynrange)
+%           plotnsgtf(c,shift,sr,fmin,fmax,bins,cutout)
+%           plotnsgtf(c,shift,sr,fmin,fmax,bins)
+%           plotnsgtf(c,shift,sr,cutout,dynrange)
+%           plotnsgtf(c,shift,sr,cutout)
+%           plotnsgtf(c,shift,sr)
 %
 %   Input parameters:
 %         c        : Array of coefficients.
-%         shift    : Vector of frequency shifts of windows.
-%         sr       : signal sample rate in Hz (default 1 Hz).
-%         fmin     : Minimum frequency used in the transform.
-%         fmax     : Maximum frequency used in the transform.
-%         bins     : Bins per octave (in constant or vector form).
+%         shift    : Vector of frequency shifts
+%         sr       : signal sample rate in Hz (default 1 Hz)
+%         fmin     : Minimum frequency used in the transform
+%         fmax     : Maximum frequency used in the transform
+%         bins     : Bins per octave (in constant or vector form)
 %         cutout   : Desired part of the spectrogram, e.g.
-%                    choice of '2' shows frequencies up to Nyquist.
+%                    choice of '2' shows frequencies up to Nyquist
 %                    ('X' shows the 'number_of_bins/X' lowest frequency 
 %                    bins)
-%         dynrange : Colorscale dynamic range in dB (default 60 dB).
+%         dynrange : Colorscale dynamic range in dB (default 60 dB)
 %
-%   If this function is run with less than 6 input arguments, input must be
-%   of the form:
+%   This variation of LTFATs plotndgt allows to plot only a part of the 
+%   spectrogram obtained from the frequency side version of the
+%   non-stationary Gabor transform and also accepting matrix array
+%   input. If runs with the necessary input parameters (fmin,fmax,bins) of
+%   the transform, it adjusts the plot labels according to those parameters.
 %
-%   plotnsgtf(c,shift,sr,cutout(optional),dynrange(optional));
-%
-%   AUTHOR(s):  Gino Velasco, Nicki Holighaus and Radu C. Frunza
-%   [Original file author: Florent Jaillet (see license below)]
 
+% Author:  Gino Velasco, Nicki Holighaus and Radu C. Frunza
+% Original code by: Florent Jaillet
+% Date: 04.03.13
 
 %   Remainder of the original help file:
 %
@@ -61,14 +61,6 @@ function [] = plotnsgtf(c,shift,sr,fmin,fmax,bins,cutout,dynrange)
 % 
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-%   AUTHOR : Florent Jaillet
-%   TESTING: 
-%   REFERENCE: 
-%   Last changed 2009-05
-%   Slightly adjusted by Nicki Holighaus 02.02.11
-%   Slightly adjusted by Gino Velasco 23.02.11
-
 
 ticklabels = 1;
 

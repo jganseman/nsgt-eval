@@ -1,4 +1,31 @@
 function [c,res,Nit]=nsgaiter(f,g,shift,M,varargin)
+%NSGAITER  Iterative nonstationary Gabor analysis
+%   Usage:  [c,res,Nit]=nsgaiter(f,g,shift,M,varargin)
+%           [c,res,Nit]=nsgaiter(f,g,shift,M)
+%           [c,res]=nsgaiter(...)
+%           c=nsgaiter(...)
+%   
+%   Input parameters:
+%         f         : Input signal
+%	      g         : Cell array of window functions
+%         shift     : Vector of shifts between the window positions
+%         M         : Vector of lengths of the window functions
+%         varargin  : Optional input pairs (see table below)
+%   Output parameters: 
+%         c         : Transform coefficients
+%         res       : Vector of relative residuals
+%         Nit       : Number of iterations
+%
+%   Optional input parameters:
+%         ['tol',tol]               : Error tolerance
+%         ['Mit',Mit]               : Maximum number of iterations
+%         ['prec',prec]             : Preconditioning switch
+%
+%   Help text goes here.
+%
+
+% Author: Nicki Holighaus
+% Date: 04.03.13
 
 if nargin < 2
     error('Not enough input arguments');

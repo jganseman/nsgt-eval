@@ -1,34 +1,34 @@
 function plotsliCQ(c,shift,varargin)
-
-% PLOTSLICQ.M - Nicki Holighaus 01.03.12
-%
-% This wrapper function for PLOTNSGTF.M re-organizes sliCQ transform
-% coefficients in such a way, that the sliCQ spectrogram is plotted 
-% correctly.
-% The coefficients are given as first input parameter, the remaining 
-% input parameters are the same as for PLOTNSGTF.M:
+%PLOTSLICQ  `plotnsgtf` wrapper for sliced transforms (sliCQ)
+%   Usage:  plotsliCQ(c,shift,sr,fmin,fmax,bins,cutout,dynrange)
+%           plotsliCQ(c,shift,sr,fmin,fmax,bins,cutout)
+%           plotsliCQ(c,shift,sr,fmin,fmax,bins)
+%           plotsliCQ(c,shift,sr,cutout,dynrange)
+%           plotsliCQ(c,shift,sr,cutout)
+%           plotsliCQ(c,shift,sr)
 %
 %   Input parameters:
 %         c        : Array of coefficients.
-%         shift    : Vector of frequency shifts of windows.
-%         sr       : signal sample rate in Hz (default 1 Hz).
-%         fmin     : Minimum frequency used in the transform.
-%         fmax     : Maximum frequency used in the transform.
-%         bins     : Bins per octave (in constant or vector form).
+%         shift    : Vector of frequency shifts of windows
+%         sr       : signal sample rate in Hz (default 1 Hz)
+%         fmin     : Minimum frequency used in the transform
+%         fmax     : Maximum frequency used in the transform
+%         bins     : Bins per octave (in constant or vector form)
 %         cutout   : Desired part of the spectrogram, e.g.
-%                    choice of '2' shows frequencies up to Nyquist.
+%                    choice of '2' shows frequencies up to Nyquist
 %                    ('X' shows the 'number_of_bins/X' lowest frequency 
 %                    bins)
-%         dynrange : Colorscale dynamic range in dB (default 60 dB).
+%         dynrange : Colorscale dynamic range in dB (default 60 dB)
 %
-%   If this function is run with less than 6 input arguments, input must be
-%   of the form:
+%   This wrapper function for PLOTNSGTF.M re-organizes sliCQ transform
+%   coefficients in such a way, that the sliCQ spectrogram is plotted 
+%   correctly.
+%   The coefficients are given as first input parameter, the remaining 
+%   input parameters are the same as for PLOTNSGTF.M:
 %
-%   plotsliCQ(c,shift,sr,cutout(optional),dynrange(optional));
 
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+% Author: Nicki Holighaus
+% Date: 04.03.13
 
 if nargin < 2
     error('Not enough input arguments');
@@ -62,7 +62,7 @@ else % Cell array coefficients
         temp = zeros(slices*M(kk)/2,1);
         temp([end-M(kk)/4+1:end,1:3*M(kk)/4]) = c{kk}(:,1);
         for jj = 1:slices-2
-            temp(jj*M(kk)/2+[-M(kk)/4+1:3*M(kk)/4]) = temp(jj*M(kk)/2+[-M(kk)/4+1:3*M(kk)/4]) + c{kk}(:,jj+1);
+            temp(jj*M(kk)/2+(-M(kk)/4+1:3*M(kk)/4)) = temp(jj*M(kk)/2+(-M(kk)/4+1:3*M(kk)/4)) + c{kk}(:,jj+1);
         end
         temp([end-3*M(kk)/4+1:end,1:M(kk)/4]) = temp([end-3*M(kk)/4+1:end,1:M(kk)/4]) + c{kk}(:,slices);
         full_cell{kk} = temp;

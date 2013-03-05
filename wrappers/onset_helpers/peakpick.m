@@ -1,21 +1,28 @@
-% PEAKPICK.M - Nicki Holighaus 02.02.11
-% This is a helper function for 'onsetdet' and not meant to
-% be used individually.
-
-% For an onset detection function SF, the routine 
-% picks only those local maxima (computed by locmax)
-% that are larger than the local mean over an 
-% area like
-%
-% |---multi*range---X---range---|
-%
-% by more than the threshold given by thre.
-
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
-
 function peaks = peakpick(SF,thre,range,multi)
+%PEAKPICK  Peakpicking routine
+%   Usage:  peaks = peakpick(SF,thre,range,multi)
+%
+%   Input parameters: 
+%         SF        : Onset detection function
+%         thre      : Threshold value
+%         range     : relevance area for local maximum
+%         multi     : asymmetric extension factor for relevance area
+%   Output parameters:
+%         peaks     : significant maxima of *SF*
+%
+%   This is a helper function for 'onsetdet' and not meant to be used 
+%   individually.
+%
+%   For an onset detection function *SF*, the routine picks only those 
+%   local maxima that are larger than the local mean over an area of the 
+%   form
+%
+%   |---$multi*range$---$X$---$range$---|
+%
+%   by more than the threshold given by *thre*.
+
+% Author: Nicki Holighaus
+% Date: 04.03.13
 
 % Check input arguments
 
@@ -56,7 +63,7 @@ end
 % A point of SF is considered a local maximum
 % in the sense of this routine, if it is larger
 % than all surrounding points in a neigborhood
-% with a radius of range-1 of this point.%
+% with a radius of range-1 of this point.
 
 function maxima = locmax(SF,range)
 

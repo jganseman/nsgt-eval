@@ -1,15 +1,23 @@
 function g = hannwin(x,L)
-
-% HANNWIN.M - Nicki Holighaus 09.03.11
+%HANNWIN  Hann window 
+%   Usage:  g = hannwin(x)
+%           g = hannwin(N,L)
+%           g = hannwin(N)
 %
-% g = hannwin(L)
+%   Input parameters: 
+%         x         : Vector of sampling positions
+%         N         : Window support (in samples)
+%         L         : Output length (in samples)
+%   Output parameters:
+%         g         : Output window
 %
-% Computes a Hann window, centered around 
-% sample 1, so that the FFT is real-valued.
+%   Given a vector *x*, computes the values of the Hann window at the 
+%   sampling points given. Given scalars *N* and *L*, computes a Hann 
+%   window of length *N*, full-point centered on a vector of length *L*.
+%
 
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+% Author: Nicki Holighaus
+% Date: 04.03.13
 
 if nargin < 1
     error('Not enough input arguments');
@@ -19,6 +27,9 @@ if numel(x) == 1
     N = x;
     if nargin < 2
         L = N;
+    end
+    if L<N
+        error('Output length L must be larger than or equal to N');
     end
     x = [0:ceil(N/2)-1,-N*ones(1,L-N),-floor(N/2):-1]'/N;
 end

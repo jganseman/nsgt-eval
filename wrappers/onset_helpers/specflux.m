@@ -1,23 +1,31 @@
-% SPECFLUX.M - Nicki Holighaus 02.02.11
+function [SF,V0] = specflux(f,win_length,tgap)
+%SPECFLUX  Spectral flux onset detection function
+%   Usage: [SF,V0] = specflux(f,win_length,tgap)
+%          SF = specflux(f,win_length,tgap)
 %
-% This is a helper function for 'onsetdet' and not meant to
-% be used individually.
+%   Input parameters: 
+%         f         : Input signal
+%         win_length: Desired window length for the STFT
+%         tgap      : Time step for the STFT
+%   Output parameters:
+%         SF        : spectral flux of *f*
+%         V0        : STFT coefficients of *f*
+% 
+%   This is a helper function for `onsetdet` and not meant to
+%   be used individually.
 %
-% Uses routines from LTFAT 0.97 or higher, available at:
-% http://ltfat.sourceforge.net/
+%   Uses routines from LTFAT 0.97 or higher, available at:
+%   http://ltfat.sourceforge.net/
 %
-% Computes the spectral flux onset-detection function
-% of f with a Hann window of length win_length. 
-% The STFT is taken with time shift parameter tgap
-% and win_length frequency channels.
+%   Computes the spectral flux onset-detection function
+%   of *f* with a Hann window of length *win_length*. 
+%   The STFT is taken with time shift parameter *tgap*
+%   and *win_length* frequency channels.
 %
-% External: DGT (LTFAT routine)
+%   External: DGT (LTFAT routine)
 
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
-
-function [SF,tgap,V0] = specflux(f,win_length,tgap)
+% Author: Nicki Holighaus
+% Date: 04.03.13
 
 % Check input arguments
 

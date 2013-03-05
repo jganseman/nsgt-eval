@@ -1,4 +1,5 @@
-% EXAMP_NSGT Onset Detection type Nonstationary Gabor transform example 
+
+%EXAMP_NSGT Onset Detection type Nonstationary Gabor transform usage demo 
 %
 %   This script sets up a nonstationary Gabor frame with the specified
 %   parameters, computes windows and corresponding canonical dual windows
@@ -20,11 +21,11 @@
 %    This figure shows a (color coded) image of the nsgtf coefficient
 %    modulus. 
 %
-%   SEE ALSO:  NSGT, NSIGT, NSDUAL, ONSETDET
+%   EXTERNALS:  NSGT, NSIGT, NSDUAL, ONSETDET
+%
 
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+% Author: Gino Velasco, Nicki Holighaus
+% Date: 04.03.13
 
 
 %% Setup onset detection parameters and load the signal.

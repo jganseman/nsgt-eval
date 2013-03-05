@@ -3,7 +3,7 @@
 
 # The path definitions below are not necessary, they are just an easy
 # way of writing the rest of this file
-publishdir ='~/Documents/publish/nsg'
+publishdir ='/home/nholighaus/Documents/publish/nsg/'
 
 # ---- Global configuration options for all projects  ------------------
 
@@ -20,10 +20,10 @@ plotengine='matlab'
 tmpdir='/tmp/'
 
 # Directory where the mat2doc files are stored
-mat2docdir='~/Documents/git/nsgtoolbox/mat2doc'
+mat2docdir='/home/nholighaus/Documents/git/nsgtoolbox/mat2doc'
 
 # Directory where files for upload are produced
-filesdir='~/Documents/publish/nsg'
+filesdir='/home/nholighaus/Documents/publish/nsg/'
 
 # ---- Project specific setups -----------------------------------------
 #
@@ -41,8 +41,8 @@ filesdir='~/Documents/publish/nsg'
 #     myproject['pdf'] = '/some/dir/myprojectpdf/'
 
 nsg={}
-nsg['dir']      = '~/Documents/git/nsgtoolbox/'
-nsg['mat']      = publishdir+'nsgfiles/'
+nsg['dir']      = '/home/nholighaus/Documents/git/nsgtoolbox/'
+nsg['mat']      = publishdir+'nsg/'
 nsg['php']      = publishdir+'nsgphp/doc'
 nsg['phplocal'] = publishdir+'nsglocal/doc'
 nsg['tex']      = publishdir+'nsgtex/'

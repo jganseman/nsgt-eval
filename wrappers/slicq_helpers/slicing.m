@@ -1,30 +1,26 @@
 function f_sliced = slicing(f,sl_len,tr_area,Ls) 
-
-% SLICING.M - Nicki Holighaus 02.03.12
-%
-% Usage:
-%   f_sliced = slicing(f,sl_len,tr_area,Ls)
-%
-% This function cuts a signal into compactly supported pieces of length
-% 'sl_len' using a uniform partition of unity composed of Tukey windows
-% with plateau area 'sl_len/2-tr_area' and transition areas of length
-% 'sl_len'. The resulting signal slices are stored in the columns of the
-% output.
+%SLICING  Cut a signal into uniform slices with half-overlap
+%   Usage:  f_sliced = slicing(f,sl_len,tr_area,Ls)
+%           f_sliced = slicing(f,sl_len,tr_area)
 %
 %   Input parameters:
-%         f             : signal to be sliced.
-%         sl_len        : slice length (in samples, must be even).
-%         tr_area       : length of each transition area (in samples,
-%                         optional, default is 'ceil(sl_len/16)').
-%         Ls            : length of 'f' (optional).
-%
+%         f         : signal to be sliced
+%         sl_len    : slice length (in samples, must be even)
+%         tr_area   : length of each transition area (in samples,
+%                     optional, default is 'ceil(sl_len/16)')
+%         Ls        : length of 'f' (optional)
 %   Output parameters:
-%         f_sliced      : Matrix containing the slices of f as columns.
+%         f_sliced  : Matrix containing the slices of f as columns
+%    
+%   This function cuts a signal into compactly supported pieces of length
+%   *sl_len* using a uniform partition of unity composed of Tukey windows
+%   with plateau area $sl_len/2-tr_area$ and transition areas of length
+%   *sl_len*. The resulting signal slices are stored in the columns of the
+%   output.
 %    
 
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+% Author: Nicki Holighaus
+% Date: 04.03.13
 
 if nargin < 4
     Ls = length(f);

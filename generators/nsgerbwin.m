@@ -1,29 +1,24 @@
-function [g,shift,M] = nsgerbwin(V,sr,L)
+function [g,shift,M] = nsgerbwin(bins,sr,Ls)
+%NSGERBWIN  ERBlet dictionary generator
+%   Usage:  [g,shift,M]=nsgerbwin(bins,sr,Ls)
+%
+%   Input parameters: 
+%         bins      : Desired bins per ERB
+%         sr        : Sampling rate of f (in Hz)
+%         Ls        : signal length
+%   Output parameters: 
+%         g         : Cell array of ERBlets
+%         shift     : Vector of frequency shifts
+%         M         : Number of time channels
+%
+%   Creates a set of windows for the ERBlet nonstationary Gabor transform. 
+%
+%   EXTERNALS : blackharr
 
-% NSGERBWIN.M
-%---------------------------------------------------------------
-% [g,shift,M]=nsgerbwin(V,sr,L) creates a set of windows for the 
-% ERBlet nonstationary Gabor transform. 
-%---------------------------------------------------------------
-%
-% INPUT : V ......... Voices per ERB
-%	      sr ........ Sampling rate (in Hz)
-%         L ......... Length of signal (in samples)
-%
-% OUTPUT : g ......... Cell array of window functions.
-%          shift ..... Vector of shifts between the center frequencies.
-%          M ......... Vector of lengths of the window functions.
-%
-%
-% AUTHOR(s) : Thibaud Necciari, Nicki Holighaus, 2012
-%
-% EXTERNALS : blackharr
+% Author: Thibaud Necciari, Nicki Holighaus
+% Date: 04.03.13
 
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
-
-df = sr/L; % frequency resolution in the FFT
+df = sr/Ls; % frequency resolution in the FFT
 
 fmin = 0;
 fmax = sr/2;
@@ -32,7 +27,7 @@ fmax = sr/2;
 erblims = 9.2645*sign([fmin,fmax]).*log(1+abs([fmin,fmax])*0.00437); 
 
 % Determine number of freq. channels
-Nf = V*ceil(erblims(2)-erblims(1));
+Nf = bins*ceil(erblims(2)-erblims(1));
 
 % Determine center frequencies
 erbs = linspace(erblims(1),erblims(2),Nf)';
@@ -48,8 +43,8 @@ gamma = 24.7*(4.37*fc*1E-3 +1); % ERB scale
 % Convert center frequencies in Hz into samples 
 
 posit = round(fc/df);% Positions of center frequencies in samples
-posit(Nf+1:end) = L-posit(Nf+1:end);% Extension to negative freq.
-shift = [L-posit(end); diff(posit)];% Hop sizes in samples 
+posit(Nf+1:end) = Ls-posit(Nf+1:end);% Extension to negative freq.
+shift = [Ls-posit(end); diff(posit)];% Hop sizes in samples 
 
 % Compute desired essential (Gaussian) support for each filter
 Lwin = 4*round(gamma/df);

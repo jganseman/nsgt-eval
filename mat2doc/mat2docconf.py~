@@ -12,7 +12,7 @@ import localconf
 conf=ConfType()
 
 def mycopyrightfun(self):
-    vf=file(self.root+'nsg_version.txt');
+    vf=file(self.root+'nsg_version');
     v=vf.readline()
     vf.close
     
@@ -29,7 +29,7 @@ conf.copyright=mycopyrightfun
 
 conf.urlext='php'
 
-contentsfiles=['']
+contentsfiles=['core_routines/Contents','wrapper/Contents','wrappers/wvlt_helpers/Contents','wrappers/slicq_helpers/Contents','wrappers/onset_helpers/Contents','windows/Contents']
 
 
 # ------------------------------------------

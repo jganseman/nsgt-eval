@@ -1,30 +1,33 @@
 function gt = nstight(g,shift,M)
-
-% NSTIGHT.M - Nicki Holighaus 02.02.11
+%NSTIGHT  Canonical tight NSG frame (for painless systems)
+%   Usage:  gt = nstight(g,shift,M)
 %
-% gt = nstight(g,shift,M)
+%   Input parameters:
+%         g         : Cell array of window functions
+%         shift     : Vector of time/frequency shifts
+%         M         : Number of frequency channels (vector/scalar)
+%   Output parameters:
+%         gt        : Tight window functions 
 %
-% Computes (for the painless case) the tight frame corresponding to a given 
-% non-stationary Gabor frame specified by the windows 'g' and time shifts
-% 'shift'.
+%   Computes (for the painless case) the canonical tight frame 
+%   corresponding to a given non-stationary Gabor frame specified by the 
+%   windows *g* and time shifts *shift*.
 % 
-% Note, the time shifts corresponding to the tight window sequence is the
-% same as the original shift sequence and as such already given.
+%   Note, the time shifts corresponding to the dual window sequence is the
+%   same as the original shift sequence and as such already given.
 %
-% This routine's output can be used for decomposition and reconstruction of 
-% a signal into, resp. from its non-stationary Gabor coefficients using the 
-% 'nsgt' and 'nsigt'.
+%   This routine's output can be used to achieve reconstruction of a signal 
+%   from its non-stationary Gabor coefficients using the inverse 
+%   non-stationary Gabor transform 'nsigt'.
 % 
-% More information on Non-stationary Gabor transforms
-% can be found at:
+%   More information on Non-stationary Gabor transforms
+%   can be found at:
 %
-% http://univie.ac.at/nonstatgab/
+%   http://univie.ac.at/nonstatgab/
 %
-% minor edit by Gino Velasco 23.02.11
 
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+% Author: Nicki Holighaus, Gino Velasco
+% Date: 03.03.13
 
 % Check input arguments
 

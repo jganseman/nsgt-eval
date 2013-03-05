@@ -1,17 +1,20 @@
 function plot_wins(g,shift,normalize)
-
-% PLOW_WINS.M - Nicki Holighaus 02.02.11
-%
+%PLOT_WINS  Plot Nonstationary Gabor windows/filters
 % Usage:
 %   plot_wins(g,shift)
 %   plot_wins(g,shift,normalize)
 %
-% Helper function that plots a non-stationary Gabor frame
-% determined by the cell array g and posititon vector shift.
+%   Input parameters:
+%         g         : Cell array of windows/filters
+%         shift     : Vector of time/frequency shifts
+%         normalize : Re-normalize the windows to approximately uniform 
+%                     height
+%
+%   Helper function that plots a non-stationary Gabor frame
+%   determined by the cell array g and posititon vector shift.
 
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+% Author:  Nicki Holighaus
+% Date: 04.03.13
 
 if nargin < 3
     normalize = 0;

@@ -1,6 +1,33 @@
 function [fr,res,Nit]=nsgsiter(c,g,shift,M,varargin)
+%NSGSITER  Iterative nonstationary Gabor synthesis
+%   Usage:  [fr,res,Nit]=nsgsiter(c,g,shift,M,varargin)
+%           [fr,res,Nit]=nsgsiter(c,g,shift,M)
+%           [fr,res]=nsgsiter(...)
+%           fr=nsgsiter(...)
+%
+%   Input parameters:
+%         c         : Nonstationary Gabor coefficients
+%	      g         : Cell array of window functions
+%         shift     : Vector of shifts between the window positions
+%         M         : Vector of lengths of the window functions
+%         varargin  : Optional input pairs (see table below)
+%   Output parameters: 
+%         fr        : Synthesized output signal
+%         res       : Vector of relative residuals
+%         Nit       : Number of iterations
+%
+%   Optional input parameters:
+%         ['tol',tol]               : Error tolerance
+%         ['Mit',Mit]               : Maximum number of iterations
+%         ['prec',prec]             : Preconditioning switch
+%
+%   Help text goes here.
+%
 
-if nargin < 2
+% Author: Nicki Holighaus
+% Date: 04.03.13
+
+if nargin < 4
     error('Not enough input arguments');
 end
 
@@ -9,7 +36,7 @@ tol = 10^-10;   % Error tolerance
 Mit = 200;      % Maximum number of iterations
 prec = 0;
 
-if nargin >= 3
+if nargin >= 4
     if isnumeric(varargin{1}) && numel(varargin{1}) == 1
         Ls = varargin{1};
         varargin = varargin(2:end);

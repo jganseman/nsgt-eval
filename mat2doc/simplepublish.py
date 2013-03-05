@@ -45,7 +45,8 @@ if 'verify' in todo:
 if 'develmat' in todo:
     #printdoc.git_stageexport(project['dir'],project['mat'])
     os.system('rm -rf '+project['mat']+'*')
-    os.system('svn export --force '+project['dir']+' '+project['mat'])
+    os.system('cp -r '+project['dir']+' '+project['mat'])
+    os.system('rm -r -f '+project['mat']+'.git')
     printdoc.printdoc(projectname,'mat')
 
     fname=filesdir+projectname+'-devel-'+versionstring
@@ -62,8 +63,10 @@ if 'develmat' in todo:
 if 'releasemat' in todo:
     #printdoc.git_repoexport(project['dir'],'master',projectname,filesdir)
     os.system('rm -rf '+project['mat']+'*')
-    os.system('svn export --force '+project['dir']+' '+project['mat'])
-	
+    
+    os.system('cp -r '+project['dir']+'* '+project['mat'])
+    os.system('rm -r -f '+project['mat']+'.git')
+
     # Remove unwanted files
     os.system('rm -rf '+project['mat']+'mat2doc')
     os.system('rm -rf '+project['mat']+'test_bench')
@@ -72,6 +75,7 @@ if 'releasemat' in todo:
     printdoc.printdoc(projectname,'mat')
     
     fname=filesdir+projectname+'-'+versionstring
+    print fname
 
     # Create the Unix src package
     os.system('tar zcvf '+fname+'.tgz '+projectname+'/')
@@ -80,7 +84,7 @@ if 'releasemat' in todo:
     os.system('rm '+fname+'.zip')
     printdoc.unix2dos(filesdir+projectname)
     os.system('zip -r '+fname+'.zip '+projectname+'/')
-    
+    print 'cp -r '+project['dir']+' '+project['mat']
 if 'pdf' in todo:
     printdoc.printdoc(projectname,'tex','rebuild')
 
@@ -105,7 +109,11 @@ if 'sendserver'==todo:
     s='rsync -av '+project['php']+'/.. '+host+':'+www+''
     os.system(s)  
 
-
+if 'html' in todo:
+    if 'rebuild' in todo:
+        printdoc.printdoc(projectname,'html','rebuild')
+    else:
+        printdoc.printdoc(projectname,'html')
         
     #os.system('rsync -av '+notehtml+' '+host+':'+noteswww);
 

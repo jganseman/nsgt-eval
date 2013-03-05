@@ -1,45 +1,41 @@
 function fr = nsigt(c,gd,shift,Ls)
+% NSIGT  Nonstationary Gabor synthesis
+%   Usage:  fr = nsigt(c,gd,shift,Ls)
+%
+%   Input parameters: 
+%         c         : Cell array of non-stationary Gabor coefficients
+%         gd        : Cell array of synthesis windows
+%         shift     : Vector of time shifts
+%         Ls        : Length of the analyzed signal
+%
+%   Output parameters:
+%         fr        : Synthesized signal (Channels are stored in the
+%                     columns)
+%
+%   Given the cell array *c* of non-stationary Gabor coefficients, and a 
+%   set of windows and time shifts, this function computes the 
+%   corresponding inverse non-stationary Gabor transform.
+% 
+%   If a non-stationary Gabor frame was used to produce the coefficients 
+%   and 'gd' is a corresponding dual frame, this function should give 
+%   perfect reconstruction of the analyzed signal (up to numerical errors).
+% 
+%   The inverse transform is computed by simple 
+%   overlap-add. For each entry of the cell array *c*,
+%   the coefficients of frequencies around a certain 
+%   position in time, the inverse Fourier transform
+%   is taken, giving 'time slices' of a signal.
+%   These slices are added onto each other with an overlap
+%   depending on the window lengths and positions, thus
+%   (re-)constructing a signal. For multichannel signals, the overlap-add
+%   procedure is done for each channel.
+% 
+%   More information can be found at:
+%   http://univie.ac.at/nonstatgab/
+%
 
-% NSIGT.N - Nicki Holighaus 07.11.12
-%
-% fr = nsigt(c,gd,shift,Ls)
-%
-% Given the cell array 'c' of non-stationary Gabor coefficients, and a set 
-% of windows and time shifts, this function computes the corresponding 
-% inverse non-stationary Gabor transform.
-% 
-% Input: 
-%           c           : Cell array of non-stationary Gabor coefficients
-%           gd          : Cell array of synthesis windows
-%           shift       : Vector of time shifts
-%           Ls          : Length of the analyzed signal
-%
-% Output:
-%           fr           : Synthesized signal (Channels are stored in the
-%                          columns)
-% 
-% If a non-stationary Gabor frame was used to produce the coefficients 
-% and 'gd' is a corresponding dual frame, this function should give perfect 
-% reconstruction of the analyzed signal (up to numerical errors).
-% 
-% The inverse transform is computed by simple 
-% overlap-add. For each entry of the cell array c,
-% the coefficients of frequencies around a certain 
-% position in time, the inverse Fourier transform
-% is taken, giving 'time slices' of a signal.
-% These slices are added onto each other with an overlap
-% depending on the window lengths and positions, thus
-% (re-)constructing a signal. For multichannel signals, the overlap-add
-% procedure is done for each channel.
-% 
-% More information can be found at:
-% http://univie.ac.at/nonstatgab/
-%
-% Edited by Gino Velasco 24.02.11
-
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+% Author: Nicki Holighaus, Gino Velasco
+% Date: 03.03.13
 
 % some preparation
 

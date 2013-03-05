@@ -1,8 +1,9 @@
-% EXAMP_NSGTF Constant/Variable Q-type Nonstationary Gabor transform example 
+
+%EXAMP_NSGTF CQ/VQ-type Nonstationary Gabor filterbank usage demo 
 %
-%   This script sets up a nonstationary Gabor frame with the specified
-%   parameters, computes windows and corresponding canonical dual windows
-%   and a test signal, and plots the windows and the energy of the 
+%   This script sets up a nonstationary Gabor filterbank frame with the 
+%   specified parameters, computes windows and corresponding canonical dual 
+%   windows and a test signal, and plots the windows and the energy of the 
 %   coefficients.
 %
 %   FIGURE 1 windows + dual windows
@@ -15,11 +16,10 @@
 %    This figure shows a (color coded) image of the nsgtf coefficient
 %    modulus. 
 %
-%   SEE ALSO:  NSGT, NSIGT, NSDUAL
+%   EXTERNALS:  NSGTF, NSIGTF, NSDUAL
 
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+% Author: Gino Velasco, Nicki Holighaus
+% Date: 04.03.13
 
 
 %% Setup parameters and load the signal.

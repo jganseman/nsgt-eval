@@ -1,32 +1,27 @@
 function f_rec = unslicing(f_sliced,sl_len,tr_area,slices)
-
-% UNSLICING.M - Nicki Holighaus 02.03.12
-%
-% Usage:
-%   f_rec = unslicing(f_sliced,sl_len,tr_area,slices)
-%
-% This function performs a windowed overlap-add procedure on the columns of
-% the input matrix 'f_sliced'. The signal is assumed to have been cut with
-% a Tukey window of plateau length 'sl_len/2-tr_area' and transition areas
-% of length 'tr_area'. The window used for the overlap-add process will be
-% a smooth dual window to such a Tukey window in the sense that unaltered
-% input created by the routine 'slicing.m' will recreate the original input
-% signal.
+%UNSLICING  Reconstruct full signal from uniform half-overlapping slices
+%   Usage:  f_rec = unslicing(f_sliced,sl_len,tr_area,slices)
 %
 %   Input parameters:
-%         f_sliced      : Matrix containing signal slices as columns.
-%         sl_len        : slice length (in samples, optional).
+%         f_sliced      : Matrix containing signal slices as columns
+%         sl_len        : slice length (in samples, optional)
 %         tr_area       : length of each transition area (in samples,
-%                         optional, default is 'floor(sl_len/16)').
-%         slices        : number of slices(columns) of f_sliced (optional).
-%
+%                         optional, default is 'floor(sl_len/16)')
+%         slices        : number of slices(columns) of f_sliced (optional)
 %   Output parameters:
-%         f_rec      : signal resulting from the overlap-add procedure.
-%    
+%         f_rec      : signal resulting from the overlap-add procedure
+%
+%   This function performs a windowed overlap-add procedure on the columns of
+%   the input matrix 'f_sliced'. The signal is assumed to have been cut with
+%   a Tukey window of plateau length 'sl_len/2-tr_area' and transition areas
+%   of length 'tr_area'. The window used for the overlap-add process will be
+%   a smooth dual window to such a Tukey window in the sense that unaltered
+%   input created by the routine 'slicing.m' will recreate the original input
+%   signal.
+%
 
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+% Author: Nicki Holighaus
+% Date: 04.03.13
 
     hopsize = sl_len/2;
     L = slices*sl_len/2;

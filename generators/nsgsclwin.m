@@ -1,38 +1,35 @@
 function [g,shift,M] = nsgsclwin(positions,short,max_win,Ls)
-
-% NSGSCLWIN.M - Nicki Holighaus 02.02.11
+%NSGSCLWIN  Scale-frame dictionary generator
+%   Usage:  [g,shift,M] = nsgsclwin(positions,short,max_win,Ls)
 %
-% [g,shift,M] = nsgsclwin(positions,short,max_win,Ls)
+%   Input parameters:
+%         positions : A vector specifying time positions around which
+%                     shortest windows are desired
+%         short     : Shortest admissible window length (in samples)
+%         max_win   : Maximum number of different window sizes
+%         Ls        : Length of the signal to be analyzed (in samples)
 %
-% Create non-stationary Gabor frame from a sequence of positions 
-% (possibly onsets). This routine builds scale-type frames with fixed 
-% parameters Q = 2, O_1 = 2/3, O_2 = 1/3 using Hann windows of various 
-% length.
+%   Output parameters:
+%         g         : Cell array of window functions
+%         shift     : Vector of time shifts
+%         M         : Vector of window lengths
 %
-% Input:
-%           positions   : A vector specifying time positions around which
-%                         shortest windows are desired
-%           short       : Shortest admissible window length (in samples)
-%           max_win     : Maximum number of different window sizes
-%           Ls          : Length of the signal to be analyzed (in samples)
+%   Create non-stationary Gabor frame from a sequence of positions 
+%   (possibly onsets). This routine builds scale-type frames with fixed 
+%   parameters $Q = 2$, $O_1 = 2/3$, $O_2 = 1/3$ using Hann windows of 
+%   various length.
 %
-% Output:
-%           g           : Cell array of window functions
-%           shift       : Vector of time shifts
-%           M           : Vector of window lengths
+%   Between those points a set of windows evolving from shortest length
+%   to a certain maximum and back again will be constructed. We will call 
+%   those sets `short->long->short` building blocks.
 %
-% Between those points a set of windows evolving from shortest length
-% to a certain maximum and back again will be constructed. We will call 
-% those sets 'short->long->short' building blocks.
-%
-% 'short' has to be a multiple of 6, otherwise the shifts might be
-% non-integers.
+%   *short* has to be a multiple of $6$, otherwise the shifts might be
+%   non-integers.
 % 
-% The first value of 'positions' should always be '1'.
+%   The first value of *positions* should always be $1$.
 
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+% Author: Nicki Holighaus
+% Date: 04.03.13
 
 if nargin < 4
     error('Not enough input arguments');

@@ -1,46 +1,35 @@
-function [c,Ls] = nsgtf(f,g,shift,M,SL)
-
-% NSGTF.M - Gino Velasco, Nicki Holighaus 01.03.12
+function [c,Ls] = nsgtf(f,g,shift,M)
+%NSGTF  Nonstationary Gabor filterbank
+%   Usage:  [c,Ls] = nsgtf(f,g,shift,M)
 %
-% [c,Ls] = nsgtf(f,g,shift,M,SL)
+%   Input parameters: 
+%         f         : The signal to be analyzed (For multichannel
+%                     signals, input should be a matrix which each
+%                     column storing a channel of the signal).
+%         g         : Cell array of Fourier transforms of the analysis 
+%                     windows
+%         shift     : Vector of frequency shifts
+%         M         : Number of time channels (optional)
+%                     If M is constant, the output is converted to a
+%                     matrix
+%   Output parameters:
+%         c         : Transform coefficients (matrix or cell array)
+%         Ls        : Original signal length (in samples)
+%
+%   Given the cell array *g* of windows and the frequency shift vector 
+%   *shift*, this function computes the corresponding nonstationary Gabor 
+%   filterbank coefficients for *f*. 
 % 
-% This is a modified version of nsgt.m for the case where the resolution 
-% evolves over frequency.
+%   The transform produces phase-locked coefficients in the
+%   sense that each window is considered to be centered at
+%   0 and the signal itself is shifted accordingly.
 %
-% Given the cell array 'g' of windows and the frequency shift vector 
-% 'shift', this function computes the corresponding frequency side version
-% of the non-stationary gabor transform of f. 
-% 
-% Input: 
-%           f           : The signal to be analyzed (For multichannel
-%                         signals, input should be a matrix which each
-%                         column storing a channel of the signal).
-%           g           : Cell array of Fourier transforms of the analysis 
-%                         windows
-%           shift       : Vector of frequency shifts
-%           M           : Number of time channels (optional)
-%                         If M is constant, the output is converted to a
-%                         matrix
-%           SL		: [Internal parameter] Do not use this if you run
-%			  the routine manually.
+%   More information can be found at:
+%   http://univie.ac.at/nonstatgab/
 %
-% Output:
-%           c           : Transform coefficients (matrix or cell array)
-%           Ls          : Original signal length (in samples)
-%
-% The transform produces phase-locked coefficients in the
-% sense that each window is considered to be centered at
-% 0 and the signal itself is shifted accordingly.
-%
-% More information can be found at:
-% http://univie.ac.at/nonstatgab/
-%
-% This file was last updated for the Nonstationary Gabor Toolbox V0.02
 
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
-
+% Author: Nicki Holighaus, Gino Velasco
+% Date: 03.03.13
 
 % Check input arguments
 if nargin < 5

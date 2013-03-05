@@ -1,20 +1,33 @@
-function [] = plotnsgt(c,shift,sr,varargin)
-
-% This is a minimal variation of LTFATs plotndgt allowing to plot only a
-% part of the non-stationary spectrogram and also accepting matrix array
-% input.
-%
-%   PLOTNSGT Plot spectrogram from nonsationary Gabor coefficients
-%   Usage:  plotnsgt_mat(c,shift,cutout,dynrange,sr);
+function plotnsgt(c,shift,sr,varargin)
+%PLOTNSGT  Plot nonstationary Gabor coefficients
+%   Usage:  plotnsgt(c,shift,sr,fmin,fmax,bins,cutout,dynrange)
+%           plotnsgt(c,shift,sr,fmin,fmax,bins,cutout)
+%           plotnsgt(c,shift,sr,fmin,fmax,bins)
+%           plotnsgt(c,shift,sr,cutout,dynrange)
+%           plotnsgt(c,shift,sr,cutout)
+%           plotnsgt(c,shift,sr)
 %
 %   Input parameters:
 %         c        : Array of coefficients.
-%         shift    : Vector of time shifts of windows.
-%         sr       : signal sample rate in Hz (default 1 Hz).
+%         shift    : Vector of time shifts
+%         sr       : signal sample rate in Hz (default 1 Hz)
+%         fmin     : Minimum frequency used in the transform
+%         fmax     : Maximum frequency used in the transform
+%         bins     : Bins per octave (in constant or vector form)
 %         cutout   : Desired part of the spectrogram, e.g.
-%                    choice of '2' shows frequencies up to Nyquist.
-%                    ('X' shows the frequencies up to sr/X)
-%         dynrange : Colorscale dynamic range in dB (default 60 dB).
+%                    choice of '2' shows frequencies up to Nyquist
+%                    ('X' shows the 'number_of_bins/X' lowest frequency 
+%                    bins)
+%         dynrange : Colorscale dynamic range in dB (default 60 dB)
+%
+%   This variation of LTFATs plotndgt allows to plot only a part of the 
+%   spectrogram obtained from the non-stationary Gabor transform and also 
+%   accepting matrix array input.
+%
+
+% Author:  Nicki Holighaus
+% Original code by: Florent Jaillet
+% Date: 04.03.13
 
 %   Remainder of the original help file:
 %
@@ -46,13 +59,6 @@ function [] = plotnsgt(c,shift,sr,varargin)
 % 
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-%   AUTHOR : Florent Jaillet
-%   TESTING: 
-%   REFERENCE: 
-%   Last changed 2009-05
-%   Slightly adjusted by Nicki Holighaus 02.02.11
-
 
 if nargin < 3
     % Default value for sampling frequency.

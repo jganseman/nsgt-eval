@@ -1,36 +1,38 @@
 function [g,shift,M] = nsgcqwin(fmin,fmax,bins,sr,Ls,varargin)
+%NSGCQWIN  Constant-Q/Variable-Q dictionary generator
+%   Usage:  [g,shift,M] = nsgcqwin(fmin,fmax,bins,sr,Ls,varargin)
+%           [g,shift,M] = nsgcqwin(fmin,fmax,bins,sr,Ls)
+%
+%   Input parameters:
+%         fmin      : Minimum frequency (in Hz)
+%	      fmax      : Maximum frequency (in Hz)
+%         bins      : Vector consisting of the number of bins per octave
+%         sr        : Sampling rate (in Hz)
+%         Ls        : Length of signal (in samples)
+%         varargin  : Optional input pairs (see table below)%
+%   Output parameters: 
+%         g          : Cell array of window functions
+%         shift      : Vector of shifts between the center frequencies
+%         M          : Vector of lengths of the window functions
+%
+%  Optional input parameters:
+%         ['min_win',min_win]       : Minimum admissible window length 
+%                                     (in samples) 
+%         ['Qvar',Qvar]             : Bandwidth variation factor
+%         ['wL_fac',wL_fac]         : Filter lengths are rounded to 
+%                                     multiples of this
+%         ['fractional',fractional] : Allow fractional shifts and
+%                                     bandwidths
+%         ['winfun',winfun]         : Window function handle
+%
+% 
+%   Creates a set of windows whose centers correspond to center frequencies 
+%   to be used for the nonstationary Gabor transform with varying Q-factor. 
+%
+%   EXTERNALS : hannwin 
 
-% NSGCQWIN.M
-%---------------------------------------------------------------
-% [g,shift,M]=nsgcqwin(fmin,fmax,bins,sr,Ls) creates a set of windows whose
-% centers correspond to center frequencies to be
-% used for the nonstationary Gabor transform with varying Q-factor. 
-%---------------------------------------------------------------
-%
-% INPUT : fmin ...... Minimum frequency (in Hz)
-%	      fmax ...... Maximum frequency (in Hz)
-%         bins ...... Vector consisting of the number of bins per octave
-%         sr ........ Sampling rate (in Hz)
-%         Ls ........ Length of signal (in samples)
-%         min_win.... Minimum admissible window length (in samples) 
-%
-% OUTPUT : g ......... Cell array of window functions.
-%          shift ..... Vector of shifts between the center frequencies.
-%          M ......... Vector of lengths of the window functions.
-%
-%---------------------------------------------------------------
-% If min_win is not specified, it is set to 4. Note that while large 
-% values for min_win might lead to changing Q-factors among the lower
-% bins, small values significantly increase time aliasing.
-%---------------------------------------------------------------
-%
-% AUTHOR(s) : Monika Dörfler, Gino Angelo Velasco, Nicki Holighaus, 2011
-%
-% EXTERNALS : hannwin 
-
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+% Authors: Nicki Holighaus, Gino Velasco, Monika Doerfler
+% Date: 04.03.13
 
 % Set defaults 
 Qvar = 1;
@@ -143,7 +145,6 @@ else
 end
 
 N = length(shift);
-g = cell(N,1);
 
 for ii = 1:2*(Lfbas+1)    
     if bw(ii) < min_win; 

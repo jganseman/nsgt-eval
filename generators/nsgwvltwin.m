@@ -1,41 +1,38 @@
 function [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun)
+%NSGWVLTWIN  Wavelet dictionary generator
+%   Usage:  [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun)
+%           [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls)
+%           [g,shift,M] = nsgwvltwin(...)
+%
+%   Input parameters: 
+%         fmin      : Desired minimum center frequency (in Hz)
+%         bw        : Desired bandwidth in the first frequency band 
+%                     (in Hz)
+%         bins      : Desired number of bins per octave
+%         sr        : Sampling rate of f (in Hz)
+%         Ls        : signal length
+%         winfun    : window function to be used, the following are 
+%		    available:
+%             @hannwin    - Hann window (default)
+%             @gausscw    - Gaussian window
+%             @wp2inp     - Uncertainty minimizer 
+%   Output parameters: 
+%         g         : Cell array of Fourier transforms of the analysis 
+%                     Wavelets
+%         shift     : Vector of frequency shifts
+%         M         : Number of time channels
+%         fb        : frame bounds of the system
+%
+%   Given the function the necessary parameters described below, this
+%   wrapper function computes a painless Wavlet system. If you do not know 
+%   how to use this function, please use 'WVLTtrans.m' instead.
+%
+%   More information about the functions used can be found at:
+%   http://nuhag.eu/nonstatgab/
+%
 
-% NSGWVLTWIN.M - Christoph Wiesmeyr, Nicki Holighaus 01.06.12
-% 
-% [g,shift,M] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun)
-%
-% Given the function the necessary parameters described below, this
-% wrapper function computes a painless Wavlet system. If you do not know 
-% how to use this function, please use 'WVLTtrans.m' instead.
-%
-% Input: 
-%           fmin        : Desired minimum center frequency (in Hz)
-%           bw          : Desired bandwidth in the first frequency band 
-%                         (in Hz)
-%           bins        : Desired number of bins per octave
-%           sr          : Sampling rate of f (in Hz)
-%           Ls          : signal length
-%           winfun      : window function to be used, the following are 
-%			  available:
-%                       @hannwin    - Hann window (default)
-%                       @gausscw    - Gaussian window
-%                       @wp2inp     - Uncertainty minimizer 
-%           
-%
-% Output: 
-%           g           : Cell array of Fourier transforms of the analysis 
-%                         Wavelets
-%           shift       : Vector of frequency shifts
-%           M           : Number of time channels
-%           fb          : frame bounds of the system
-%
-%
-% More information about the functions used can be found at:
-% http://nuhag.eu/nonstatgab/
-
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+% Author: Christoph Wiesmeyr, Nicki Holighaus
+% Date: 04.03.13
 
 % Check input parameters
 
