@@ -7,7 +7,7 @@ function [c,res,Nit]=nsgaiter(f,g,shift,M,varargin)
 %   
 %   Input parameters:
 %         f         : Input signal
-%	      g         : Cell array of window functions
+%         g         : Cell array of window functions
 %         shift     : Vector of shifts between the window positions
 %         M         : Vector of lengths of the window functions
 %         varargin  : Optional input pairs (see table below)

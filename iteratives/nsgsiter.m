@@ -7,7 +7,7 @@ function [fr,res,Nit]=nsgsiter(c,g,shift,M,varargin)
 %
 %   Input parameters:
 %         c         : Nonstationary Gabor coefficients
-%	      g         : Cell array of window functions
+%         g         : Cell array of window functions
 %         shift     : Vector of shifts between the window positions
 %         M         : Vector of lengths of the window functions
 %         varargin  : Optional input pairs (see table below)

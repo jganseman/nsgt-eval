@@ -1,9 +1,9 @@
 function fr = invwvlttrans(c,g,shift,M,Ls,fb,tgtfl)
 %INVWVLTTRANS  Wavelet frame synthesis
-%   Usage:  fr = invWVLTtrans(c,g,shift,M,Ls,fb,tgtfl)
-%           fr = invWVLTtrans(c,g,shift,M,Ls)
-%           fr = invWVLTtrans(c,g,shift,M,Ls)
-%           fr = invWVLTtrans(c,g,shift,M)
+%   Usage:  fr = invwvlttrans(c,g,shift,M,Ls,fb,tgtfl)
+%           fr = invwvlttrans(c,g,shift,M,Ls)
+%           fr = invwvlttrans(c,g,shift,M,Ls)
+%           fr = invwvlttrans(c,g,shift,M)
 % 
 %   Input parameters: 
 %         c         : Cell array of Wavelet coefficients
@@ -11,8 +11,8 @@ function fr = invwvlttrans(c,g,shift,M,Ls,fb,tgtfl)
 %                     Wavelets
 %         shift     : Vector of frequency shifts
 %         M         : Number of time channels
-%	      fb	    : Frame bounds (vector)
-%         tgtfl 	: Tightflag (1 if frame is tight)
+%         fb	    : Frame bounds (vector)
+%         tgtfl     : Tightflag (1 if frame is tight)
 %   Output parameters:
 %         fr        : Reconstructed signal
 %

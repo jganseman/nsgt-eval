@@ -11,7 +11,7 @@ publishdir ='/home/nholighaus/Documents/publish/nsg/'
 octexec='/usr/bin/octave'
 
 # Must be defined if you use Matlab, absolute path of the Matlab interpreter
-matexec='/usr/bin/matlab'
+matexec='/usr/local/MATLAB/R2011a/bin/matlab'
 
 # Which program should be used for plotting: 'matlab' or 'octave'
 plotengine='matlab'

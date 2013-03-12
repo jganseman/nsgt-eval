@@ -29,8 +29,9 @@ conf.copyright=mycopyrightfun
 
 conf.urlext='php'
 
-contentsfiles=['core_routines/Contents','wrappers/Contents','wrappers/wvlt_helpers/Contents','wrappers/slicq_helpers/Contents','wrappers/onset_helpers/Contents','windows/Contents']
+contentsfiles=['core_routines/Contents','wrappers/Contents','windows/Contents','wrappers/wvlt_helpers/Contents','wrappers/slicq_helpers/Contents','wrappers/onset_helpers/Contents','plotting/Contents','iteratives/Contents','generators/Contents']
 
+#'demos/Contents'
 
 # ------------------------------------------
 # Configuration of PHP for Sourceforge
@@ -40,7 +41,7 @@ php=PhpConf()
 
 php.indexfiles=contentsfiles
 php.includedir='include/'
-php.urlbase='/'
+php.urlbase='/doc/'
 php.codedir=localconf.nsg['mat']
 
 # ------------------------------------------

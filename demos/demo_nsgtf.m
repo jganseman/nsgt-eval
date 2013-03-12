@@ -1,20 +1,23 @@
-
-%EXAMP_NSGTF CQ/VQ-type Nonstationary Gabor filterbank usage demo 
+%DEMO_NSGTF CQ/VQ-type Nonstationary Gabor filterbank usage demo 
 %
 %   This script sets up a nonstationary Gabor filterbank frame with the 
 %   specified parameters, computes windows and corresponding canonical dual 
 %   windows and a test signal, and plots the windows and the energy of the 
 %   coefficients.
 %
-%   FIGURE 1 windows + dual windows
+%   .. figure::
 %
-%    This figure shows the window functions used and the corresponding
-%    canonical dual windows. 
+%      windows + dual windows
 %
-%   FIGURE 2 spectrogram (absolute value of coefficients in dB)
+%      This figure shows the window functions used and the corresponding
+%      canonical dual windows. 
 %
-%    This figure shows a (color coded) image of the nsgtf coefficient
-%    modulus. 
+%   .. figure::
+%
+%      spectrogram (absolute value of coefficients in dB)
+%
+%      This figure shows a (color coded) image of the nsgtf coefficient
+%      modulus. 
 %
 %   EXTERNALS:  NSGTF, NSIGTF, NSDUAL
 

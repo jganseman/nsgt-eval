@@ -1,11 +1,11 @@
-function plotsliCQ(c,shift,varargin)
+function plotslicq(c,shift,varargin)
 %PLOTSLICQ  `plotnsgtf` wrapper for sliced transforms (sliCQ)
-%   Usage:  plotsliCQ(c,shift,sr,fmin,fmax,bins,cutout,dynrange)
-%           plotsliCQ(c,shift,sr,fmin,fmax,bins,cutout)
-%           plotsliCQ(c,shift,sr,fmin,fmax,bins)
-%           plotsliCQ(c,shift,sr,cutout,dynrange)
-%           plotsliCQ(c,shift,sr,cutout)
-%           plotsliCQ(c,shift,sr)
+%   Usage:  plotslicq(c,shift,sr,fmin,fmax,bins,cutout,dynrange)
+%           plotslicq(c,shift,sr,fmin,fmax,bins,cutout)
+%           plotslicq(c,shift,sr,fmin,fmax,bins)
+%           plotslicq(c,shift,sr,cutout,dynrange)
+%           plotslicq(c,shift,sr,cutout)
+%           plotslicq(c,shift,sr)
 %
 %   Input parameters:
 %         c        : Array of coefficients.

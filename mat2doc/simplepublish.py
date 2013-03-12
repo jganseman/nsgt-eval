@@ -9,7 +9,7 @@ projectname='nsg'
 
 # Configure HTML placement at remote server
 host='nholighaus,nsg@web.sourceforge.net'
-www='/home/project-web/nsg/htdocs'
+www='/home/project-web/nsg/htdocs/doc'
 
 
 # ------- do not edit below this line ----------

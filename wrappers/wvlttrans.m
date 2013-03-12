@@ -1,33 +1,31 @@
 function [c,g,shift,M,Ls,fb,tgtfl] = wvlttrans(f,fmin,sr,bins,bw,winfun)
 %WVLTTRANS  Wavelet frame transform
-%   Usage: [c,g,shift,M,Ls,fb,tgtfl] = WVLTtrans(f,fmin,sr,bins,bw,tgtfl)
-%          [c,g,shift,M,Ls,fb,tgtfl] = WVLTtrans(f,fmin,sr,bins,bw)
-%          [c,g,shift,M,Ls,fb,tgtfl] = WVLTtrans(f,fmin,sr,bins)
-%          [c,g,shift,M,Ls,fb,tgtfl] = WVLTtrans(f,fmin,sr)
-%          [c,g,shift,M,Ls,fb,tgtfl] = WVLTtrans(f,fmin)
-%          [c,g,shift,M,Ls,fb] = WVLTtrans(...)
-%          [c,g,shift,M,Ls] = WVLTtrans(...)
-%          [c,g,shift,M] = WVLTtrans(...)
-%          c = WVLTtrans(...)
+%   Usage: [c,g,shift,M,Ls,fb,tgtfl] = wvlttrans(f,fmin,sr,bins,bw,tgtfl)
+%          [c,g,shift,M,Ls,fb,tgtfl] = wvlttrans(f,fmin,sr,bins,bw)
+%          [c,g,shift,M,Ls,fb,tgtfl] = wvlttrans(f,fmin,sr,bins)
+%          [c,g,shift,M,Ls,fb,tgtfl] = wvlttrans(f,fmin,sr)
+%          [c,g,shift,M,Ls,fb,tgtfl] = wvlttrans(f,fmin)
+%          [c,g,shift,M,Ls,fb] = wvlttrans(...)
+%          [c,g,shift,M,Ls] = wvlttrans(...)
+%          [c,g,shift,M] = wvlttrans(...)
+%          c = wvlttrans(...)
 %
 %   Input parameters: 
 %         f         : Input signal
 %         fmin      : Desired minimum center frequency (in Hz)
-%         bandwidth : Desired bandwidth in the first frequency band 
-%                     (in Hz)
+%         bandwidth : Desired bandwidth in the first frequency band (in Hz)
 %         bins      : Desired number of bins per octave
 %         sr        : Sampling rate of f (in Hz)
 %         winfun    : Window function to be used
 %   Output parameters: 
 %         c         : Cell array of Wavelet coefficients
-%         g         : Cell array of Fourier transforms of the analysis 
+%         g         : Cell array of Fourier transforms of the analysis
 %                     Wavelets
 %         shift     : Vector of frequency shifts
 %         M         : Number of time channels
 %         Ls        : Original signal length
 %         fb	    : Frame bounds (vector)
-% 	      tgtfl 	: Tightflag (1 if frame is tight)
-%
+%         tgtfl     : Tightflag (1 if frame is tight)
 %
 %   Given the function *f* and the necessary parameters, this wrapper 
 %   function performs the corresponding Wavelet transform

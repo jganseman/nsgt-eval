@@ -17,9 +17,9 @@ function peaks = peakpick(SF,thre,range,multi)
 %   local maxima that are larger than the local mean over an area of the 
 %   form
 %
-%   |---$multi*range$---$X$---$range$---|
-%
 %   by more than the threshold given by *thre*.
+
+%   ..      |---$multi*range$---$X$---$range$---|
 
 % Author: Nicki Holighaus
 % Date: 04.03.13

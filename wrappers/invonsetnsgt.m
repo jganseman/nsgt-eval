@@ -1,7 +1,7 @@
 function fr = invonsetnsgt(c,g,shift,M,Ls)
 %INVONSETNSGT  Onset-based nonstationary Gabor synthesis
-%   Usage:  fr = invOnsetNsgt(c,g,shift,M,Ls)
-%           fr = invOnsetNsgt(c,g,shift,M)  
+%   Usage:  fr = invonsetnsgt(c,g,shift,M,Ls)
+%           fr = invonsetnsgt(c,g,shift,M)  
 %
 %   Input parameters: 
 %         c         : Cell array of transform coefficients

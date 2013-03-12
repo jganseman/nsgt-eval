@@ -1,10 +1,10 @@
 function [c,g,shift,M,Ls] = onsetnsgt(f,thre,short,max_win,win_length)
 %ONSETNSGT  Onset-based nonstationary Gabor transform
-%   Usage:  [c,g,shift,M,Ls] = OnsetNsgt(f,thre,short,max_win,win_length)
-%           [c,g,shift,M,Ls] = OnsetNsgt(f,thre,short,max_win)
-%           [c,g,shift,M,Ls] = OnsetNsgt(f,thre,short)
-%           [c,g,shift,M,Ls] = OnsetNsgt(f,thre)
-%           c = OnsetNsgt(...)
+%   Usage:  [c,g,shift,M,Ls] = onsetnsgt(f,thre,short,max_win,win_length)
+%           [c,g,shift,M,Ls] = onsetnsgt(f,thre,short,max_win)
+%           [c,g,shift,M,Ls] = onsetnsgt(f,thre,short)
+%           [c,g,shift,M,Ls] = onsetnsgt(f,thre)
+%           c = onsetnsgt(...)
 %
 %   Input parameters: 
 %         f         : The signal to be analyzed (single channel only)

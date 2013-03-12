@@ -1,52 +1,74 @@
-.. || replace:: ``
-.. _: http://nsg.sourceforge.net/wrappers/onset_helpers/.php
 .. |nsigt| replace:: `nsigt`
-.. _nsigt: http://nsg.sourceforge.net/core_routines/nsigt.php
+.. _nsigt: /doc/core_routines/nsigt.php
 .. |nsgtf| replace:: `nsgtf`
-.. _nsgtf: http://nsg.sourceforge.net/core_routines/nsgtf.php
+.. _nsgtf: /doc/core_routines/nsgtf.php
+.. |plot_wins| replace:: `plot_wins`
+.. _plot_wins: /doc/plotting/plot_wins.php
+.. |plotslicq| replace:: `plotslicq`
+.. _plotslicq: /doc/plotting/plotslicq.php
+.. |plotnsgt| replace:: `plotnsgt`
+.. _plotnsgt: /doc/plotting/plotnsgt.php
+.. |plotnsgtf| replace:: `plotnsgtf`
+.. _plotnsgtf: /doc/plotting/plotnsgtf.php
+.. |nsgaiter| replace:: `nsgaiter`
+.. _nsgaiter: /doc/iteratives/nsgaiter.php
+.. |nsgsiter| replace:: `nsgsiter`
+.. _nsgsiter: /doc/iteratives/nsgsiter.php
 .. |onsetnsgt| replace:: `onsetnsgt`
-.. _onsetnsgt: http://nsg.sourceforge.net/wrappers/onsetnsgt.php
+.. _onsetnsgt: /doc/wrappers/onsetnsgt.php
 .. |invwvlttrans| replace:: `invwvlttrans`
-.. _invwvlttrans: http://nsg.sourceforge.net/wrappers/invwvlttrans.php
+.. _invwvlttrans: /doc/wrappers/invwvlttrans.php
 .. |unslicing| replace:: `unslicing`
-.. _unslicing: http://nsg.sourceforge.net/wrappers/slicq_helpers/unslicing.php
+.. _unslicing: /doc/wrappers/slicq_helpers/unslicing.php
 .. |invonsetnsgt| replace:: `invonsetnsgt`
-.. _invonsetnsgt: http://nsg.sourceforge.net/wrappers/invonsetnsgt.php
-.. |gausscw| replace:: `gausscw`
-.. _gausscw: http://nsg.sourceforge.net/wrappers/wvlt_helpers/gausscw.php
-.. |slicq| replace:: `slicq`
-.. _slicq: http://nsg.sourceforge.net/wrappers/slicq.php
-.. |wp2inp| replace:: `wp2inp`
-.. _wp2inp: http://nsg.sourceforge.net/wrappers/wvlt_helpers/wp2inp.php
-.. |nsigtf_real| replace:: `nsigtf_real`
-.. _nsigtf_real: http://nsg.sourceforge.net/core_routines/nsigtf_real.php
-.. |onsetdet| replace:: `onsetdet`
-.. _onsetdet: http://nsg.sourceforge.net/wrappers/onset_helpers/onsetdet.php
-.. |islicq| replace:: `islicq`
-.. _islicq: http://nsg.sourceforge.net/wrappers/islicq.php
+.. _invonsetnsgt: /doc/wrappers/invonsetnsgt.php
 .. |hannwin| replace:: `hannwin`
-.. _hannwin: http://nsg.sourceforge.net/windows/hannwin.php
-.. |specflux| replace:: `specflux`
-.. _specflux: http://nsg.sourceforge.net/wrappers/onset_helpers/specflux.php
-.. |wvlttrans| replace:: `wvlttrans`
-.. _wvlttrans: http://nsg.sourceforge.net/wrappers/wvlttrans.php
-.. |slicing| replace:: `slicing`
-.. _slicing: http://nsg.sourceforge.net/wrappers/slicq_helpers/slicing.php
-.. |nsdual| replace:: `nsdual`
-.. _nsdual: http://nsg.sourceforge.net/core_routines/nsdual.php
-.. |nsgt| replace:: `nsgt`
-.. _nsgt: http://nsg.sourceforge.net/core_routines/nsgt.php
-.. |nsgtf_real| replace:: `nsgtf_real`
-.. _nsgtf_real: http://nsg.sourceforge.net/core_routines/nsgtf_real.php
-.. |nsgt_real| replace:: `nsgt_real`
-.. _nsgt_real: http://nsg.sourceforge.net/core_routines/nsgt_real.php
-.. |nsigt_real| replace:: `nsigt_real`
-.. _nsigt_real: http://nsg.sourceforge.net/core_routines/nsigt_real.php
-.. |nsigtf| replace:: `nsigtf`
-.. _nsigtf: http://nsg.sourceforge.net/core_routines/nsigtf.php
-.. |peakpick| replace:: `peakpick`
-.. _peakpick: http://nsg.sourceforge.net/wrappers/onset_helpers/peakpick.php
+.. _hannwin: /doc/windows/hannwin.php
+.. |slicq| replace:: `slicq`
+.. _slicq: /doc/wrappers/slicq.php
+.. |wp2inp| replace:: `wp2inp`
+.. _wp2inp: /doc/wrappers/wvlt_helpers/wp2inp.php
 .. |blackharr| replace:: `blackharr`
-.. _blackharr: http://nsg.sourceforge.net/windows/blackharr.php
+.. _blackharr: /doc/windows/blackharr.php
+.. |onsetdet| replace:: `onsetdet`
+.. _onsetdet: /doc/wrappers/onset_helpers/onsetdet.php
+.. |islicq| replace:: `islicq`
+.. _islicq: /doc/wrappers/islicq.php
+.. |gausscw| replace:: `gausscw`
+.. _gausscw: /doc/wrappers/wvlt_helpers/gausscw.php
+.. |specflux| replace:: `specflux`
+.. _specflux: /doc/wrappers/onset_helpers/specflux.php
+.. |wvlttrans| replace:: `wvlttrans`
+.. _wvlttrans: /doc/wrappers/wvlttrans.php
+.. |slicing| replace:: `slicing`
+.. _slicing: /doc/wrappers/slicq_helpers/slicing.php
+.. |nsdual| replace:: `nsdual`
+.. _nsdual: /doc/core_routines/nsdual.php
+.. |nsgt| replace:: `nsgt`
+.. _nsgt: /doc/core_routines/nsgt.php
+.. |nsgcqwin| replace:: `nsgcqwin`
+.. _nsgcqwin: /doc/generators/nsgcqwin.php
+.. |nsgtf_real| replace:: `nsgtf_real`
+.. _nsgtf_real: /doc/core_routines/nsgtf_real.php
+.. |nsgt_real| replace:: `nsgt_real`
+.. _nsgt_real: /doc/core_routines/nsgt_real.php
+.. |nsigt_real| replace:: `nsigt_real`
+.. _nsigt_real: /doc/core_routines/nsigt_real.php
+.. |nsigtf| replace:: `nsigtf`
+.. _nsigtf: /doc/core_routines/nsigtf.php
+.. |nsgerbwin| replace:: `nsgerbwin`
+.. _nsgerbwin: /doc/generators/nsgerbwin.php
+.. |peakpick| replace:: `peakpick`
+.. _peakpick: /doc/wrappers/onset_helpers/peakpick.php
+.. |nsgsclwin| replace:: `nsgsclwin`
+.. _nsgsclwin: /doc/generators/nsgsclwin.php
+.. |nsigtf_real| replace:: `nsigtf_real`
+.. _nsigtf_real: /doc/core_routines/nsigtf_real.php
+.. |nsgsiterf| replace:: `nsgsiterf`
+.. _nsgsiterf: /doc/iteratives/nsgsiterf.php
 .. |nstight| replace:: `nstight`
-.. _nstight: http://nsg.sourceforge.net/core_routines/nstight.php
+.. _nstight: /doc/core_routines/nstight.php
+.. |nsgwvltwin| replace:: `nsgwvltwin`
+.. _nsgwvltwin: /doc/generators/nsgwvltwin.php
+.. |nsgaiterf| replace:: `nsgaiterf`
+.. _nsgaiterf: /doc/iteratives/nsgaiterf.php

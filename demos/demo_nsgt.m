@@ -1,25 +1,30 @@
-
-%EXAMP_NSGT Onset Detection type Nonstationary Gabor transform usage demo 
+%DEMO_NSGT Onset Detection type Nonstationary Gabor transform usage demo 
 %
 %   This script sets up a nonstationary Gabor frame with the specified
 %   parameters, computes windows and corresponding canonical dual windows
 %   and a test signal, and plots the windows and the energy of the 
 %   coefficients.
 %
-%   FIGURE 1 onset detection results
+%   .. figure::
+%    
+%      onset detection results
 %
-%    This figure shows a regular spectrogram with marked onsets and the
-%    spectral flux function with marked onsets.
+%      This figure shows a regular spectrogram with marked onsets and the
+%      spectral flux function with marked onsets.
 %
-%   FIGURE 2 windows + dual windows
+%   .. figure::
 %
-%    This figure shows the window functions used and the corresponding
-%    canonical dual windows. 
+%      windows + dual windows
 %
-%   FIGURE 3 spectrogram (absolute value of coefficients in dB)
+%      This figure shows the window functions used and the corresponding
+%      canonical dual windows. 
 %
-%    This figure shows a (color coded) image of the nsgtf coefficient
-%    modulus. 
+%   .. figure::
+%
+%      spectrogram (absolute value of coefficients in dB)
+%
+%      This figure shows a (color coded) image of the nsgtf coefficient
+%      modulus. 
 %
 %   EXTERNALS:  NSGT, NSIGT, NSDUAL, ONSETDET
 %

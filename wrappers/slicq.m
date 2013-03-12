@@ -1,17 +1,16 @@
-function [c,g,shift,M,Ls,sl_len,tr_area] = ...
-                   slicq(f,fmin,fmax,bins,sl_len,tr_area,sr,M,min_win,Qvar)
+function [c,g,shift,M,Ls,sl_len,tr_area] = slicq(f,fmin,fmax,bins,sl_len,tr_area,sr,M,min_win,Qvar)
 %SLICQ  Sliced constant-Q/variable-Q transform
 %   Usage:  [c,g,shift,M,Ls,sl_len,tr_area] 
-%                = sliCQ(f,fmin,fmax,bins,sl_len,tr_area,sr,M,min_win,Qvar)
-%                = sliCQ(f,fmin,fmax,bins,sl_len,tr_area,sr,M,min_win)
-%                = sliCQ(f,fmin,fmax,bins,sl_len,tr_area,sr,M)
-%                = sliCQ(f,fmin,fmax,bins,sl_len,tr_area,sr)
-%                = sliCQ(f,fmin,fmax,bins,sl_len,tr_area)
-%                = sliCQ(f,fmin,fmax,bins,sl_len)
-%                = sliCQ(f,fmin,fmax,bins)
-%                = sliCQ(f,fmin,fmax)
-%                = sliCQ(f,fmin)
-%           c = sliCQ(...)
+%                = slicq(f,fmin,fmax,bins,sl_len,tr_area,sr,M,min_win,Qvar)
+%                = slicq(f,fmin,fmax,bins,sl_len,tr_area,sr,M,min_win)
+%                = slicq(f,fmin,fmax,bins,sl_len,tr_area,sr,M)
+%                = slicq(f,fmin,fmax,bins,sl_len,tr_area,sr)
+%                = slicq(f,fmin,fmax,bins,sl_len,tr_area)
+%                = slicq(f,fmin,fmax,bins,sl_len)
+%                = slicq(f,fmin,fmax,bins)
+%                = slicq(f,fmin,fmax)
+%                = slicq(f,fmin)
+%           c = slicq(...)
 %
 %   Input parameters:
 %         f         : Input signal
@@ -50,10 +49,10 @@ function [c,g,shift,M,Ls,sl_len,tr_area] = ...
 %   http://www.univie.ac.at/nonstatgab/
 %
 %   For more information on sliced transforms, see
-%   N. Holighaus, M. Dörfler, G. Velasco, and T. Grill, “A framework for 
-%   invertible, real-time constant-q transforms,” Audio, Speech, and 
+%   N. Holighaus, M. Doerfler, G. Velasco, and T. Grill, "A framework for 
+%   invertible, real-time constant-q transforms," Audio, Speech, and 
 %   Language Processing, IEEE Transactions on, vol. 21, no. 4, 
-%   pp. 775 –785, April 2013.
+%   pp. 775-785, April 2013.
 %
 
 % Author: Nicki Holighaus

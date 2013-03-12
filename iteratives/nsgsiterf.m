@@ -7,7 +7,7 @@ function [fr,res,Nit]=nsgsiterf(c,g,shift,M,varargin)
 %
 %   Input parameters:
 %         c         : Nonstationary Gabor coefficients
-%	      g         : Cell array of window functions
+%         g         : Cell array of filters
 %         shift     : Vector of shifts between the center frequencies
 %         M         : Vector of lengths of the filters
 %         varargin  : Optional input pairs (see table below)

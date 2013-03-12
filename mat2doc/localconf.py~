@@ -3,7 +3,7 @@
 
 # The path definitions below are not necessary, they are just an easy
 # way of writing the rest of this file
-publishdir ='/home/nholighaus/Documents/publish/nsg'
+publishdir ='/home/nholighaus/Documents/publish/nsg/'
 
 # ---- Global configuration options for all projects  ------------------
 
@@ -11,7 +11,7 @@ publishdir ='/home/nholighaus/Documents/publish/nsg'
 octexec='/usr/bin/octave'
 
 # Must be defined if you use Matlab, absolute path of the Matlab interpreter
-matexec='/usr/bin/matlab'
+matexec='/usr/local/MATLAB/R2011a/bin/matlab'
 
 # Which program should be used for plotting: 'matlab' or 'octave'
 plotengine='matlab'

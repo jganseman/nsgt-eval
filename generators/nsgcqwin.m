@@ -5,17 +5,17 @@ function [g,shift,M] = nsgcqwin(fmin,fmax,bins,sr,Ls,varargin)
 %
 %   Input parameters:
 %         fmin      : Minimum frequency (in Hz)
-%	      fmax      : Maximum frequency (in Hz)
+%         fmax      : Maximum frequency (in Hz)
 %         bins      : Vector consisting of the number of bins per octave
 %         sr        : Sampling rate (in Hz)
 %         Ls        : Length of signal (in samples)
-%         varargin  : Optional input pairs (see table below)%
+%         varargin  : Optional input pairs (see table below)
 %   Output parameters: 
-%         g          : Cell array of window functions
-%         shift      : Vector of shifts between the center frequencies
-%         M          : Vector of lengths of the window functions
+%         g         : Cell array of window functions
+%         shift     : Vector of shifts between the center frequencies
+%         M         : Vector of lengths of the window functions
 %
-%  Optional input parameters:
+%   Optional input parameters:
 %         ['min_win',min_win]       : Minimum admissible window length 
 %                                     (in samples) 
 %         ['Qvar',Qvar]             : Bandwidth variation factor
@@ -25,11 +25,11 @@ function [g,shift,M] = nsgcqwin(fmin,fmax,bins,sr,Ls,varargin)
 %                                     bandwidths
 %         ['winfun',winfun]         : Window function handle
 %
-% 
 %   Creates a set of windows whose centers correspond to center frequencies 
 %   to be used for the nonstationary Gabor transform with varying Q-factor. 
 %
-%   EXTERNALS : hannwin 
+%   EXTERNALS: hannwin
+%
 
 % Authors: Nicki Holighaus, Gino Velasco, Monika Doerfler
 % Date: 04.03.13

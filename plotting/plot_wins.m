@@ -1,8 +1,7 @@
 function plot_wins(g,shift,normalize)
 %PLOT_WINS  Plot Nonstationary Gabor windows/filters
-% Usage:
-%   plot_wins(g,shift)
-%   plot_wins(g,shift,normalize)
+%   Usage:  plot_wins(g,shift)
+%           plot_wins(g,shift,normalize)
 %
 %   Input parameters:
 %         g         : Cell array of windows/filters

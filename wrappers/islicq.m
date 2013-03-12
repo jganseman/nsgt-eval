@@ -1,7 +1,7 @@
 function [fr,gd] = islicq(c,g,shift,M,Ls,sl_len,tr_area)
 %ISLICQ  Sliced constant-Q/variable-Q synthesis
-%   Usage:  [fr,gd] = isliCQ(c,g,shift,M,Ls,sl_len,tr_area)
-%           fr = isliCQ(c,g,shift,M,Ls,sl_len,tr_area)
+%   Usage:  [fr,gd] = islicq(c,g,shift,M,Ls,sl_len,tr_area)
+%           fr = islicq(c,g,shift,M,Ls,sl_len,tr_area)
 %
 %   Input parameters:
 %         c         : Cell array of coefficients
@@ -27,10 +27,10 @@ function [fr,gd] = islicq(c,g,shift,M,Ls,sl_len,tr_area)
 %   http://www.univie.ac.at/nonstatgab/
 %
 %   For more information on sliced transforms, see
-%   N. Holighaus, M. Dörfler, G. Velasco, and T. Grill, “A framework for 
-%   invertible, real-time constant-q transforms,” Audio, Speech, and 
+%   N. Holighaus, M. Doerfler, G. Velasco, and T. Grill, "A framework for 
+%   invertible, real-time constant-q transforms," Audio, Speech, and 
 %   Language Processing, IEEE Transactions on, vol. 21, no. 4, 
-%   pp. 775 –785, April 2013.
+%   pp. 775-785, April 2013.
 %
 
 % Author: Nicki Holighaus

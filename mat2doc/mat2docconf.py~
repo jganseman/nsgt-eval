@@ -29,8 +29,9 @@ conf.copyright=mycopyrightfun
 
 conf.urlext='php'
 
-contentsfiles=['core_routines/Contents','wrapper/Contents','wrappers/wvlt_helpers/Contents','wrappers/slicq_helpers/Contents','wrappers/onset_helpers/Contents','windows/Contents']
+contentsfiles=['core_routines/Contents','wrappers/Contents','windows/Contents','wrappers/wvlt_helpers/Contents','wrappers/slicq_helpers/Contents','wrappers/onset_helpers/Contents','plotting/Contents','iteratives/Contents','generators/Contents']
 
+#'demos/Contents'
 
 # ------------------------------------------
 # Configuration of PHP for Sourceforge

@@ -12,10 +12,10 @@ function [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun)
 %         sr        : Sampling rate of f (in Hz)
 %         Ls        : signal length
 %         winfun    : window function to be used, the following are 
-%		    available:
-%             @hannwin    - Hann window (default)
-%             @gausscw    - Gaussian window
-%             @wp2inp     - Uncertainty minimizer 
+%                     available:
+%                     @hannwin    - Hann window (default)
+%                     @gausscw    - Gaussian window
+%                     @wp2inp     - Uncertainty minimizer 
 %   Output parameters: 
 %         g         : Cell array of Fourier transforms of the analysis 
 %                     Wavelets

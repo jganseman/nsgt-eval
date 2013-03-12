@@ -7,7 +7,7 @@ function [c,res,Nit]=nsgaiterf(f,g,shift,M,varargin)
 %
 %   Input parameters:
 %         f         : Input signal
-%	      g         : Cell array of window functions
+%         g         : Cell array of filters
 %         shift     : Vector of shifts between the center frequencies
 %         M         : Vector of lengths of the filters
 %         varargin  : Optional input pairs (see table below)
