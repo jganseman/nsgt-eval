@@ -90,6 +90,7 @@ pos = peakpick(ODF,thre,range,multi);
 % Shift the onset positions according by a fixed amount to be more precise
 % (experimental, but improves the results on simple signals)
 
+tgap = win_length/8;
 pos = onsets(pos,tgap,win_length,shift);
 
 % Due to periodization and shifts, some onsets might appear after the

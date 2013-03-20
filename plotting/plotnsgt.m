@@ -1,19 +1,13 @@
 function plotnsgt(c,shift,sr,varargin)
 %PLOTNSGT  Plot nonstationary Gabor coefficients
-%   Usage:  plotnsgt(c,shift,sr,fmin,fmax,bins,cutout,dynrange)
-%           plotnsgt(c,shift,sr,fmin,fmax,bins,cutout)
-%           plotnsgt(c,shift,sr,fmin,fmax,bins)
-%           plotnsgt(c,shift,sr,cutout,dynrange)
-%           plotnsgt(c,shift,sr,cutout)
+%   Usage:  plotnsgt(c,shift,sr,varargin)
 %           plotnsgt(c,shift,sr)
+%           plotnsgt(c,shift)
 %
 %   Input parameters:
 %         c        : Array of coefficients.
 %         shift    : Vector of time shifts
 %         sr       : signal sample rate in Hz (default 1 Hz)
-%         fmin     : Minimum frequency used in the transform
-%         fmax     : Maximum frequency used in the transform
-%         bins     : Bins per octave (in constant or vector form)
 %         cutout   : Desired part of the spectrogram, e.g.
 %                    choice of '2' shows frequencies up to Nyquist
 %                    ('X' shows the 'number_of_bins/X' lowest frequency 
@@ -23,6 +17,23 @@ function plotnsgt(c,shift,sr,varargin)
 %   This variation of LTFATs plotndgt allows to plot only a part of the 
 %   spectrogram obtained from the non-stationary Gabor transform and also 
 %   accepting matrix array input.
+%
+%   Optional input arguments arguments can be supplied like this::
+%
+%       plotnsgt(c,shift,sr,'min_win',min_win)
+%
+%   The arguments must be character strings followed by an
+%   argument:
+%
+%     'dynrange',dynrange  Colorscale dynamic range in dB (default 60 dB)
+%
+%     'cutout',cutout      Desired part of the spectrogram, e.g.
+%                          choice of '2' shows frequencies up to Nyquist
+%                          ('X' shows the 'number_of_bins/X' lowest 
+%                          frequency bins)
+%
+%     'realsig',realsig    Input coefficients are taken from a
+%                          representation for real-valued signals
 %
 
 % Author:  Nicki Holighaus

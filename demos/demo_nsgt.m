@@ -79,7 +79,7 @@ c = nsgt(s,g,shift);
 
 figure;
 
-plotnsgt(c,shift,fs,2,60);
+plotnsgt(c,shift,fs,'dynrange',60);
 
 %% Test reconstruction
 s_r = nsigt(c,gd,shift,Ls);

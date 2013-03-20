@@ -19,7 +19,9 @@
 .. |invwvlttrans| replace:: `invwvlttrans`
 .. _invwvlttrans: /doc/wrappers/invwvlttrans.php
 .. |unslicing| replace:: `unslicing`
-.. _unslicing: /doc/wrappers/slicq_helpers/unslicing.php
+.. _unslicing: /doc/helpers/unslicing.php
+.. |demo_nsgt| replace:: `demo_nsgt`
+.. _demo_nsgt: /doc/demos/demo_nsgt.php
 .. |invonsetnsgt| replace:: `invonsetnsgt`
 .. _invonsetnsgt: /doc/wrappers/invonsetnsgt.php
 .. |hannwin| replace:: `hannwin`
@@ -27,23 +29,25 @@
 .. |slicq| replace:: `slicq`
 .. _slicq: /doc/wrappers/slicq.php
 .. |wp2inp| replace:: `wp2inp`
-.. _wp2inp: /doc/wrappers/wvlt_helpers/wp2inp.php
+.. _wp2inp: /doc/helpers/wp2inp.php
 .. |blackharr| replace:: `blackharr`
 .. _blackharr: /doc/windows/blackharr.php
 .. |onsetdet| replace:: `onsetdet`
-.. _onsetdet: /doc/wrappers/onset_helpers/onsetdet.php
+.. _onsetdet: /doc/helpers/onsetdet.php
 .. |islicq| replace:: `islicq`
 .. _islicq: /doc/wrappers/islicq.php
+.. |demo_nsgtf| replace:: `demo_nsgtf`
+.. _demo_nsgtf: /doc/demos/demo_nsgtf.php
 .. |gausscw| replace:: `gausscw`
-.. _gausscw: /doc/wrappers/wvlt_helpers/gausscw.php
+.. _gausscw: /doc/helpers/gausscw.php
 .. |nsgt_startup| replace:: `nsgt_startup`
 .. _nsgt_startup: /doc///nsgt_startup.php
 .. |specflux| replace:: `specflux`
-.. _specflux: /doc/wrappers/onset_helpers/specflux.php
+.. _specflux: /doc/helpers/specflux.php
 .. |wvlttrans| replace:: `wvlttrans`
 .. _wvlttrans: /doc/wrappers/wvlttrans.php
-.. |slicing| replace:: `slicing`
-.. _slicing: /doc/wrappers/slicq_helpers/slicing.php
+.. |nsigt_real| replace:: `nsigt_real`
+.. _nsigt_real: /doc/core_routines/nsigt_real.php
 .. |nsdual| replace:: `nsdual`
 .. _nsdual: /doc/core_routines/nsdual.php
 .. |nsgt| replace:: `nsgt`
@@ -56,14 +60,14 @@
 .. _nsganamat: /doc/operators/nsganamat.php
 .. |nsgt_real| replace:: `nsgt_real`
 .. _nsgt_real: /doc/core_routines/nsgt_real.php
-.. |nsigt_real| replace:: `nsigt_real`
-.. _nsigt_real: /doc/core_routines/nsigt_real.php
+.. |slicing| replace:: `slicing`
+.. _slicing: /doc/helpers/slicing.php
 .. |nsigtf| replace:: `nsigtf`
 .. _nsigtf: /doc/core_routines/nsigtf.php
 .. |nsgerbwin| replace:: `nsgerbwin`
 .. _nsgerbwin: /doc/generators/nsgerbwin.php
 .. |peakpick| replace:: `peakpick`
-.. _peakpick: /doc/wrappers/onset_helpers/peakpick.php
+.. _peakpick: /doc/helpers/peakpick.php
 .. |nsgfrmmat| replace:: `nsgfrmmat`
 .. _nsgfrmmat: /doc/operators/nsgfrmmat.php
 .. |nsgsclwin| replace:: `nsgsclwin`

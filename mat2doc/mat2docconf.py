@@ -29,7 +29,7 @@ conf.copyright=mycopyrightfun
 
 conf.urlext='php'
 
-contentsfiles=['/Contents','core_routines/Contents','wrappers/Contents','windows/Contents','wrappers/wvlt_helpers/Contents','wrappers/slicq_helpers/Contents','wrappers/onset_helpers/Contents','plotting/Contents','iteratives/Contents','generators/Contents','operators/Contents']
+contentsfiles=['/Contents','demos/Contents','core_routines/Contents','wrappers/Contents','windows/Contents','helpers/Contents','plotting/Contents','iteratives/Contents','generators/Contents','operators/Contents']
 
 #'demos/Contents'
 

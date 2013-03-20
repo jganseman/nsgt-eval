@@ -6,7 +6,7 @@ cwd=os.getcwd()+'/'
 # ------- Configuration parameters -------------
 
 projectname='nsg'
-
+projectdir='~/Documents/git/nsgtoolbox'
 # Configure HTML placement at remote server
 host='nholighaus,nsg@web.sourceforge.net'
 www='/home/project-web/nsg/htdocs/doc'
@@ -61,14 +61,9 @@ if 'develmat' in todo:
 
 # Release for users to download
 if 'releasemat' in todo:
-    #printdoc.git_repoexport(project['dir'],'master',projectname,filesdir)
-    os.system('rm -rf '+project['mat']+'*')
-    
-    os.system('cp -r '+project['dir']+'* '+project['mat'])
-    os.system('rm -r -f '+project['mat']+'.git')
+    os.system('mat2doc mat '+projectdir)
 
     # Remove unwanted files
-    os.system('rm -rf '+project['mat']+'mat2doc')
     os.system('rm -rf '+project['mat']+'test_bench')
     #os.system('rm -rf '+project['mat']+'timing')
 
@@ -90,7 +85,7 @@ if 'pdf' in todo:
 
 
 if 'php'==todo:
-    printdoc.printdoc(projectname,'php')
+    os.system('mat2doc php '+projectdir)
 
     s='rsync -av '+project['php']+'/ '+host+':'+www+''
     print s
