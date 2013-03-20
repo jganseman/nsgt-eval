@@ -36,6 +36,8 @@
 .. _islicq: /doc/wrappers/islicq.php
 .. |gausscw| replace:: `gausscw`
 .. _gausscw: /doc/wrappers/wvlt_helpers/gausscw.php
+.. |nsgt_startup| replace:: `nsgt_startup`
+.. _nsgt_startup: /doc///nsgt_startup.php
 .. |specflux| replace:: `specflux`
 .. _specflux: /doc/wrappers/onset_helpers/specflux.php
 .. |wvlttrans| replace:: `wvlttrans`

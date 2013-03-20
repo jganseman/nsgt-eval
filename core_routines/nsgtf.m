@@ -49,7 +49,8 @@ if Ls == 1
 end
 
 if CH > Ls
-    disp(['The number of signal channels (',num2str(CH),') is larger than']);
+    disp(['The number of signal channels (',num2str(CH),') ',...
+        'is larger than']);
     disp(['the number of samples per channel (',num2str(Ls),').']);
     reply = input('Is this correct? ([Y]es,[N]o)', 's');
     switch reply
@@ -59,7 +60,8 @@ if CH > Ls
                 case {'N','n','No','no',''}
                     error('Invalid signal input, terminating program');
                 case {'Y','y','Yes','yes'}
-                    disp('Transposing signal matrix and continuing program execution');
+                    disp('Transposing signal matrix and continuing ',...
+                        'program execution');
                     f = f.';
                     X = CH; CH = Ls; Ls = CH; clear X;
                 otherwise
@@ -76,7 +78,7 @@ N=length(shift);    % The number of frequency slices
 
 if nargin == 3
     M = zeros(N,1);
-    for kk = 1:N 
+    for kk = 1:N
         M(kk) = length(g{kk});
     end
 end
@@ -93,41 +95,42 @@ timepos = cumsum(shift)-shift(1); % Calculate positions from shift vector
 
 % A small amount of zero-padding might be needed (e.g. for scale frames)
 
-fill = sum(shift)-Ls; 
+fill = sum(shift)-Ls;
 f = [f;zeros(fill,CH)];
 
 c=cell(N,1); % Initialisation of the result
-    
+
 % The actual transform
-    
+
 for ii = 1:N
     Lg = length(g{ii});
     
     idx = [ceil(Lg/2)+1:Lg,1:ceil(Lg/2)];
     win_range = mod(timepos(ii)+(-floor(Lg/2):ceil(Lg/2)-1),Ls+fill)+1;
     
-    if M(ii) < Lg % if the number of frequency channels is too small, aliasing is introduced
+    if M(ii) < Lg % if the number of frequency channels is too small,
+        % aliasing is introduced
         col = ceil(Lg/M(ii));
         temp = zeros(col*M(ii),CH);
         
-        temp([end-floor(Lg/2)+1:end,1:ceil(Lg/2)],:) = bsxfun(@times,f(win_range,:),g{ii}(idx));        
+        temp([end-floor(Lg/2)+1:end,1:ceil(Lg/2)],:) = ...
+            bsxfun(@times,f(win_range,:),g{ii}(idx));
         temp = reshape(temp,M(ii),col,CH);
         
         c{ii} = squeeze(ifft(sum(temp,2)));
         % Using c = cellfun(@(x) squeeze(ifft(x)),c,'UniformOutput',0);
         % outside the loop instead does not provide speedup; instead it is
-        % slower in most cases.        
-     else
+        % slower in most cases.
+    else
         temp = zeros(M(ii),CH);
-        temp([end-floor(Lg/2)+1:end,1:ceil(Lg/2)],:) = bsxfun(@times,f(win_range,:),g{ii}(idx));
+        temp([end-floor(Lg/2)+1:end,1:ceil(Lg/2)],:) = ...
+            bsxfun(@times,f(win_range,:),g{ii}(idx));
         
         c{ii} = ifft(temp);
     end
-end           
+end
 
 if max(M) == min(M)
-     c = cell2mat(c);
-     c = reshape(c,M(1),N,CH);
-end
- 
+    c = cell2mat(c);
+    c = reshape(c,M(1),N,CH);
 end

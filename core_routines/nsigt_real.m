@@ -46,7 +46,8 @@ if nargin < 4
     error('Not enough input arguments');
 end
 
-if iscell(c) == 0 % If matrix format coefficients were used, convert to cell
+if iscell(c) == 0 % If matrix format coefficients were used, convert to
+    % cell
     [~,N,CH] = size(c);
     c = reshape(c,N*M,CH);
     c = mat2cell(c,M*ones(N,1),CH);
@@ -57,7 +58,7 @@ else
 end
 
 timepos = cumsum(shift);        % Calculate positions from shift vector
-NN = timepos(end);              % Length of the reconstruction before truncation
+NN = timepos(end);              % Reconstruction length before truncation
 timepos = timepos-shift(1);   	% Adjust positions
 
 fr = zeros(NN,CH); % Initialize output
@@ -75,12 +76,11 @@ for ii = 1:N
     win_range = mod(timepos(ii)+(-floor(Lg/2):ceil(Lg/2)-1),NN)+1;
     
     temp = ifftreal(c{ii},M(ii),1)*M(ii);
-    temp = temp(mod([end-floor(Lg/2)+1:end,1:ceil(Lg/2)]-1,length(temp))+1,:);
+    temp = temp(mod([end-floor(Lg/2)+1:end,1:ceil(Lg/2)]-1,...
+        length(temp))+1,:);
     
     fr(win_range,:) = fr(win_range,:) + ...
         bsxfun(@times,temp,gd{ii}([Lg-floor(Lg/2)+1:Lg,1:ceil(Lg/2)]));
 end
 
 fr = fr(1:Ls,:); % Truncate the signal to original length (if given)
-
-end

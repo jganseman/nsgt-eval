@@ -2,7 +2,7 @@ function nsgt_startup()
 %NSGT_STARTUP  Set paths for using NSGToolbox
 %   Usage: nsgt_startup()
 %
-% This script file adds NSGToolbox folders to the MATLAB path.
+%   This script file adds NSGToolbox folders to the MATLAB path.
 
 % Author: Nicki Holighaus
 % Date: 20.03.13

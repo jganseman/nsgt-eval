@@ -41,7 +41,8 @@ if nargin < 3
     error('Not enough input arguments');
 end
 
-if iscell(c) == 0 % If matrix format coefficients were used, convert to cell
+if iscell(c) == 0 % If matrix format coefficients were used, convert to
+    % cell
     [M,N,CH] = size(c);
     c = reshape(c,N*M,CH);
     c = mat2cell(c,M*ones(N,1),CH);
@@ -51,7 +52,7 @@ else
 end
 
 timepos = cumsum(shift);        % Calculate positions from shift vector
-NN = timepos(end);              % Length of the reconstruction before truncation
+NN = timepos(end);              % Reconstruction length before truncation
 timepos = timepos-shift(1);     % Adjust positions
 
 fr = zeros(NN,CH); % Initialize output

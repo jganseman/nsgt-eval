@@ -45,7 +45,7 @@ if max(size(M)) == 1
     M = M(1)*ones(length(shift),1);
 end
 
-% Setup the necessary parameters 
+% Setup the necessary parameters
 N = length(shift);
 
 timepos = cumsum(shift);
@@ -58,17 +58,18 @@ win_range = cell(N,1);
 % Construct the diagonal of the frame operator matrix explicitly
 
 for ii = 1:N
-  Lg = length(g{ii});
-
-  win_range{ii} = mod(timepos(ii)+(-floor(Lg/2):ceil(Lg/2)-1),Ls)+1;
-  diagonal(win_range{ii}) = diagonal(win_range{ii}) + (fftshift(g{ii}).^2)*M(ii);   
+    Lg = length(g{ii});
+    
+    win_range{ii} = mod(timepos(ii)+(-floor(Lg/2):ceil(Lg/2)-1),Ls)+1;
+    diagonal(win_range{ii}) = diagonal(win_range{ii}) + ...
+        (fftshift(g{ii}).^2)*M(ii);
 end
 
-% Using the frame operator and the original window sequence, compute 
+% Using the frame operator and the original window sequence, compute
 % the dual window sequence
 
 gd = g;
-  
+
 for ii=1:N
     gd{ii} = ifftshift(fftshift(gd{ii})./diagonal(win_range{ii}));
 end
