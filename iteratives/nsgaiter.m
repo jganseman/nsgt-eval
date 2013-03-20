@@ -1,8 +1,9 @@
-function [c,res,Nit]=nsgaiter(f,g,shift,M,varargin)
+function [c,Ls,res,Nit]=nsgaiter(f,g,shift,M,varargin)
 %NSGAITER  Iterative nonstationary Gabor analysis
-%   Usage:  [c,res,Nit]=nsgaiter(f,g,shift,M,varargin)
-%           [c,res,Nit]=nsgaiter(f,g,shift,M)
-%           [c,res]=nsgaiter(...)
+%   Usage:  [c,Ls,res,Nit]=nsgaiter(f,g,shift,M,varargin)
+%           [c,Ls,res,Nit]=nsgaiter(f,g,shift,M)
+%           [c,Ls,res]=nsgaiter(...)
+%           [c,Ls]=nsgaiter(...)
 %           c=nsgaiter(...)
 %   
 %   Input parameters:
@@ -13,6 +14,7 @@ function [c,res,Nit]=nsgaiter(f,g,shift,M,varargin)
 %         varargin  : Optional input pairs (see table below)
 %   Output parameters: 
 %         c         : Transform coefficients
+%         Ls        : Input signal length
 %         res       : Vector of relative residuals
 %         Nit       : Number of iterations
 %

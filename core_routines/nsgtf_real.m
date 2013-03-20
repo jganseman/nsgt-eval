@@ -1,6 +1,6 @@
 function [c,Ls] = nsgtf_real(f,g,shift,M)
 %NSGTF_REAL  Nonstationary Gabor filterbank for real signals
-%   Usage:  [c,Ls] = nsgtf_real(f,g,shift,M)
+%   Usage: [c,Ls] = nsgtf_real(f,g,shift,M)
 %
 %   Input parameters: 
 %         f         : A real-valued signal to be analyzed (For multichannel

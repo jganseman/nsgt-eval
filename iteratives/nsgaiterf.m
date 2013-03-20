@@ -1,8 +1,9 @@
-function [c,res,Nit]=nsgaiterf(f,g,shift,M,varargin)
+function [c,Ls,res,Nit]=nsgaiterf(f,g,shift,M,varargin)
 %NSGAITERF  Iterative nonstationary Gabor filterbank analysis
-%   Usage:  [c,res,Nit]=nsgaiterf(f,g,shift,M,varargin)
-%           [c,res,Nit]=nsgaiterf(f,g,shift,M)
-%           [c,res]=nsgaiterf(...)
+%   Usage:  [c,Ls,res,Nit]=nsgaiterf(f,g,shift,M,varargin)
+%           [c,Ls,res,Nit]=nsgaiterf(f,g,shift,M)
+%           [c,Ls,res]=nsgaiterf(...)
+%           [c,Ls]=nsgaiterf(...)
 %           c=nsgaiterf(...)
 %
 %   Input parameters:
@@ -13,6 +14,7 @@ function [c,res,Nit]=nsgaiterf(f,g,shift,M,varargin)
 %         varargin  : Optional input pairs (see table below)
 %   Output parameters: 
 %         c         : Filterbank coefficients
+%         Ls        : Input signal length
 %         res       : Vector of relative residuals
 %         Nit       : Number of iterations
 %

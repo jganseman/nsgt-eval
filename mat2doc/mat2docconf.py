@@ -20,7 +20,7 @@ def mycopyrightfun(self):
     buf=f.readlines()
     f.close
 
-    copyright=['Copyright (C) 2013 OEAW, by Nicki Holighaus.\n','This file is part of NSG toolbox version '+v]
+    copyright=['Copyright (C) 2013 Nicki Holighaus.\n','This file is part of NSG toolbox version '+v]
     copyright.extend(buf)
     
     return copyright
@@ -29,7 +29,7 @@ conf.copyright=mycopyrightfun
 
 conf.urlext='php'
 
-contentsfiles=['core_routines/Contents','wrappers/Contents','windows/Contents','wrappers/wvlt_helpers/Contents','wrappers/slicq_helpers/Contents','wrappers/onset_helpers/Contents','plotting/Contents','iteratives/Contents','generators/Contents']
+contentsfiles=['/Contents','core_routines/Contents','wrappers/Contents','windows/Contents','wrappers/wvlt_helpers/Contents','wrappers/slicq_helpers/Contents','wrappers/onset_helpers/Contents','plotting/Contents','iteratives/Contents','generators/Contents']
 
 #'demos/Contents'
 

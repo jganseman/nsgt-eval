@@ -1,4 +1,4 @@
-function S = nsgfrmmat(g,shift,M,Ls)
+function S = nsgfrmmat(g,shift,M,Ls,steps)
 %NSGFRMMAT  Sparse nonstationary Gabor frame operator matrix
 %   Usage:  S = nsgfrmmat(g,shift,M,Ls)
 %           S = nsgfrmmat(g,shift,M)
@@ -43,7 +43,7 @@ for ll = 1:N
     win_range = mod(timepos(ll)+(-floor(Lg(ll)/2):ceil(Lg(ll)/2)-1),Ls)+1;
     S0(win_range,1) = S0(win_range,1) + M(ll)*abs(g{ll}).^2;
     
-    for kk = 1:B(ll)
+    for kk = 1:min(B(ll),steps)
         temp0 = M(ll)*g{ll}(1+kk*M(ll):end).*conj(g{ll}(1:end-kk*M(ll)));
         win_begin = win_range(1:end-kk*M(ll));
         win_end = win_range(1+kk*M(ll):end);

@@ -1,6 +1,6 @@
 function [c,Ls] = nsgtf(f,g,shift,M)
 %NSGTF  Nonstationary Gabor filterbank
-%   Usage:  [c,Ls] = nsgtf(f,g,shift,M)
+%   Usage: [c,Ls] = nsgtf(f,g,shift,M)
 %
 %   Input parameters: 
 %         f         : The signal to be analyzed (For multichannel

@@ -31,7 +31,8 @@ function [c,g,shift,M,Ls,fb,tgtfl] = wvlttrans(f,fmin,sr,bins,bw,winfun)
 %   function performs the corresponding Wavelet transform
 %
 %   More information about the functions used can be found at:
-%   http://nuhag.eu/nonstatgab/
+%   http://univie.ac.at/nonstatgab/
+%
 
 % Author: Nicki Holighaus, Christoph Wiesmeyr
 % Date: 04.03.13

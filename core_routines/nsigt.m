@@ -1,6 +1,6 @@
 function fr = nsigt(c,gd,shift,Ls)
 % NSIGT  Nonstationary Gabor synthesis
-%   Usage:  fr = nsigt(c,gd,shift,Ls)
+%   Usage: fr = nsigt(c,gd,shift,Ls)
 %
 %   Input parameters: 
 %         c         : Cell array of non-stationary Gabor coefficients

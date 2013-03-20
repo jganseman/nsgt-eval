@@ -1,6 +1,6 @@
 function fr = nsigt_real(c,gd,shift,M,Ls)
 % NSIGT_REAL  Nonstationary Gabor synthesis for real signals
-%   Usage:  fr = nsigt_real(c,gd,shift,M,Ls)
+%   Usage: fr = nsigt_real(c,gd,shift,M,Ls)
 %
 %   Input parameters: 
 %         c         : Cell array of non-stationary Gabor coefficients

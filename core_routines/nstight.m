@@ -1,6 +1,6 @@
 function gt = nstight(g,shift,M)
 %NSTIGHT  Canonical tight NSG frame (for painless systems)
-%   Usage:  gt = nstight(g,shift,M)
+%   Usage: gt = nstight(g,shift,M)
 %
 %   Input parameters:
 %         g         : Cell array of window functions

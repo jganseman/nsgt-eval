@@ -1,6 +1,6 @@
 function fr = nsigtf(c,gd,shift,Ls)
 %NSIGTF  Nonstationary Gabor filterbank synthesis
-%   Usage:  fr = nsigtf(c,gd,shift,Ls)
+%   Usage: fr = nsigtf(c,gd,shift,Ls)
 %
 %   Input parameters: 
 %         c         : Cell array of non-stationary Gabor coefficients

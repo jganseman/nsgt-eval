@@ -21,7 +21,7 @@ function fr = invwvlttrans(c,g,shift,M,Ls,fb,tgtfl)
 %   transform.
 %
 %   More information about the functions used can be found at:
-%   http://nuhag.eu/nonstatgab/
+%   http://univie.ac.at/nonstatgab/
 
 % Author: Nicki Holighaus
 % Date: 04.03.13

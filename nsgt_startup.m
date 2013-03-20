@@ -1,10 +1,11 @@
-% NSGT_STARTUP.M - Nicki Holighaus 01.03.12
+function nsgt_startup()
+%NSGT_STARTUP  Set paths for using NSGToolbox
+%   Usage: nsgt_startup()
 %
-% This script file adds the NSGT Toolbox to the MATLAB path.
+% This script file adds NSGToolbox folders to the MATLAB path.
 
-% This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. 
-% To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to 
-% Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+% Author: Nicki Holighaus
+% Date: 20.03.13
 
 basepath = which('nsgt_startup');
 basepath=basepath(1:end-15);

@@ -1,6 +1,6 @@
 function gd = nsdual(g,shift,M)
 %NSDUAL  Canonical dual NSG frame (for painless systems)
-%   Usage:  gd = nsdual(g,shift,M)
+%   Usage: gd = nsdual(g,shift,M)
 %
 %   Input parameters:
 %         g         : Cell array of window functions

@@ -1,6 +1,6 @@
 function fr = nsigtf_real(c,gd,shift,Ls)
 % NSIGTF_REAL  Nonstationary Gabor filterbank synthesis for real signals
-%   Usage:  fr = nsigtf_real(c,gd,shift,M,Ls)
+%   Usage: fr = nsigtf_real(c,gd,shift,M,Ls)
 %
 %   Input parameters: 
 %         c         : Cell array of non-stationary Gabor coefficients

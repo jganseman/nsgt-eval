@@ -1,6 +1,6 @@
 function [c,Ls] = nsgt_real(f,g,shift,M)
 %NSGT_REAL  Nonstationary Gabor transform for real signals
-%   Usage:  [c,Ls] = nsgt_real(f,g,shift,M)
+%   Usage: [c,Ls] = nsgt_real(f,g,shift,M)
 % 
 %   Input parameters:
 %         f         : A real-valued signal to be analyzed (For multichannel

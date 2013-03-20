@@ -1,6 +1,6 @@
 function [c,Ls] = nsgt(f,g,shift,M)
 %NSGT  Nonstationary Gabor transform
-%   Usage:  [c,Ls] = nsgt(f,g,shift,M);
+%   Usage: [c,Ls] = nsgt(f,g,shift,M);
 %
 %   Input parameters:
 %         f         : The signal to be analyzed (For multichannel

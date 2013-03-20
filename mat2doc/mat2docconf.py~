@@ -20,7 +20,7 @@ def mycopyrightfun(self):
     buf=f.readlines()
     f.close
 
-    copyright=['Copyright (C) 2013 OEAW, by Nicki Holighaus.\n','This file is part of NSG toolbox version '+v]
+    copyright=['Copyright (C) 2013 Nicki Holighaus.\n','This file is part of NSG toolbox version '+v]
     copyright.extend(buf)
     
     return copyright
@@ -41,7 +41,7 @@ php=PhpConf()
 
 php.indexfiles=contentsfiles
 php.includedir='include/'
-php.urlbase='/'
+php.urlbase='/doc/'
 php.codedir=localconf.nsg['mat']
 
 # ------------------------------------------

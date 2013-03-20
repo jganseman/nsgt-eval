@@ -1,6 +1,8 @@
 function [fr,res,Nit]=nsgsiter(c,g,shift,M,varargin)
 %NSGSITER  Iterative nonstationary Gabor synthesis
-%   Usage:  [fr,res,Nit]=nsgsiter(c,g,shift,M,varargin)
+%   Usage:  [fr,res,Nit]=nsgsiter(c,g,shift,M,Ls,varargin)
+%           [fr,res,Nit]=nsgsiter(c,g,shift,M,varargin)
+%           [fr,res,Nit]=nsgsiter(c,g,shift,M,Ls)
 %           [fr,res,Nit]=nsgsiter(c,g,shift,M)
 %           [fr,res]=nsgsiter(...)
 %           fr=nsgsiter(...)
@@ -10,6 +12,7 @@ function [fr,res,Nit]=nsgsiter(c,g,shift,M,varargin)
 %         g         : Cell array of window functions
 %         shift     : Vector of shifts between the window positions
 %         M         : Vector of lengths of the window functions
+%         Ls        : Original signal length
 %         varargin  : Optional input pairs (see table below)
 %   Output parameters: 
 %         fr        : Synthesized output signal
@@ -75,14 +78,14 @@ if prec == 0
     [fr,tmp1,tmp2,Nit,res] = pcg(frmop,fr,tol,Mit);
 else 
     % Construct the diagonal of the frame operator matrix explicitly
-    diagonal=zeros(Ls,1);
+    diagonal=zeros(L,1);
     for ii = 1:N
         Lg = length(g{ii});
 
-        win_range = mod(posit(ii)+(-floor(Lg/2):ceil(Lg/2)-1),Ls)+1;
+        win_range = mod(posit(ii)+(-floor(Lg/2):ceil(Lg/2)-1),L)+1;
         diagonal(win_range) = diagonal(win_range) + (fftshift(g{ii}).^2)*M(ii);   
     end
-    D = spdiags(diagonal,0,Ls,Ls);
+    D = spdiags(diagonal,0,L,L);
     [fr,tmp1,tmp2,Nit,res] = pcg(frmop,fr,tol,Mit,D);    
 end
 
