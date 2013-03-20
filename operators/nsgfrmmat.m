@@ -19,9 +19,9 @@ function S = nsgfrmmat(g,shift,M,Ls,steps)
 % Date: 04.03.13
 
 if nargin < 2
-   error('Too few input arguments');
+    error('Too few input arguments');
 end
-    
+
 N = length(g);
 timepos = cumsum(shift)-shift(1);
 
@@ -32,9 +32,9 @@ if nargin < 4
     Ls = timepos(end)+shift(1);
     if nargin < 3
         M = Lg;
-    end    
+    end
 end
-    
+
 B = floor((Lg-1)./M);
 S0 = sparse(Ls,Ls);
 
@@ -53,6 +53,6 @@ for ll = 1:N
     end
 end
 
-[i,j] = find(S0); 
+[i,j] = find(S0);
 ind0 = sub2ind([Ls,Ls],i,j);
 S = sparse(i,mod(i+j-2,Ls)+1,S0(ind0),Ls,Ls);

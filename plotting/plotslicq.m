@@ -32,7 +32,7 @@ function plotslicq(c,shift,varargin)
 
 if nargin < 2
     error('Not enough input arguments');
-end  
+end
 
 % Rearrange the coefficients, summing up the slices with half overlap
 % Recall that the first quarter of the first slice, as well as the last
@@ -47,9 +47,11 @@ if iscell(c)==0 % Matrix coefficients
     
     full_cell([end-M/4+1:end,1:3*M/4],:) = c(:,:,1);
     for jj = 1:slices-2
-        full_cell(jj*M/2+[-M/4+1:3*M/4],:) = full_cell(jj*M/2+[-M/4+1:3*M/4],:) + c(:,:,jj+1);
+        full_cell(jj*M/2+[-M/4+1:3*M/4],:) = ...
+            full_cell(jj*M/2+[-M/4+1:3*M/4],:) + c(:,:,jj+1);
     end
-    full_cell([end-3*M/4+1:end,1:M/4],:) = full_cell([end-3*M/4+1:end,1:M/4],:) + c(:,:,slices);
+    full_cell([end-3*M/4+1:end,1:M/4],:) = ...
+        full_cell([end-3*M/4+1:end,1:M/4],:) + c(:,:,slices);
     
 else % Cell array coefficients
     
@@ -62,9 +64,11 @@ else % Cell array coefficients
         temp = zeros(slices*M(kk)/2,1);
         temp([end-M(kk)/4+1:end,1:3*M(kk)/4]) = c{kk}(:,1);
         for jj = 1:slices-2
-            temp(jj*M(kk)/2+(-M(kk)/4+1:3*M(kk)/4)) = temp(jj*M(kk)/2+(-M(kk)/4+1:3*M(kk)/4)) + c{kk}(:,jj+1);
+            temp(jj*M(kk)/2+(-M(kk)/4+1:3*M(kk)/4)) = ...
+                temp(jj*M(kk)/2+(-M(kk)/4+1:3*M(kk)/4)) + c{kk}(:,jj+1);
         end
-        temp([end-3*M(kk)/4+1:end,1:M(kk)/4]) = temp([end-3*M(kk)/4+1:end,1:M(kk)/4]) + c{kk}(:,slices);
+        temp([end-3*M(kk)/4+1:end,1:M(kk)/4]) = ...
+            temp([end-3*M(kk)/4+1:end,1:M(kk)/4]) + c{kk}(:,slices);
         full_cell{kk} = temp;
     end
 end

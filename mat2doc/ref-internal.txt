@@ -52,6 +52,8 @@
 .. _nsgcqwin: /doc/generators/nsgcqwin.php
 .. |nsgtf_real| replace:: `nsgtf_real`
 .. _nsgtf_real: /doc/core_routines/nsgtf_real.php
+.. |nsganamat| replace:: `nsganamat`
+.. _nsganamat: /doc/operators/nsganamat.php
 .. |nsgt_real| replace:: `nsgt_real`
 .. _nsgt_real: /doc/core_routines/nsgt_real.php
 .. |nsigt_real| replace:: `nsigt_real`
@@ -62,6 +64,8 @@
 .. _nsgerbwin: /doc/generators/nsgerbwin.php
 .. |peakpick| replace:: `peakpick`
 .. _peakpick: /doc/wrappers/onset_helpers/peakpick.php
+.. |nsgfrmmat| replace:: `nsgfrmmat`
+.. _nsgfrmmat: /doc/operators/nsgfrmmat.php
 .. |nsgsclwin| replace:: `nsgsclwin`
 .. _nsgsclwin: /doc/generators/nsgsclwin.php
 .. |nsigtf_real| replace:: `nsigtf_real`

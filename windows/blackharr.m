@@ -33,11 +33,11 @@ if nargin < 1
 end
 
 if numel(x) == 1
-    N = x; 
+    N = x;
     if nargin < 3
         mod = 1;
         if nargin < 2
-           L = N;
+            L = N;
         end
     end
     if L<N
@@ -54,8 +54,10 @@ end
 
 x = x+1/2;
 if mod == 0
-    g = 0.35875 - 0.48829*cos(2*pi*x) + 0.14128*cos(4*pi*x) - 0.01168*cos(6*pi*x);
+    g = 0.35875 - 0.48829*cos(2*pi*x) + 0.14128*cos(4*pi*x) - ...
+        0.01168*cos(6*pi*x);
 else
-    g = 0.35872 - 0.48832*cos(2*pi*x) + 0.14128*cos(4*pi*x) - 0.01168*cos(6*pi*x);
+    g = 0.35872 - 0.48832*cos(2*pi*x) + 0.14128*cos(4*pi*x) - ...
+        0.01168*cos(6*pi*x);
 end
 g = g .* (x > 0) .* (x < 1);

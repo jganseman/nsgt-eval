@@ -27,7 +27,7 @@ function fr = invwvlttrans(c,g,shift,M,Ls,fb,tgtfl)
 % Date: 04.03.13
 
 if nargin<6
-  tgtfl = 0;
+    tgtfl = 0;
 end
 
 if nargin==6 && tgtfl==1
@@ -41,9 +41,9 @@ end
 
 % Compute the dual frame
 if tgtfl
-  gd =g;
+    gd =g;
 else
-  gd = nsdual(g,shift,M);
+    gd = nsdual(g,shift,M);
 end
 
 % Inverse Wavelet transform

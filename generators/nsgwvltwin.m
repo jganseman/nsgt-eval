@@ -6,25 +6,25 @@ function [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun)
 %
 %   Input parameters: 
 %         fmin      : Desired minimum center frequency (in Hz)
-%         bw        : Desired bandwidth in the first frequency band 
+%         bw        : Desired bandwidth in the first frequency band
 %                     (in Hz)
 %         bins      : Desired number of bins per octave
 %         sr        : Sampling rate of f (in Hz)
 %         Ls        : signal length
-%         winfun    : window function to be used, the following are 
+%         winfun    : window function to be used, the following are
 %                     available:
-%                     @hannwin    - Hann window (default)
-%                     @gausscw    - Gaussian window
-%                     @wp2inp     - Uncertainty minimizer 
-%   Output parameters: 
-%         g         : Cell array of Fourier transforms of the analysis 
+%                     @hannwin    - Hann window (default),
+%                     @gausscw    - Gaussian window,
+%                     @wp2inp     - Uncertainty minimizer,
+%   Output parameters:
+%         g         : Cell array of Fourier transforms of the analysis
 %                     Wavelets
 %         shift     : Vector of frequency shifts
 %         M         : Number of time channels
 %         fb        : frame bounds of the system
 %
 %   Given the function the necessary parameters described below, this
-%   wrapper function computes a painless Wavlet system. If you do not know 
+%   wrapper function computes a painless Wavlet system. If you do not know
 %   how to use this function, please use 'WVLTtrans.m' instead.
 %
 %   More information about the functions used can be found at:
@@ -76,20 +76,24 @@ bl = bl*pow2;
 br = br*pow2;
 bw = bw*pow2;
 
-% The translation factors are taken to be the bandwidth (in samples) 
+% The translation factors are taken to be the bandwidth (in samples)
 % rounded up
 
-M(2:scales+1) = ceil(bw);                            
+M(2:scales+1) = ceil(bw);
 M(end:-1:scales+3) = M(2:scales+1);
 
 % Cunstruct the Wavelets as log-warped functions of type 'winfun'
 
-points = arrayfun(@(x,y) ceil(x)*delta:delta:y*delta,bl,br,'UniformOutput',0);
-points = arrayfun(@(x) k*(log(points{x})/log(a)-x+1),1:scales,'UniformOutput',0);
+points = arrayfun(@(x,y) ceil(x)*delta:delta:y*delta,bl,br,...
+    'UniformOutput',0);
+points = arrayfun(@(x) k*(log(points{x})/log(a)-x+1),1:scales,...
+    'UniformOutput',0);
 
-g(2:scales+1) = cellfun(winfun,points,'UniformOutput',0);                                                        
-g(2:scales+1) = arrayfun(@(x) g{x}/sqrt(M(x)),2:scales+1,'UniformOutput',0);
-g(end:-1:scales+3) = cellfun(@(x) flipud(x),g(2:scales+1),'UniformOutput',0);
+g(2:scales+1) = cellfun(winfun,points,'UniformOutput',0);
+g(2:scales+1) = arrayfun(@(x) g{x}/sqrt(M(x)),2:scales+1,...
+    'UniformOutput',0);
+g(end:-1:scales+3) = cellfun(@(x) flipud(x),g(2:scales+1),...
+    'UniformOutput',0);
 g = cellfun(@(x) ifftshift(x),g,'UniformOutput',0);
 
 Lg = cellfun(@length,points)';
@@ -112,12 +116,14 @@ shift = [Ls-mod(timepos(end)-1,Ls);diff(timepos)];
 
 diagonal=zeros(Ls,1);
 for ii = 2:scales+1
-  win_range = mod(timepos(ii)+(-floor(length(g{ii})/2):ceil(length(g{ii})/2)-1)-1,Ls)+1;
+  win_range = mod(timepos(ii)+...
+      (-floor(length(g{ii})/2):ceil(length(g{ii})/2)-1)-1,Ls)+1;
   diagonal(win_range) = diagonal(win_range) + M(ii)*fftshift(g{ii}).^2 ;   
 end
 for ii = scales+3:2*scales+2
-  win_range = mod(timepos(ii)+(-floor(length(g{ii})/2):ceil(length(g{ii})/2)-1)-1,Ls)+1;
-  diagonal(win_range) = diagonal(win_range) + M(ii)*fftshift(g{ii}).^2 ;   
+  win_range = mod(timepos(ii)+...
+      (-floor(length(g{ii})/2):ceil(length(g{ii})/2)-1)-1,Ls)+1;
+  diagonal(win_range) = diagonal(win_range) + M(ii)*fftshift(g{ii}).^2 ;
 end
 
 % Compute the padding functions ('scaling functions'), this functions will
@@ -132,10 +138,11 @@ end
  UppLim = ceil(Ls/2-BR*2^((scales-4)/bins));
  
  M(1) = 2*LowLim;
- g{1} = sqrt((maxX-diagonal([1:LowLim,end-LowLim+1:end]))/M(1)); 
+ g{1} = sqrt((maxX-diagonal([1:LowLim,end-LowLim+1:end]))/M(1));
  
  M(scales+2) = 2*UppLim;
- g{scales+2} = sqrt((maxX-diagonal(floor(Ls/2)+[1:UppLim,-UppLim+1:0]))/M(scales+2));
+ g{scales+2} = sqrt((maxX-diagonal(floor(Ls/2)+[1:UppLim,-UppLim+1:0]))...
+     /M(scales+2));
  
  %% Compute the frame bounds if output parameter 'fb' is desired
  if nargout == 4
@@ -145,7 +152,7 @@ end
     
     for ii = [1,scales+2]
       range = mod(timepos(ii)+(-floor(Lg(ii)/2):ceil(Lg(ii)/2)-1)-1,Ls)+1;
-      diagonal(range) = diagonal(range) + (fftshift(g{ii}).^2)*M(ii);   
+      diagonal(range) = diagonal(range) + (fftshift(g{ii}).^2)*M(ii);
     end
     
     % Since the system is painless, the minimum and maximum of the diagonal

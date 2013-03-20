@@ -29,16 +29,16 @@ color = ['b', 'r'];
 % This loop just plots each window at its corresponding time position.
 
 for ii = 1:N
-     Lg = length(g{ii});
-
+    Lg = length(g{ii});
+    
     win_range = timepos(ii)+(-floor(Lg/2):ceil(Lg/2)-1);
     if normalize == 1 % If normalize is set to 1, normalize
-                      % the windows to have the same maximum
+        % the windows to have the same maximum
         plot(win_range, fftshift(g{ii}).*sqrt(length(g{ii})), ...
-           color(rem(ii,2)+1));
+            color(rem(ii,2)+1));
     else
         plot(win_range, fftshift(g{ii}), ...
-           color(rem(ii,2)+1));
+            color(rem(ii,2)+1));
     end
     hold on;
 end

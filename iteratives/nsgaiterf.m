@@ -18,12 +18,20 @@ function [c,Ls,res,Nit]=nsgaiterf(f,g,shift,M,varargin)
 %         res       : Vector of relative residuals
 %         Nit       : Number of iterations
 %
-%   Optional input parameters:
-%         ['tol',tol]               : Error tolerance
-%         ['Mit',Mit]               : Maximum number of iterations
-%         ['prec',prec]             : Preconditioning switch
-%
 %   Help text goes here.
+%
+%   Optional input arguments arguments can be supplied like this::
+%
+%       nsgaiterf(f,g,shift,M,'tol',tol)
+%
+%   The arguments must be character strings followed by an
+%   argument:
+%
+%     'tol',tol      Error tolerance
+%
+%     'Mit',Mit      Maximum number of iterations
+%
+%     'prec',prec    Preconditioning switch
 %
 
 % Author: Nicki Holighaus
@@ -74,7 +82,8 @@ else
         Lg = length(g{ii});
 
         win_range = mod(timepos(ii)+(-floor(Lg/2):ceil(Lg/2)-1),Ls)+1;
-        diagonal(win_range) = diagonal(win_range) + (fftshift(g{ii}).^2)*M(ii);   
+        diagonal(win_range) = diagonal(win_range) + ...
+            (fftshift(g{ii}).^2)*M(ii);   
     end
     D = spdiags(diagonal,0,Ls,Ls);
     [f,tmp1,tmp2,Nit,res] = pcg(frmop,f,tol,Mit,D);    

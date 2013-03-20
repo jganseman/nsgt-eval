@@ -24,7 +24,7 @@ if nargin < 5
     end
     Ls = sum(shift);
 end
-    
+
 gd = nsdual(g,shift,M);
 
 fr = nsigt_real(c,gd,shift,M,Ls);

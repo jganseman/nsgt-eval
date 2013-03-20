@@ -25,7 +25,7 @@ fmin = 0;
 fmax = sr/2;
 
 % Convert fmin and fmax into ERB
-erblims = 9.2645*sign([fmin,fmax]).*log(1+abs([fmin,fmax])*0.00437); 
+erblims = 9.2645*sign([fmin,fmax]).*log(1+abs([fmin,fmax])*0.00437);
 
 % Determine number of freq. channels
 Nf = bins*ceil(erblims(2)-erblims(1));
@@ -37,20 +37,20 @@ fc(1)=fmin;
 fc(end)=fmax;
 
 % Concatenate "virtual" frequency positions of negative-frequency windows
-fc = [fc ; flipud(fc(1:end-1))];    
+fc = [fc ; flipud(fc(1:end-1))];
 
 gamma = 24.7*(4.37*fc*1E-3 +1); % ERB scale
 
-% Convert center frequencies in Hz into samples 
+% Convert center frequencies in Hz into samples
 
 posit = round(fc/df);% Positions of center frequencies in samples
 posit(Nf+1:end) = Ls-posit(Nf+1:end);% Extension to negative freq.
-shift = [Ls-posit(end); diff(posit)];% Hop sizes in samples 
+shift = [Ls-posit(end); diff(posit)];% Hop sizes in samples
 
 % Compute desired essential (Gaussian) support for each filter
 Lwin = 4*round(gamma/df);
 
-% Blackman-Harris windows are slightly broader than Gaussians, this is 
+% Blackman-Harris windows are slightly broader than Gaussians, this is
 % offset by the factor 1.1
 
 M = round(Lwin/1.1);

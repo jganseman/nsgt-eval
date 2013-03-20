@@ -70,10 +70,10 @@ end
 
 % Compute Wavelet system
 if nargout <= 5
-   [g,shift,M] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun);  
+    [g,shift,M] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun);
 else
-   [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun);
-   tgtfl = (abs(fb(1)-fb(2))<10^(-12));
+    [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun);
+    tgtfl = (abs(fb(1)-fb(2))<10^(-12));
 end
 
 % Compute Wavelet coefficients

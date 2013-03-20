@@ -27,7 +27,7 @@ function [c,g,shift,M,Ls] = onsetnsgt(f,thre,short,max_win,win_length)
 
 if nargin < 5
     win_length = 2048;
-    if nargin < 4 
+    if nargin < 4
         max_win = 10;
         if nargin < 3
             short = 192;
@@ -37,7 +37,7 @@ if nargin < 5
         end
     end
 end
-        
+
 if min(size(f)) > 1
     error('%s: Multichannel signals are not supported',upper(mfilename));
 end

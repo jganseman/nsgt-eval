@@ -41,31 +41,32 @@ end
 ss_3 = short/3;
 
 positions = [positions;Ls]; % The last window should be 'shortest', so
-                      % the length of the signal is added to the
-                      % onset vector.
+% the length of the signal is added to the
+% onset vector.
 
 % 'blocks' specifies the step size between positions.
 
 blocks = positions(2:end)-positions(1:end-1) - 2*ss_3;
 
 if numel(find(blocks < 2*ss_3)) > 0
-    error('Positions vector and shortest admissible window size incompatible');
+    error('Positions vector and shortest admissible window size ',...
+        'incompatible');
 end
 
-NN = length(blocks);                      
-                      
+NN = length(blocks);
+
 % 'dists(n)' holds the minimal length of 'short->long->short'
 % building blocks with 'n' different windows
 
 dists = (7*2.^(0:max_win-1) - 5)*ss_3;
 
-% 'm0(n)' will be the number of different windows used in the 
+% 'm0(n)' will be the number of different windows used in the
 % n-th 'short->long->short' building block
 
-%m0 =  max_win*ones(NN,1); 
+%m0 =  max_win*ones(NN,1);
 
 % 'A(n,m)' will be the number of fill-in windows of scale
-% 'm' needed to stretch the n-th building block to the 
+% 'm' needed to stretch the n-th building block to the
 % desired size
 
 A = zeros(NN,max_win);
@@ -87,7 +88,7 @@ blocks(1:end) = blocks(1:end)-fillin(1:end)+[0;fillin(1:end-1)];
 blocks(1) = blocks(1)+2*ss_3;
 
 temp = cell2mat(arrayfun(@(x) de2bi(x/ss_3,max_win+1),...
-                                            blocks,'UniformOutput',0));
+    blocks,'UniformOutput',0));
 
 A = A + temp(:,2:end);
 
@@ -112,23 +113,23 @@ for k = 1:NN
         n = nk;
     end
     l = m0(k);
-    Q = 2^(l-1);    
+    Q = 2^(l-1);
     if l > 1
-      win_size(n) = short*Q;
-      shift(n) = 5/4*ss_3*Q;      
-      n = n+1;  
+        win_size(n) = short*Q;
+        shift(n) = 5/4*ss_3*Q;
+        n = n+1;
     end
     nk = n+A(k,l)+1;
     win_size(n:nk-1) = short*Q;
     shift(n:nk-1) = 2*ss_3*Q;
-    n = nk; 
+    n = nk;
     nk = n+m0(k)-1;
     Q = 2.^(m0(k)-2:-1:0)';
     win_size(n:nk-1) = short*Q;
     shift(n:nk-1) = 5/2*ss_3*Q;
     n = nk;
 end
- 
+
 % Calculate the windows corresponding to the time
 % steps (can be improved in various ways)
 

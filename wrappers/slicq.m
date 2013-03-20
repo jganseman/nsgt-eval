@@ -18,7 +18,7 @@ function [c,g,shift,M,Ls,sl_len,tr_area] = slicq(f,fmin,fmax,bins,sl_len,tr_area
 %         fmax      : Desired maximum frequency (in Hz)
 %         bins      : Bins per octave (constant or vector (for VQ))
 %         sl_len    : Desired slice length (in samples)
-%         tr_area   : Transition area length (in samples, $\leq sl_len/2$)
+%         tr_area   : Transition area length (in samples, $\leq sl\_len/2$)
 %         sr        : Sampling rate (in Hz)
 %         M         : Desired number of time channels per slice, if set to 
 %                     $0$, a channel vactor will be computed (*M* must be a 
@@ -58,77 +58,78 @@ function [c,g,shift,M,Ls,sl_len,tr_area] = slicq(f,fmin,fmax,bins,sl_len,tr_area
 % Author: Nicki Holighaus
 % Date: 04.03.13
 
-    if size(f,1) == 1
-        f = f.';
-    end
+if size(f,1) == 1
+    f = f.';
+end
 
-    Ls = length(f);
-    
-    if nargin < 10 
-        Qvar = 1;
-        if nargin < 9
-            min_win = 16;
-            if nargin < 8
-                M = 0;
-                if nargin < 7
-                    sr = 1;
-                    if nargin < 6
-                        if nargin < 5
-                            sl_len = 16384;
-                            if nargin < 4
-                                bins = 12;
-                                if nargin < 3
-                                    fmax = .5;
-                                    if nargin < 2
-                                        error('Too few input arguments');
-                                    end
+Ls = length(f);
+
+if nargin < 10
+    Qvar = 1;
+    if nargin < 9
+        min_win = 16;
+        if nargin < 8
+            M = 0;
+            if nargin < 7
+                sr = 1;
+                if nargin < 6
+                    if nargin < 5
+                        sl_len = 16384;
+                        if nargin < 4
+                            bins = 12;
+                            if nargin < 3
+                                fmax = .5;
+                                if nargin < 2
+                                    error('Too few input arguments');
                                 end
                             end
                         end
-                        tr_area = round(sl_len/16);
                     end
+                    tr_area = round(sl_len/16);
                 end
             end
         end
     end
-    
-    if numel(M) > 1
-        warning('Number of channels must be a constant or 0, channel vector will be recomputed');
-        M(1) = 0;
-    end
-    
-    if M(1) == 0 
-        % This is just a slightly modified version of nsgfwin
-        [g,shift,M] = nsgcqwin(fmin,fmax,bins,sr,sl_len,'min_win',min_win,...
-            'Qvar',Qvar,'wL_fac',4,'fractional',1,'winfun',@blackharr);
-    else
-        % This is just a slightly modified version of nsgfwin
-        [g,shift] = nsgcqwin(fmin,fmax,bins,sr,sl_len,'min_win',min_win,...
-            'Qvar',Qvar,'wL_fac',4,'fractional',1,'winfun',@blackharr);
-        M = 4*ceil(M/4);
-    end
-    N = length(shift); % The number of filters
-    
-    %% Compute the slices
-    f_sliced = slicing(f,sl_len,tr_area,Ls);
-    
-    %% Compute the CQ of each slice
-    c = nsgtf(f_sliced,g,shift,M);
+end
 
-    %% Rearrange the coefficients such that they the slices are centered
-     
-    if iscell(c) == 0 % Matrix coefficients
-        A = [3*M(1)/4+1:M(1),1:3*M(1)/4];
-        B = [M(1)/4+1:M(1),1:M(1)/4];
+if numel(M) > 1
+    warning('Number of channels must be a constant or 0, channel ',...
+        'vector will be recomputed');
+    M(1) = 0;
+end
+
+if M(1) == 0
+    % This is just a slightly modified version of nsgfwin
+    [g,shift,M] = nsgcqwin(fmin,fmax,bins,sr,sl_len,'min_win',min_win,...
+        'Qvar',Qvar,'wL_fac',4,'fractional',1,'winfun',@blackharr);
+else
+    % This is just a slightly modified version of nsgfwin
+    [g,shift] = nsgcqwin(fmin,fmax,bins,sr,sl_len,'min_win',min_win,...
+        'Qvar',Qvar,'wL_fac',4,'fractional',1,'winfun',@blackharr);
+    M = 4*ceil(M/4);
+end
+N = length(shift); % The number of filters
+
+%% Compute the slices
+f_sliced = slicing(f,sl_len,tr_area,Ls);
+
+%% Compute the CQ of each slice
+c = nsgtf(f_sliced,g,shift,M);
+
+%% Rearrange the coefficients such that they the slices are centered
+
+if iscell(c) == 0 % Matrix coefficients
+    A = [3*M(1)/4+1:M(1),1:3*M(1)/4];
+    B = [M(1)/4+1:M(1),1:M(1)/4];
+    
+    c(:,:,1:2:end) = c(A,:,1:2:end);
+    c(:,:,2:2:end) = c(B,:,2:2:end);
+else % Cell array coefficients
+    for jj = 1:length(g) % Can this be faster somehow?
+        A = [3*M(jj)/4+1:M(jj),1:3*M(jj)/4];
+        B = [M(jj)/4+1:M(jj),1:M(jj)/4];
         
-        c(:,:,1:2:end) = c(A,:,1:2:end);
-        c(:,:,2:2:end) = c(B,:,2:2:end);
-    else % Cell array coefficients
-         for jj = 1:length(g) % Can this be faster somehow?            
-            A = [3*M(jj)/4+1:M(jj),1:3*M(jj)/4];
-            B = [M(jj)/4+1:M(jj),1:M(jj)/4];
-  
-            c{jj}(:,1:2:end) = c{jj}(A,1:2:end);
-            c{jj}(:,2:2:end) = c{jj}(B,2:2:end);
-        end
-     end
+        c{jj}(:,1:2:end) = c{jj}(A,1:2:end);
+        c{jj}(:,2:2:end) = c{jj}(B,2:2:end);
+    end
+end

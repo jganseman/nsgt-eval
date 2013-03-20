@@ -30,9 +30,9 @@
 fmin = 130; % Minimum desired frequency (in Hz)
 
 fmax = 22050; % Maximum desired frequency (in Hz)
-              % fmax is taken to be the Nyquist frequency if not indicated
-              
-%fmax = floor(fmin*2^(floor(log2(22050/fmin))));               
+% fmax is taken to be the Nyquist frequency if not indicated
+
+%fmax = floor(fmin*2^(floor(log2(22050/fmin))));
 
 bins = 12; % Number of bins per octave
 

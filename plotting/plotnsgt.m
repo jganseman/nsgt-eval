@@ -69,7 +69,7 @@ if nargin < 3
 end
 
 dynrange = 60;  % Default value for colorscale dynamic.
-cutout = 2;     % Default value for frequency cutout.    
+cutout = 2;     % Default value for frequency cutout.
 realsig = 0;
 
 if nargin >= 4
@@ -97,7 +97,7 @@ end
 maxfreq = sr/cutout;
 
 if realsig
-    cutout = cutout/2;    
+    cutout = cutout/2;
 end
 
 clf %Clear previous figures
@@ -112,21 +112,22 @@ tlim=tlim/sr;
 % Compute maximum of the representation for colorscale dynamic handling.
 if iscell(c) == 1
     if size(c{1},2) > 1
-        error(['Multichannel spectrograms are not supported. Please use',...
-            ' ''cellfun(@(x) x(:,k),c,''UniformOutput'',0)'' to select the k-th channel.']);
+        error(['Multichannel spectrograms are not supported. Please ',...
+            'use ''cellfun(@(x) x(:,k),c,''UniformOutput'',0)'' to ',...
+            'select the k-th channel.']);
     end
     temp=cell2mat(c);
 else
     if size(c,3) > 1
-        error(['Multichannel spectrograms are not supported. Please use',...
-            ' ''c(:,:,k)'' to select the k-th channel.']);
+        error(['Multichannel spectrograms are not supported. Please ',...
+            'use ''c(:,:,k)'' to select the k-th channel.']);
     end
     temp=c;
 end
 ma=20*log10(max(abs(temp(:))));
 
 % Plot the representation: as the sampling grid in the time frequency plane
-% is irregular, the representation by done by plotting many images next to 
+% is irregular, the representation by done by plotting many images next to
 % each other, with one image for each window
 hold('on');
 if iscell(c) == 1
@@ -136,8 +137,8 @@ if iscell(c) == 1
         temp = temp(ind);% +eps is here to avoid log of 0
         % Octave cannot plot images that are only one point wide, so we use
         % images that are to points wide
-        imagesc(adapt(tlim(ii:ii+1)),[0,1-1/length(c{ii})]*maxfreq,[temp,temp],...
-        [ma-dynrange,ma]);
+        imagesc(adapt(tlim(ii:ii+1)),[0,1-1/length(c{ii})]*maxfreq,...
+            [temp,temp],[ma-dynrange,ma]);
     end
 else
     for ii=1:length(shift)
@@ -146,8 +147,8 @@ else
         temp = temp(ind);% +eps is here to avoid log of 0
         % Octave cannot plot images that are only one point wide, so we use
         % images that are to points wide
-        imagesc(adapt(tlim(ii:ii+1)),[0,1-1/size(c,2)]*maxfreq,[temp,temp],...
-        [ma-dynrange,ma]);
+        imagesc(adapt(tlim(ii:ii+1)),[0,1-1/size(c,2)]*maxfreq,...
+            [temp,temp],[ma-dynrange,ma]);
     end
 end
 hold('off');
@@ -155,7 +156,7 @@ axis('tight');
 
 end
 
-function [res]=adapt(lim) 
+function [res]=adapt(lim)
 % we have to adapt the time values to fit the way the image function handle
 % the x position
 res=[(3*lim(1)+lim(2))/4,(lim(1)+3*lim(2))/4];

@@ -39,9 +39,9 @@ win_length = 4096; % Window length for the onset analysis
 
 thr = 0.7; % Onset detection threshold
 
-area = 8; % Determines the size of the area over which local maxima are taken
+area = 8; % Determines the size of area over which local maxima are taken
 
-multi = 3; % Area multiplier for the peak picking algorithm 
+multi = 3; % Area multiplier for the peak picking algorithm
 
 %% Test signals
 
@@ -53,7 +53,7 @@ Ls = length(s); % Length of signal (in samples)
 
 %% Window design
 %  Define a set of windows for the nonstationary Gabor transform with
-%  resolution evolving over time. In particular, short windows of 192 
+%  resolution evolving over time. In particular, short windows of 192
 %  samples length should be chosen at onset positions
 pos = onsetdet(s,win_length,thr,area,multi,1.5,1);
 
