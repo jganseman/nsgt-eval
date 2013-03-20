@@ -32,37 +32,6 @@ function plotnsgtf(c,shift,sr,fmin,fmax,bins,cutout,dynrange)
 % Original code by: Florent Jaillet
 % Date: 04.03.13
 
-%   Remainder of the original help file:
-%
-%   plondgt plots the spectrogram from coefficients computed with the 
-%   function ndgt. For more details on the format of the variables c and a 
-%   format, please read the ndgt function help.
-%
-%   plotndgt uses a dB colorscale, and the dynrange value can be used to
-%   specify the dynamic of this colorscale, as the produced image uses a 
-%   colormap in the interval [chigh-dynrange,chigh], where chigh is the 
-%   highest value in the plot.
-%
-%   Limitation: plotndgt only works for coefficients c obtained from a
-%   monochannel signal.
-%
-%   SEE ALSO:  NDGT
-%
-% The original file is part of LTFAT version 0.97
-
-% This program is free software: you can redistribute it and/or modify
-% it under the terms of the GNU General Public License as published by
-% the Free Software Foundation, either version 3 of the License, or
-% (at your option) any later version.
-% 
-% This program is distributed in the hope that it will be useful,
-% but WITHOUT ANY WARRANTY; without even the implied warranty of
-% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-% GNU General Public License for more details.
-% 
-% You should have received a copy of the GNU General Public License
-% along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 ticklabels = 1;
 
 if nargin < 8
