@@ -20,9 +20,11 @@ function [c,Ls] = nsgtf(f,g,shift,M)
 %   *shift*, this function computes the corresponding nonstationary Gabor 
 %   filterbank coefficients for *f*. 
 % 
-%   The transform produces phase-locked coefficients in the
-%   sense that each window is considered to be centered at
-%   0 and the signal itself is shifted accordingly.
+%   The transform produces phase-locked coefficients in the sense that each 
+%   window is considered to be centered at 0 and the signal itself is 
+%   shifted accordingly.
+%
+%   See also:  nsigtf, nsdual, nstight
 %
 %   More information can be found at:
 %   http://univie.ac.at/nonstatgab/

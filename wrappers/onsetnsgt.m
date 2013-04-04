@@ -21,6 +21,8 @@ function [c,g,shift,M,Ls] = onsetnsgt(f,thre,short,max_win,win_length)
 %
 %   Help text goes here.
 %
+%   See also:  invonsetnsgt, nsgt_real, nsgsclwin, onsetdet
+%
 
 % Author: Nicki Holighaus
 % Date: 04.03.13

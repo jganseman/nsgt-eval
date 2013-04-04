@@ -14,6 +14,8 @@ function fr = invonsetnsgt(c,g,shift,M,Ls)
 %
 %   Help text goes here.
 %
+%   See also:  onsetnsgt, nsigt_real, nsdual
+%
 
 % Author: Nicki Holighaus
 % Date: 04.03.13

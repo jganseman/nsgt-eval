@@ -16,18 +16,18 @@ function fr = nsigtf(c,gd,shift,Ls)
 %   corresponding inverse non-stationary Gabor transform.
 %
 %   If a non-stationary Gabor frame was used to produce the coefficients 
-%   and *gd* is a corresponding dual frame, this function should give 
+%   and 'gd' is a corresponding dual frame, this function should give 
 %   perfect reconstruction of the analyzed signal (up to numerical errors).
 % 
-%   The inverse transform is computed by simple 
-%   overlap-add. For each entry of the cell array *c*,
-%   the coefficients of frequencies around a certain 
-%   position in time, the inverse Fourier transform
-%   is taken, giving 'time slices' of a signal.
-%   These slices are added onto each other with an overlap
-%   depending on the window lengths and positions, thus
+%   The inverse transform is computed by simple overlap-add. For each entry
+%   of the cell array *c*, the coefficients of frequencies around a certain 
+%   position in time, the inverse Fourier transform is taken, giving 'time 
+%   slices' of a signal. These slices are added onto each other with an 
+%   overlap depending on the window lengths and positions, thus 
 %   (re-)constructing a signal. For multichannel signals, the overlap-add
 %   procedure is done for each channel.
+%
+%   See also:  nsgtf, nsdual, nstight
 % 
 %   More information can be found at:
 %   http://univie.ac.at/nonstatgab/

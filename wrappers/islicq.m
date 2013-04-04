@@ -16,11 +16,11 @@ function [fr,gd] = islicq(c,g,shift,M,Ls,sl_len,tr_area)
 %         gd        : Cell array of synthesis windows
 %
 %   This wrapper function implements the inverse constant-Q nonstationary
-%   Gabor transform. Given the output of `sliCQ.m`, this routine 
+%   Gabor transform. Given the output of |slicq|, this routine 
 %   synthesizes the signal *fr* from the coefficient array *c*. If *c* is 
 %   unaltered and the system specified by *g*, *shift* and *M* is a 
 %   painless frame, then *fr* will be equal to the signal analyzed by 
-%   `sliCQ.m`.
+%   |slicq|.
 %
 %   For more information on the constant-Q nonstationary Gabor transform, 
 %   see
@@ -31,6 +31,8 @@ function [fr,gd] = islicq(c,g,shift,M,Ls,sl_len,tr_area)
 %   invertible, real-time constant-q transforms," Audio, Speech, and 
 %   Language Processing, IEEE Transactions on, vol. 21, no. 4, 
 %   pp. 775-785, April 2013.
+%
+%   See also:  slicq, nsigtf, nsdual, unslicing
 %
 
 % Author: Nicki Holighaus

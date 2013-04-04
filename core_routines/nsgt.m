@@ -21,9 +21,11 @@ function [c,Ls] = nsgt(f,g,shift,M)
 %   channels to correspond to the current window length (Minimal 
 %   requirement for the so-called painless case).
 %
-%   The transform produces phase-locked coefficients in the
-%   sense that each window is considered to be centered at
-%   0 and the signal itself is shifted accordingly.
+%   The transform produces phase-locked coefficients in the sense that each
+%   window is considered to be centered at 0 and the signal itself is 
+%   shifted accordingly.
+%
+%   See also:  nsigt, nsdual, nstight
 %
 %   More information can be found at:
 %   http://univie.ac.at/nonstatgab/

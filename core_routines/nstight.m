@@ -18,7 +18,9 @@ function gt = nstight(g,shift,M)
 %
 %   This routine's output can be used to achieve reconstruction of a signal 
 %   from its non-stationary Gabor coefficients using the inverse 
-%   non-stationary Gabor transform 'nsigt'.
+%   non-stationary Gabor transform |nsigt|.
+% 
+%   See also:  nsigt, nsigt_real, nsigtf, nsigtf_real
 % 
 %   More information on Non-stationary Gabor transforms
 %   can be found at:

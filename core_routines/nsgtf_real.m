@@ -18,11 +18,13 @@ function [c,Ls] = nsgtf_real(f,g,shift,M)
 %
 %   Given the cell array *g* of windows and the frequency shift vector 
 %   *shift*, this function computes the corresponding nonstationary Gabor 
-%   filterbank coefficients for the real-valued vector *f*. 
+%   filterbank coefficients for the real-valued signal *f*. 
 % 
-%   The transform produces phase-locked coefficients in the
-%   sense that each window is considered to be centered at
-%   0 and the signal itself is shifted accordingly.
+%   The transform produces phase-locked coefficients in the sense that each 
+%   window is considered to be centered at 0 and the signal itself is 
+%   shifted accordingly.
+%
+%   See also:  nsigtf_real, nsdual, nstight
 %
 %   More information can be found at:
 %   http://univie.ac.at/nonstatgab/

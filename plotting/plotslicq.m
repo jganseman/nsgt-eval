@@ -1,5 +1,5 @@
 function plotslicq(c,shift,varargin)
-%PLOTSLICQ  `plotnsgtf` wrapper for sliced transforms (sliCQ)
+%PLOTSLICQ  |plotnsgtf| wrapper for sliced transforms (sliCQ)
 %   Usage:  plotslicq(c,shift,sr,fmin,fmax,bins,cutout,dynrange)
 %           plotslicq(c,shift,sr,fmin,fmax,bins,cutout)
 %           plotslicq(c,shift,sr,fmin,fmax,bins)
@@ -15,16 +15,18 @@ function plotslicq(c,shift,varargin)
 %         fmax     : Maximum frequency used in the transform
 %         bins     : Bins per octave (in constant or vector form)
 %         cutout   : Desired part of the spectrogram, e.g.
-%                    choice of '2' shows frequencies up to Nyquist
-%                    ('X' shows the 'number_of_bins/X' lowest frequency 
+%                    choice of `2` shows frequencies up to Nyquist
+%                    (`X` shows the $number_of_bins/X$ lowest frequency 
 %                    bins)
 %         dynrange : Colorscale dynamic range in dB (default 60 dB)
 %
-%   This wrapper function for PLOTNSGTF.M re-organizes sliCQ transform
+%   This wrapper function for |plotnsgtf| re-organizes sliCQ transform
 %   coefficients in such a way, that the sliCQ spectrogram is plotted 
 %   correctly.
 %   The coefficients are given as first input parameter, the remaining 
-%   input parameters are the same as for PLOTNSGTF.M:
+%   input parameters are the same as for |plotnsgtf|.
+%
+%   See also:  plotnsgtf, slicq
 %
 
 % Author: Nicki Holighaus

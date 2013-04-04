@@ -27,6 +27,8 @@ function [g,shift,M] = nsgsclwin(positions,short,max_win,Ls)
 %   non-integers.
 % 
 %   The first value of *positions* should always be $1$.
+%
+%   See also:  nsgt, nsgt_real, onsetnsgt, invonsetnsgt
 
 % Author: Nicki Holighaus
 % Date: 04.03.13

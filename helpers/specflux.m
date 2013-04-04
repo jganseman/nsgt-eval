@@ -22,6 +22,9 @@ function [SF,V0] = specflux(f,win_length,tgap)
 %   The STFT is taken with time shift parameter *tgap*
 %   and *win_length* frequency channels.
 %
+%
+%   See also:  onsetdet
+%
 %   External: DGT (LTFAT routine)
 
 % Author: Nicki Holighaus

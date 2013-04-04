@@ -13,9 +13,9 @@ function [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun)
 %         Ls        : signal length
 %         winfun    : window function to be used, the following are
 %                     available:
-%                     @hannwin    - Hann window (default),
-%                     @gausscw    - Gaussian window,
-%                     @wp2inp     - Uncertainty minimizer,
+%                     @hannwin    - |hannwin|, Hann window (default),
+%                     @gausscw    - |gausscw|, Gaussian window,
+%                     @wp2inp     - |wp2inp|, Uncertainty minimizer,
 %   Output parameters:
 %         g         : Cell array of Fourier transforms of the analysis
 %                     Wavelets
@@ -25,10 +25,12 @@ function [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun)
 %
 %   Given the function the necessary parameters described below, this
 %   wrapper function computes a painless Wavlet system. If you do not know
-%   how to use this function, please use 'WVLTtrans.m' instead.
+%   how to use this function, please use |wvlttrans| instead.
 %
 %   More information about the functions used can be found at:
 %   http://nuhag.eu/nonstatgab/
+%
+%   See also:  wvlttrans, invwvlttrans, hannwin, gausscw, wp2inp
 %
 
 % Author: Christoph Wiesmeyr, Nicki Holighaus

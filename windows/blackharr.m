@@ -24,6 +24,8 @@ function g = blackharr(x,L,mod)
 %   construction is used to yield a `continuous` window function. The
 %   original construction can be used by setting the parameter *mod* to 0.
 %
+%   See also:  hannwin
+%
 
 % Author: Nicki Holighaus
 % Date: 04.03.13

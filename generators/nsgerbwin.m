@@ -13,7 +13,7 @@ function [g,shift,M] = nsgerbwin(bins,sr,Ls)
 %
 %   Creates a set of windows for the ERBlet nonstationary Gabor transform. 
 %
-%   EXTERNALS: blackharr
+%   See also:  nsgtf, nsgtf_real, hannwin, blackharr
 %
 
 % Author: Thibaud Necciari, Nicki Holighaus

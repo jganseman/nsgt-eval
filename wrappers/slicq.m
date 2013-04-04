@@ -37,11 +37,11 @@ function [c,g,shift,M,Ls,sl_len,tr_area] = slicq(f,fmin,fmax,bins,sl_len,tr_area
 %
 %   This wrapper function computes the sliced constant-Q nonstationary 
 %   Gabor transform of the signal *f* given by the specified parameter set. 
-%   The parameters are identical to the parameters for `nsgcqwin` plus some
-%   additional ones. Those additional parameters are the slice and
-%   transition area lengths as well as (optionally) the desired number of 
-%   frequency channels *M*, if a fixed number of channels is desired, and 
-%   the parameter *Qvar* that allows variation of the overlap between 
+%   The parameters are identical to the parameters for |nsgcqwin| slice 
+%   and transition area length. Those additional parameters are the slice 
+%   and transition area lengths as well as (optionally) the desired number 
+%   of frequency channels *M*, if a fixed number of channels is desired, 
+%   and the parameter *Qvar* that allows variation of the overlap between 
 %   frequency channels.
 %
 %   For more information on the constant-Q nonstationary Gabor transform, 
@@ -53,6 +53,8 @@ function [c,g,shift,M,Ls,sl_len,tr_area] = slicq(f,fmin,fmax,bins,sl_len,tr_area
 %   invertible, real-time constant-q transforms," Audio, Speech, and 
 %   Language Processing, IEEE Transactions on, vol. 21, no. 4, 
 %   pp. 775-785, April 2013.
+%
+%   See also:  islicq, nsgtf, nsgcqwin, slicing
 %
 
 % Author: Nicki Holighaus

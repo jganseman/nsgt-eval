@@ -15,8 +15,8 @@ function plotnsgtf(c,shift,sr,fmin,fmax,bins,cutout,dynrange)
 %         fmax     : Maximum frequency used in the transform
 %         bins     : Bins per octave (in constant or vector form)
 %         cutout   : Desired part of the spectrogram, e.g.
-%                    choice of '2' shows frequencies up to Nyquist
-%                    ('X' shows the 'number_of_bins/X' lowest frequency 
+%                    choice of `2` shows frequencies up to Nyquist
+%                    (`X` shows the $number_of_bins/X$ lowest frequency 
 %                    bins)
 %         dynrange : Colorscale dynamic range in dB (default 60 dB)
 %
@@ -26,6 +26,8 @@ function plotnsgtf(c,shift,sr,fmin,fmax,bins,cutout,dynrange)
 %   input. If runs with the necessary input parameters (fmin,fmax,bins) of
 %   the transform, it adjusts the plot labels according to those 
 %   parameters.
+%
+%   See also:  nsgtf, plotnsgt, plotslicq
 %
 
 % Author:  Gino Velasco, Nicki Holighaus and Radu C. Frunza

@@ -1,0 +1,6 @@
+fext='.php'
+urlbase='/doc'
+urlext='.php'
+widthstr='10em'
+imagetype='png'
+includedir='../include'

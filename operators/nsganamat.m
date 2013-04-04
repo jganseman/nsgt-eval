@@ -19,16 +19,19 @@ function G = nsganamat(g,shift,M,Ls,phaselock)
 %         G		    : Frame analysis operator corresponding to the
 %                     input arguments
 % 
-%   Given the cell array 'g' of windows and the time shift vector 'shift',
+%   Given the cell array *g* of windows and the time shift vector *shift*,
 %   this function computes the corresponding non-stationary gabor analysis
 %   matrix.
 %   
 %   !Attention!: While this routine can be used to gain some insight into 
 %   the structure of frame-related operators, it is not suited for use with
 %   transform lentghs over a few thousand samples.
+%
+%   See also:  nsgt, nsgfrmmat
 %   
 %   More information can be found at:
 %   http://univie.ac.at/nonstatgab/
+%
 
 % Author: Nicki Holighaus
 % Date: 04.03.13

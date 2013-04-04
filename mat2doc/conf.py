@@ -1,0 +1,5 @@
+outputdir='~/Documents/publish'
+plotengine='matlab'
+author='Nicki Holighaus'
+version='0.0.9'
+year='2013'

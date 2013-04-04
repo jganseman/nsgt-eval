@@ -15,6 +15,8 @@ function g = hannwin(x,L)
 %   sampling points given. Given scalars *N* and *L*, computes a Hann 
 %   window of length *N*, full-point centered on a vector of length *L*.
 %
+%   See also:  blackharr
+%
 
 % Author: Nicki Holighaus
 % Date: 04.03.13

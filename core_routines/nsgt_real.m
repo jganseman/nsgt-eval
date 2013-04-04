@@ -23,6 +23,8 @@ function [c,Ls] = nsgt_real(f,g,shift,M)
 %   sense that each window is considered to be centered at
 %   0 and the signal itself is shifted accordingly.
 %
+%   See also:  nsigt_real, nsdual, nstight
+%
 %   More information can be found at:
 %   http://univie.ac.at/nonstatgab/
 %

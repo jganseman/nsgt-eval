@@ -36,7 +36,7 @@ function [g,shift,M] = nsgcqwin(fmin,fmax,bins,sr,Ls,varargin)
 %
 %     'winfun',winfun          Window function handle
 %
-%   EXTERNALS: hannwin
+%   See also:  nsgtf, nsgtf_real, hannwin, blackharr
 %
 
 % Authors: Nicki Holighaus, Gino Velasco, Monika Doerfler

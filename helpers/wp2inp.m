@@ -11,6 +11,9 @@ function g = wp2inp(x)
 %   in the Wavelet wrapper.
 %
 %   Insert a reference here!
+%
+%   See also:  wvlttrans, invwvlttrans, nsgwvltwin
+%
 
 % Author: Christoph Wiesmeyr
 % Date: 04.03.13

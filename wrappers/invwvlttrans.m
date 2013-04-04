@@ -22,6 +22,9 @@ function fr = invwvlttrans(c,g,shift,M,Ls,fb,tgtfl)
 %
 %   More information about the functions used can be found at:
 %   http://univie.ac.at/nonstatgab/
+%
+%   See also:  wvlttrans, nsigtf, nsdual
+%
 
 % Author: Nicki Holighaus
 % Date: 04.03.13

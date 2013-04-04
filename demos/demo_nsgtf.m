@@ -19,7 +19,8 @@
 %      This figure shows a (color coded) image of the nsgtf coefficient
 %      modulus. 
 %
-%   EXTERNALS:  NSGTF, NSIGTF, NSDUAL
+%   See also:  nsgtf, nsigtf, nsdual, nsgcqwin
+%
 
 % Author: Gino Velasco, Nicki Holighaus
 % Date: 04.03.13

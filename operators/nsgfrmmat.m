@@ -11,8 +11,11 @@ function S = nsgfrmmat(g,shift,M,Ls,steps)
 %   Output parameters:
 %         S         : Sparse frame operator matrix
 %
-%   Creates the frame operator matrix of size $LsxLs$ associated to the 
-%   nonstationary Gabor system *g*, *shift*, *M* in sparse matrix format.
+%   Creates the frame operator matrix of size $Ls\times Ls$ associated to 
+%   the nonstationary Gabor system *g*, *shift*, *M* in sparse matrix 
+%   format.
+%
+%   See also:  nsgt, nsigt, nsganamat
 %
 
 % Author: Nicki Holighaus

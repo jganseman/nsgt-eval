@@ -42,6 +42,8 @@ function [pos,V0] = onsetdet(f,win_length,thre,range,multi,shift,showplot)
 %   function on an area corresponding to $-multi*range$ to $+range$ of the 
 %   current position.
 %
+%   See also:  onsetnsgt, invonsetnsgt, specflux, peakpick
+%
 %   External: DGT (LTFAT routine)
 
 % Author: Nicki Holighaus

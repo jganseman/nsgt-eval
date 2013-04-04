@@ -26,7 +26,7 @@
 %      This figure shows a (color coded) image of the nsgtf coefficient
 %      modulus. 
 %
-%   EXTERNALS:  NSGT, NSIGT, NSDUAL, ONSETDET
+%   See also:  nsgt, nsigt, nsdual, nsgsclwin, onsetdet
 %
 
 % Author: Gino Velasco, Nicki Holighaus

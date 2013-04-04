@@ -33,6 +33,9 @@ function [c,g,shift,M,Ls,fb,tgtfl] = wvlttrans(f,fmin,sr,bins,bw,winfun)
 %   More information about the functions used can be found at:
 %   http://univie.ac.at/nonstatgab/
 %
+%   See also:  invwvlttrans, nsgtf, nsgwvltwin
+%
+
 
 % Author: Nicki Holighaus, Christoph Wiesmeyr
 % Date: 04.03.13

@@ -9,8 +9,8 @@ function plotnsgt(c,shift,sr,varargin)
 %         shift    : Vector of time shifts
 %         sr       : signal sample rate in Hz (default 1 Hz)
 %         cutout   : Desired part of the spectrogram, e.g.
-%                    choice of '2' shows frequencies up to Nyquist
-%                    ('X' shows the 'number_of_bins/X' lowest frequency 
+%                    choice of `2` shows frequencies up to Nyquist
+%                    (`X` shows the $number_of_bins/X$ lowest frequency 
 %                    bins)
 %         dynrange : Colorscale dynamic range in dB (default 60 dB)
 %
@@ -34,6 +34,8 @@ function plotnsgt(c,shift,sr,varargin)
 %
 %     'realsig',realsig    Input coefficients are taken from a
 %                          representation for real-valued signals
+%
+%   See also:  nsgt, plotnsgt
 %
 
 % Author:  Nicki Holighaus
