@@ -1,4 +1,5 @@
-function [c,g,shift,M,Ls,sl_len,tr_area] = slicq(f,fmin,fmax,bins,sl_len,tr_area,sr,M,min_win,Qvar)
+function [c,g,shift,M,Ls,sl_len,tr_area] = ...
+    slicq(f,fmin,fmax,bins,sl_len,tr_area,sr,M,min_win,Qvar)
 %SLICQ  Sliced constant-Q/variable-Q transform
 %   Usage:  [c,g,shift,M,Ls,sl_len,tr_area] 
 %                = slicq(f,fmin,fmax,bins,sl_len,tr_area,sr,M,min_win,Qvar)
