@@ -43,7 +43,7 @@ function [c,g,shift,M,Ls,fb,tgtfl] = wvlttrans(f,fmin,sr,bins,bw,winfun)
 
 % set default window function
 if nargin < 6
-    winfun = @hannwin;
+    winfun = 'hann';
 end
 
 % Determine signal length and make column vectors

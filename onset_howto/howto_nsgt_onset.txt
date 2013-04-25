@@ -1,11 +1,10 @@
 Step-by-Step introduction to non-stationary Gabor via
 Onset detection using the attached MATLAB routines:
-('onsetdet' uses LTFAT 0.97 or higher)
 
 1. Load the signal to be analyzed/processed into your
    workspace, e.g.:
 
-   sig = wavread('glock.wav');
+   sig = wavread('glockenspiel.wav');
 
    saves the wave-file type signal 'glock.wav' in the
    current directory under the variable name 'sig'
@@ -33,7 +32,7 @@ Onset detection using the attached MATLAB routines:
 3. Create the adapted non-stationary Gabor scheme fitted to 
    those onset positions, e.g.:
 
-   [wins,shift] = scaleframe(onsets,192,8,length(sig));
+   [wins,shift] = nsgsclwin(onsets,192,8,length(sig));
 
    builds the dictionary for the onset vector 'onsets' using
    windows of length 192*2^Q with Q in {0,...,8-1} and 
@@ -84,15 +83,13 @@ Onset detection using the attached MATLAB routines:
 To give it a try, copy the following lines of code to your 
 MATLAB command window (four plots are produced):
 
-(Caution: LTFAT 0.97 or higher should be installed! )
-
 ----------------------------------------------------------
 
-sig = wavread('glock.wav');
+sig = wavread('glockenspiel.wav');
 figure(1);
 onsets = onsetdet(sig,2048,0.5,4,2,3,1);
 title('Onset detection results');
-[wins,shift] = scaleframe(onsets,192,8,length(sig));
+[wins,shift] = nsgsclwin(onsets,192,8,length(sig));
 winsd = nsdual(wins,shift);
 figure(2);
 subplot(2,1,1);

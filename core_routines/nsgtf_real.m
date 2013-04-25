@@ -1,6 +1,8 @@
 function [c,Ls] = nsgtf_real(f,g,shift,M)
 %NSGTF_REAL  Nonstationary Gabor filterbank for real signals
 %   Usage: [c,Ls] = nsgtf_real(f,g,shift,M)
+%          [c,Ls] = nsgtf_real(f,g,shift)
+%          c = nsgtf_real(...)
 %
 %   Input parameters: 
 %         f         : A real-valued signal to be analyzed (For multichannel
@@ -16,22 +18,30 @@ function [c,Ls] = nsgtf_real(f,g,shift,M)
 %         c         : Transform coefficients (matrix or cell array)
 %         Ls        : Original signal length (in samples)
 %
-%   Given the cell array *g* of windows and the frequency shift vector 
-%   *shift*, this function computes the corresponding nonstationary Gabor 
-%   filterbank coefficients for the real-valued signal *f*. 
-% 
-%   The transform produces phase-locked coefficients in the sense that each 
-%   window is considered to be centered at 0 and the signal itself is 
-%   shifted accordingly.
+%   Given the cell array *g* of windows, the time shift vector *shift*, and
+%   channel numbers *M*, `nsgtf_real` computes the corresponding 
+%   nonstationary Gabor filterbank of *f*, using only the filters with at 
+%   least partially supported on the positive frequencies. Let 
+%   $P(n)=\sum_{l=1}^{n} shift(l)$, then the output 
+%   `c = nsgtf_real(f,g,shift,M)` is a cell array with 
+%
+%   ..         Ls-1                                      
+%      c{n}(m)= sum fft(f)(l)*conj(g\{n\}(l-P(n)))*exp(2*pi*i*(l-P(n))*m/M(n))
+%               l=0                                      
+%
+%   .. math:: c\{n\}(m) = \sum_{l=0}^{Ls-1} \hat{f}[l]\overline{g\{n\}[l-P(n)]}e^{-2\pi i(l-P(n))m/M(n)},
+%
+%   where `m` runs from `0` to `M(n)-1` and `n` from 1 to `N`, where
+%   $g\{N\}$ is the final filter at least partially supported on the
+%   positive frequencies. All filters in *g*, *shift* that are completely
+%   supported on the negative frequencies are ignored.
+%
+%   For more details, see |nsgtf|.
 %
 %   See also:  nsigtf_real, nsdual, nstight
-%
-%   More information can be found at:
-%   http://univie.ac.at/nonstatgab/
-%
 
 % Author: Nicki Holighaus, Gino Velasco
-% Date: 03.03.13
+% Date: 23.04.13
 
 % Check input arguments
 if nargin < 5

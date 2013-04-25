@@ -19,7 +19,32 @@ function [fr,res,Nit]=nsgsiterf(c,g,shift,M,varargin)
 %         res       : Vector of relative residuals
 %         Nit       : Number of iterations
 %
-%   Help text goes here.
+%   Given coefficients *c* and nonstationary Gabor frame specified by *g*, 
+%   *shift* and *M*, this routine approximates the synthesis formula 
+%   associated to the canonical dual frame. 
+%
+%   The synthesized signal *fr* is obtained by first synthesizing with 
+%   respect to *g*, *shift* and *M* using |nsigtf| followed by iteratively
+%   applying the inverse frame operator to the result using the conjugate 
+%   gradients method. The following equivalence is used:
+%
+%   ..     N-1 M(n)-1                            N-1 M(n)-1
+%       fr=sum  sum  c{n}(m)S^{-1}g_{n,m}=S^{-1}(sum  sum  c{n}(m)g_{n,m}),
+%          n=0  m=0                              n=0  m=0
+%
+%   ..  math:: fr = \sum_{n=0}^{N-1}\sum_{m=0}^{M(n)-1}c\{n\}(m)S^{-1}g_{n,m} = S^{-1}\left(\sum_{n=0}^{N-1}\sum_{m=0}^{M(n)-1}c\{n\}(m)g_{n,m}\right),
+%
+%   where `N=numel(shift)`. The conjugate gradients algorithm uses the 
+%   frame operator, or rather its efficient realization by applying |nsgtf| 
+%   and |nsigtf| consecutively.
+%
+%   Convergence speed of the conjugate gradients algorithm depends on the 
+%   condition number of the frame operator, which can be improved by
+%   preconditioning. Currently, only a diagonal preconditioner using the 
+%   inverse of the frame operator diagonal is implemented.
+%
+%   Note: The algorithm only converges if *g*, *shift* and *M* form a
+%   frame.
 %
 %   Optional input arguments arguments can be supplied like this::
 %
@@ -30,12 +55,13 @@ function [fr,res,Nit]=nsgsiterf(c,g,shift,M,varargin)
 %
 %     'tol',tol      Error tolerance
 %
-%     'maxit',maxit      Maximum number of iterations
+%     'Mit',Mit      Maximum number of iterations
 %
 %     'prec',prec    Preconditioning switch
 %
-%   See also:  nsgtf, nsgaiterf
+%   See also:  nsigtf, nsgtf, nsgaiterf
 %
+%   References:  nebahoso13 gr93
 
 % Author: Nicki Holighaus
 % Date: 04.03.13
@@ -46,7 +72,7 @@ end
 
 % Set default parameters
 tol = 10^-10;   % Error tolerance
-maxit = 200;      % Maximum number of iterations
+Mit = 200;      % Maximum number of iterations
 prec = 0;
 
 if nargin >= 3
@@ -65,8 +91,8 @@ if nargin >= 3
         switch varargin{kk}
             case {'tol'}
                 tol = varargin{kk+1};
-            case {'maxit'}
-                maxit = varargin{kk+1};
+            case {'Mit'}
+                Mit = varargin{kk+1};
             case {'prec'}
                 prec = varargin{kk+1};
             otherwise
@@ -85,7 +111,7 @@ frmop = @(x) nsigtf(nsgtf(x,g,shift,M),g,shift,L);
 fr = nsigtf(c,g,shift,L);
 
 if prec == 0
-    [fr,tmp1,tmp2,Nit,res] = pcg(frmop,fr,tol,maxit);
+    [fr,tmp1,tmp2,Nit,res] = pcg(frmop,fr,tol,Mit);
 else 
     % Construct the diagonal of the frame operator matrix explicitly
     diagonal=zeros(L,1);
@@ -97,7 +123,7 @@ else
             (fftshift(g{ii}).^2)*M(ii);   
     end
     D = spdiags(diagonal,0,L,L);
-    [fr,tmp1,tmp2,Nit,res] = pcg(frmop,fr,tol,maxit,D);    
+    [fr,tmp1,tmp2,Nit,res] = pcg(frmop,fr,tol,Mit,D);    
 end
 
 if  exist('Ls','var')

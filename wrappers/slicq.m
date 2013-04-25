@@ -102,13 +102,11 @@ if numel(M) > 1
 end
 
 if M(1) == 0
-    % This is just a slightly modified version of nsgfwin
     [g,shift,M] = nsgcqwin(fmin,fmax,bins,sr,sl_len,'min_win',min_win,...
-        'Qvar',Qvar,'wL_fac',4,'fractional',1,'winfun',@blackharr);
+        'Qvar',Qvar,'bwfac',4,'fractional',1,'winfun','modblackharr');
 else
-    % This is just a slightly modified version of nsgfwin
     [g,shift] = nsgcqwin(fmin,fmax,bins,sr,sl_len,'min_win',min_win,...
-        'Qvar',Qvar,'wL_fac',4,'fractional',1,'winfun',@blackharr);
+        'Qvar',Qvar,'bwfac',4,'fractional',1,'winfun','modblackharr');
     M = 4*ceil(M/4);
 end
 N = length(shift); % The number of filters

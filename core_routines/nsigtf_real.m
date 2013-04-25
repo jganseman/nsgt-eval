@@ -1,10 +1,10 @@
-function fr = nsigtf_real(c,gd,shift,Ls)
+function fr = nsigtf_real(c,g,shift,Ls)
 % NSIGTF_REAL  Nonstationary Gabor filterbank synthesis for real signals
-%   Usage: fr = nsigtf_real(c,gd,shift,M,Ls)
+%   Usage: fr = nsigtf_real(c,g,shift,M,Ls)
 %
 %   Input parameters: 
 %         c         : Cell array of non-stationary Gabor coefficients
-%         gd        : Cell array of synthesis filters
+%         g         : Cell array of synthesis filters
 %         shift     : Vector of time shifts
 %         M         : Number of time channels (vector/scalar)
 %         Ls        : Length of the analyzed signal
@@ -12,36 +12,44 @@ function fr = nsigtf_real(c,gd,shift,Ls)
 %         fr        : Synthesized real-valued signal (Channels are stored 
 %                     in the columns)
 %
-%   Given the cell array *c* of non-stationary Gabor coefficients, and a 
-%   set of filter, frequency shifts and time step parameters this function 
-%   computes the corresponding inverse non-stationary Gabor transform.
+%   Given the cell array *c* of nonstationary Gabor filterbank 
+%   coefficients, a set of filters *g* and frequency shifts *shift*, this 
+%   function computes the corresponding nonstationary Gabor filterbank
+%   synthesis for real valued signals. 
 %
-%   This routine always assumes that the output is supposed to be
-%   real-valued.
+%   Note that, due to the structure of the coefficient array in the real
+%   valued setting, all entries `g{n}` with $N > length(c)$ will be ignored
+%   and assumed to be fully supported on the negative frequencies.
+%
+%   Let $P(n)=\sum_{l=1}^{n} shift(l)$, then the synthesis formula reads:
+%
+%   ..               N-1 
+%       fr_temp(l) = sum sum c{n}(m)g{n}[l-P(n)]*exp(-2*pi*i*(l-P(n))*m/M(n)),
+%                    n=0  m
+%   
+%   .. math::  fr_{temp}[l] = \sum_{n=0}^{N-1}\sum_{m} c\{n\}(m)g\{n\}[l-P(n)] e^{-2\pi i(l-P(n))m/M(n)},
+%
+%   for $l=0,\cdots,Ls-1$.  In practice, the synthesis formula is realized 
+%   by `fft` and overlap-add. To synthesize the negative frequencies, 
+%   *fr_temp* is truncated to length $floor( Ls/2 )+1$. Afterwards 
+%   `ifftreal` implicitly computes the hermite symmetric extension and 
+%   computes the inverse Fourier transform, i.e. fr = ifftreal(fr_temp).
 % 
-%   If a non-stationary Gabor frame was used to produce the coefficients 
-%   and 'gd' is a corresponding dual frame, this function should give 
-%   perfect reconstruction of the analyzed signal (up to numerical errors).
-% 
-%   The inverse transform is computed by simple overlap-add. For each entry
-%   of the cell array *c*, the coefficients of frequencies around a certain 
-%   position in time, the inverse Fourier transform is taken, giving 'time 
-%   slices' of a signal. These slices are added onto each other with an 
-%   overlap depending on the window lengths and positions, thus 
-%   (re-)constructing a signal. For multichannel signals, the overlap-add
-%   procedure is done for each channel.
+%   If a nonstationary Gabor frame was used to produce the coefficients 
+%   and *g* is a corresponding dual frame, this function should perfectly 
+%   reconstruct the originally analyzed signal to numerical precision.
+%   
+%   Multichannel output will save each channel in a column of *fr*.
 %
 %   See also:  nsgtf_real, nsdual, nstight
-%
-%   More information can be found at:
-%   http://univie.ac.at/nonstatgab/
-%
+% 
+%   References: badohojave11 dogrhove11 
 
 % Author: Nicki Holighaus, Gino Velasco
-% Date: 03.03.13
+% Date: 23.04.13
 
 %Check input arguments
-if nargin < 3
+if nargin < 4
     error('Not enough input arguments');
 end
 
@@ -66,15 +74,11 @@ timepos = timepos-shift(1);   % Adjust positions
 
 fr = zeros(NN,CH); % Initialize output
 
-if nargin < 4
-    Ls = NN; % If original signal length is not given do not truncate
-end
-
 % The overlap-add procedure including multiplication with the synthesis
 % windows
 
 for ii = 1:N
-    Lg = length(gd{ii});
+    Lg = length(g{ii});
     
     win_range = mod(timepos(ii)+(-floor(Lg/2):ceil(Lg/2)-1),NN)+1;
     
@@ -83,7 +87,7 @@ for ii = 1:N
         length(temp))+1,:);
     
     fr(win_range,:) = fr(win_range,:) + ...
-        bsxfun(@times,temp,gd{ii}([Lg-floor(Lg/2)+1:Lg,1:ceil(Lg/2)]));
+        bsxfun(@times,temp,g{ii}([Lg-floor(Lg/2)+1:Lg,1:ceil(Lg/2)]));
 end
 
 fr = ifftreal(fr(1:floor(Ls/2)+1),Ls,1);

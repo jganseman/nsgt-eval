@@ -1,6 +1,8 @@
 function [c,Ls] = nsgt(f,g,shift,M)
 %NSGT  Nonstationary Gabor transform
-%   Usage: [c,Ls] = nsgt(f,g,shift,M);
+%   Usage: [c,Ls] = nsgt(f,g,shift,M)
+%          [c,Ls] = nsgt(f,g,shift)
+%          c = nsgt(...)
 %
 %   Input parameters:
 %         f         : The signal to be analyzed (For multichannel
@@ -15,24 +17,37 @@ function [c,Ls] = nsgt(f,g,shift,M)
 %         c         : Transform coefficients (matrix or cell array)
 %         Ls        : Original signal length (in samples)
 %
-%   Given the cell array *g* of windows and the time shift vector *shift*,
-%   this function computes the corresponding non-stationary gabor transform 
-%   of *f*. Cell array output always assumes the number of frequency 
-%   channels to correspond to the current window length (Minimal 
-%   requirement for the so-called painless case).
+%   Given the cell array *g* of windows, the time shift vector *shift*, and
+%   channel numbers *M*, `nsgt` computes the corresponding nonstationary 
+%   Gabor transform of *f*. Let $P(n)=\sum_{l=1}^{n} shift(l)$, then the 
+%   output `c = nsgt(f,g,shift,M)` is a cell array with 
 %
-%   The transform produces phase-locked coefficients in the sense that each
-%   window is considered to be centered at 0 and the signal itself is 
-%   shifted accordingly.
+%   ..         Ls-1                               
+%      c{n}(m)= sum f(l)*conj(g\{n\}(l-P(n)))*exp(-2*pi*i*(l-P(n))*m/M(n))
+%               l=0                                
+%
+%   .. math:: c\{n\}(m) = \sum_{l=0}^{Ls-1} f[l]\overline{g\{n\}[l-P(n)]}e^{-2\pi i(l-P(n))m/M(n)},
+%
+%   where `m` runs from `0` to `M(n)-1`.
+%
+%   If multichannel input is used, the same nonstationary Gabor system is 
+%   applied to each channel and each entry of *c* will be a 2D array with 
+%   c{n}(:,CH) being the entries corresponding to channel *CH*.
+%
+%   If *M* is scalar or uniform, then *c* is converted into a regular
+%   array. 
+%
+%   The choice of phase-locked coefficients (by inserting (l-P(n)) in the 
+%   complex exponential prevents border artifacts for combinations of 
+%   window functions *g{n}* that do not have full support and *M(n)* that 
+%   do not divide *Ls*.
 %
 %   See also:  nsigt, nsdual, nstight
 %
-%   More information can be found at:
-%   http://univie.ac.at/nonstatgab/
-%
+%   References: badohojave11
 
 % Author: Nicki Holighaus, Gino Velasco
-% Date: 03.03.13
+% Date: 23.04.13
 
 % Check input arguments
 

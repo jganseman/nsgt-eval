@@ -1,23 +1,94 @@
-function [g,shift,M] = nsgerbwin(bins,sr,Ls)
+function [g,shift,M] = nsgerbwin(bins,sr,Ls,varargin)
 %NSGERBWIN  ERBlet dictionary generator
-%   Usage:  [g,shift,M]=nsgerbwin(bins,sr,Ls)
+%   Usage:  [g,shift,M]=nsgerbwin(bins,sr,Ls,varargin)
+%           [g,shift,M]=nsgerbwin(bins,sr,Ls)
 %
 %   Input parameters: 
 %         bins      : Desired bins per ERB
 %         sr        : Sampling rate of f (in Hz)
 %         Ls        : signal length
+%         varargin  : Optional input pairs (see table below)
 %   Output parameters: 
 %         g         : Cell array of ERBlets
 %         shift     : Vector of frequency shifts
 %         M         : Number of time channels
 %
-%   Creates a set of windows for the ERBlet nonstationary Gabor transform. 
+%   Create a nonstationary Gabor filterbank composed of filter regularly 
+%   spaced on the ERB frequency scale and having constant Equivalent 
+%   Rectangular Bandwidth. 
 %
-%   See also:  nsgtf, nsgtf_real, hannwin, blackharr
+%   The conversion formula of Hz to ERB number is given by
 %
+%   .. ERBnum(x) = 9.2645*sign(x)*log(1+abs(x)*0.00437).
+%
+%   .. math:: ERBnum(x) = 9.2645\operatorname{sgn}(x)\log(1+0.00437|x|).
+%
+%   The Equivalent Rectangular Bandwidth at frequency `x` is 
+%
+%   .. ERB(x) = 24.7*(0.00437*x + 1).
+%
+%   .. math:: ERB(x) = 24.7(1 + 0.00437x).
+%
+%   The filters are chosen symmetrically around the zero frequency and
+%   finally a symmetric filter is placed on the Nyquist frequency.
+%
+%   The result can serve as input parameters for |nsgtf| to obtain the
+%   ERBlet analysis coefficients or |nsigtf| to synthesize from
+%   coefficients, as well as their counterparts for real valued signals.
+%
+%   Optional input arguments arguments can be supplied like this::
+%
+%       nsgerbwin(bins,sr,Ls,'Qvar',Qvar)
+%
+%   The arguments must be character strings followed by an
+%   argument:
+%
+%     'Qvar',Qvar              Bandwidth variation factor
+%
+%     'bwfac',bwfac            Channel numbers *M* are rounded to multiples 
+%                              of this
+%
+%     'winfun',winfun          String containing the window name
+%
+%   See also:  nsgtf, nsgtf_real, winfuns
+%
+%   References: badohojave11 nebahoso13 
 
 % Author: Thibaud Necciari, Nicki Holighaus
-% Date: 04.03.13
+% Date: 23.04.13
+
+% Set defaults
+Qvar = 1;
+bwfac = 1;
+winfun = 'modblackharr';
+
+% Check input arguments
+
+if nargin < 3
+    error('Not enough input arguments');
+end
+
+if nargin >= 4
+    Lvar = length(varargin);
+    if mod(Lvar,2)
+        error('Invalid input argument');
+    end
+    for kk = 1:2:Lvar
+        if ~ischar(varargin{kk})
+            error('Invalid input argument');
+        end
+        switch varargin{kk}
+            case {'Qvar'}
+                Qvar = varargin{kk+1};
+            case {'bwfac'}
+                bwfac = varargin{kk+1};
+            case {'winfun'}
+                winfun = varargin{kk+1};
+            otherwise
+                error(['Invalid input argument: ', varargin{kk}]);
+        end
+    end
+end
 
 df = sr/Ls; % frequency resolution in the FFT
 
@@ -48,7 +119,7 @@ posit(Nf+1:end) = Ls-posit(Nf+1:end);% Extension to negative freq.
 shift = [Ls-posit(end); diff(posit)];% Hop sizes in samples
 
 % Compute desired essential (Gaussian) support for each filter
-Lwin = 4*round(gamma/df);
+Lwin = 4*round(gamma/df)*Qvar;
 
 % Blackman-Harris windows are slightly broader than Gaussians, this is
 % offset by the factor 1.1
@@ -56,7 +127,9 @@ Lwin = 4*round(gamma/df);
 M = round(Lwin/1.1);
 
 % Compute cell array of analysis filters
-g = arrayfun(@(x) blackharr(x)/sqrt(x),M,'UniformOutput',0);
+g = arrayfun(@(x) winfuns(winfun,x)/sqrt(x),M,'UniformOutput',0);
+
+M = bwfac*ceil(M/bwfac);
 
 g{1}=1/sqrt(2)*g{1};
 g{end}=1/sqrt(2)*g{end};

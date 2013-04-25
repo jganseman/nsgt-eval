@@ -9,27 +9,42 @@ function gd = nsdual(g,shift,M)
 %   Output parameters:
 %         gd        : Dual window functions 
 %
-%   Computes (for the painless case) the canonical dual frame 
-%   corresponding to a given non-stationary Gabor frame specified by the 
-%   windows *g* and time shifts *shift*.
+%   Given a non-stationary Gabor frame specified by the windows *g*, shift 
+%   parameters *shift*, and channel numbers *M*, `nsdual` computes the
+%   canonical dual frame windows *gd* by inverting the diagonal of the
+%   frame operator and applying the inverse to *g*. More explicitly,
+%
+%   .. gd{n} = g{n} / ( sum M(l) |g{l}|^2 ), 
+%                        l  
+%
+%   .. math:: gd\{n\} = \frac{ g\{n\} }{ \sum_{l} M(l) |g\{l\}|^2 }
+%
+%   If *g*, *shift*, *M* specified a painless frame, i.e. 
+%   $|supp(g\{n\}) | \leq M(n)~\forall~n$ and 
+%
+%   .. A <= sum ( M(n) |g{n}|^2 ) <= B, for some 0 < A <= B < infty
+%            n  
+%
+%   .. math:: \sum_{n} M(n) |g\{n\}|^2 \simeq 1, 
+%   
+%   the computation will result in the canonical dual frame. If  *g*, 
+%   *shift*, *M* specify a frame, but the first condition is violated, the 
+%   result can be interpreted as a first approximation of the corresponding 
+%   canonical dual frame.
 % 
 %   Note, the time shifts corresponding to the dual window sequence is the
 %   same as the original shift sequence and as such already given.
 %
-%   This routine's output can be used to achieve reconstruction of a signal 
-%   from its non-stationary Gabor coefficients using the inverse 
-%   non-stationary Gabor transform |nsigt|.
+%   If *g*, *shift*, *M* is a painless frame, the output can be used for 
+%   perfect reconstruction of a signal using the inverse nonstationary 
+%   Gabor transform |nsigt|.
 % 
-%   See also:  nsigt, nsigt_real, nsigtf, nsigtf_real
-%
-%   More information on Non-stationary Gabor transforms
-%   can be found at:
-%
-%   http://univie.ac.at/nonstatgab/
-%
+%   See also:  nsgt, nsigt, nsgt_real, nsigt_real, nsgtf, nsigtf
+% 
+%   References: badohojave11
 
 % Author: Nicki Holighaus, Gino Velasco
-% Date: 03.03.13
+% Date: 23.04.13
 
 % Check input arguments
 

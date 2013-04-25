@@ -14,24 +14,39 @@ function [g,shift,M] = nsgsclwin(positions,short,max_win,Ls)
 %         shift     : Vector of time shifts
 %         M         : Vector of window lengths
 %
-%   Create non-stationary Gabor frame from a sequence of positions 
-%   (possibly onsets). This routine builds scale-type frames with fixed 
-%   parameters $Q = 2$, $O_1 = 2/3$, $O_2 = 1/3$ using Hann windows of 
-%   various length.
+%   Create non-stationary Gabor frame from a sequence of positions, e.g. 
+%   an onset sequence. This routine builds scale-type frames with fixed 
+%   scale parameter $Q = 2$ and overlap parameters $O_1 = 2/3$, 
+%   $O_2 = 1/3$. Currently, Hann windows of varying length are used as 
+%   prototype. 
 %
-%   Between those points a set of windows evolving from shortest length
-%   to a certain maximum and back again will be constructed. We will call 
-%   those sets `short->long->short` building blocks.
+%   The routine places short windows on the points specified by the
+%   sequence, while the space between 2 points is spanned by a sequence of
+%   that smoothly expand to longer lengths and then shrink back to a short
+%   length. We call those short sequences `short->long->short` building 
+%   blocks.
 %
-%   *short* has to be a multiple of $6$, otherwise the shifts might be
-%   non-integers.
+%   The final window sequence is obtained by concatenating the sequence of
+%   building blocks. 
 % 
-%   The first value of *positions* should always be $1$.
+%   For more details, please check the reference.
 %
-%   See also:  nsgt, nsgt_real, onsetnsgt, invonsetnsgt
+%   Notes: 
+%
+%   For the parameters `Q`, `O_1` and `O_2` as specified above being valid,
+%   the input parameter *short* must be a multiple of $6$, or non integer 
+%   shifts might occur.
+% 
+%   The first value of *positions* should always be 1 to cover the complete
+%   time axis. A valid position sequence can be obtained, e.g. from
+%   |onsetdet|.
+%
+%   See also:  nsgt, nsgt_real, onsetnsgt, invonsetnsgt, onsetdet
+%
+%   References: badohojave11
 
 % Author: Nicki Holighaus
-% Date: 04.03.13
+% Date: 23.04.13
 
 if nargin < 4
     error('Not enough input arguments');
@@ -137,4 +152,4 @@ end
 
 M = win_size;
 
-g = arrayfun(@(x,y) hannwin(x)/sqrt(y),win_size,M,'UniformOutput',0);
+g = arrayfun(@(x,y) winfuns('hann',x)/sqrt(y),win_size,M,'UniformOutput',0);

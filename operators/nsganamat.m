@@ -13,28 +13,48 @@ function G = nsganamat(g,shift,M,Ls,phaselock)
 %         M         : Number of frequency channels (optional)
 %         Ls		: Transform length
 %         phaselock : This optional 0/1 switch specifies the phaselock 
-%                     convention: 0 (non-phaselocked, default), 
-%                     1 (phaselocked) 
+%                     convention: 0 (non-phaselocked), 
+%                     1 (phaselocked, default) 
 %   Output parameters:
 %         G		    : Frame analysis operator corresponding to the
 %                     input arguments
-% 
-%   Given the cell array *g* of windows and the time shift vector *shift*,
-%   this function computes the corresponding non-stationary gabor analysis
-%   matrix.
-%   
-%   !Attention!: While this routine can be used to gain some insight into 
+%
+%   Computes the frame analysis matrix corresponding the nonstationary
+%   Gabor system specified by *g*, *shift* and *M*. The rows of the frame
+%   analysis matrix contain the complex conjugate of the frame elements in
+%   modulation first order, i.e. let $P(n) = \sum_{l=1}^{n} shift(l)$
+%
+%   ..        n-1
+%       K_n = sum M(l)
+%             l=0
+%
+%   ..  math:: K_n = \sum_{l=0}^{n-1} M(l)
+%
+%   and let $m$ run from $0$ to $M(n)-1$. Then 
+%
+%   ..  G(K_n + m,.) = conj(g{n})(. - P(n-1))*exp(-2*pi*i*(. - P(n-1))*m/M(n))
+%
+%   .. math:: G(K_n + m,cdot) = \overline{g\{n\}(\cdot - P(n-1))}*e^{-2\pi im(\cdot - P(n-1))/M(n)}
+%
+%   The conjugate transpose of *G* equals the synthesis operator
+%   corresponding to *g*, *shift* and *M*. Consequently, $c=Gf$ and 
+%   $fr=conj(G)^T c$.
+%
+%   The formulas above use the phaselocked definition of a nonstationary
+%   Gabor frame also realized by |nsgt|, |nsigt|. Alternatively, 
+%   non-phaselocked frame elements can be used. Note however, that this
+%   might result in border discontinuities if $L/M(n)$ is not integer.
+%  
+%   Note: While this routine can be used to gain some insight into 
 %   the structure of frame-related operators, it is not suited for use with
 %   transform lentghs over a few thousand samples.
-%
-%   See also:  nsgt, nsgfrmmat
 %   
-%   More information can be found at:
-%   http://univie.ac.at/nonstatgab/
+%   See also:  nsgt, nsigt, nsgfrmmat
 %
+%   References:  ch08 badohojave11 
 
 % Author: Nicki Holighaus
-% Date: 04.03.13
+% Date: 24.04.13
 
 % Check input
 
@@ -46,7 +66,7 @@ if nargin == 4
         phaselock = 0;
         Ls = sum(shift);
     else
-        phaselock = 0;
+        phaselock = 1;
     end
 end
 if nargin == 3
@@ -69,7 +89,7 @@ if nargin < 3
     if nargin < 2
         error('Not enough input arguments');
     end
-    phaselock = 0;
+    phaselock = 1;
     Ls = sum(shift);
     for kk = 1:length(shift)
         M(kk) = length(g{kk});

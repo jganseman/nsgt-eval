@@ -1,6 +1,8 @@
 function [c,Ls] = nsgt_real(f,g,shift,M)
 %NSGT_REAL  Nonstationary Gabor transform for real signals
 %   Usage: [c,Ls] = nsgt_real(f,g,shift,M)
+%          [c,Ls] = nsgt_real(f,g,shift)
+%          c = nsgt_real(...)
 % 
 %   Input parameters:
 %         f         : A real-valued signal to be analyzed (For multichannel
@@ -15,22 +17,26 @@ function [c,Ls] = nsgt_real(f,g,shift,M)
 %         c         : Transform coefficients (matrix or cell array)
 %         Ls        : Original signal length (in samples)
 %
-%   Given the cell array *g* of windows and the frequency shift vector 
-%   *shift*, this function computes the corresponding nonstationary Gabor 
-%   filterbank coefficients for the real-valued vector *f*. 
+%   Given the cell array *g* of windows, the time shift vector *shift*, and
+%   channel numbers *M*, `nsgt_real` computes the corresponding 
+%   nonstationary Gabor transform of *f*, computing only the positive 
+%   frequency samples. Let $P(n)=\sum_{l=1}^{n} shift(l)$, then the output 
+%   `c = nsgt_real(f,g,shift,M)` is a cell array with 
+%
+%   ..         Ls-1                               
+%      c{n}(m)= sum f(l)*conj(g\{n\}(l-P(n)))*exp(-2*pi*i*(l-P(n))*m/M(n))
+%               l=0            
+%
+%   .. math:: c\{n\}(m) = \sum_{l=0}^{Ls-1} f[l]\overline{g\{n\}[l-P(n)]}e^{-2\pi i(l-P(n))m/M(n)},
+%
+%   where `m` runs from `0` to `floor( M(n)/2 )`.
+%
+%   For more details, see |nsgt|.
 % 
-%   The transform produces phase-locked coefficients in the
-%   sense that each window is considered to be centered at
-%   0 and the signal itself is shifted accordingly.
-%
-%   See also:  nsigt_real, nsdual, nstight
-%
-%   More information can be found at:
-%   http://univie.ac.at/nonstatgab/
-%
+%   See also:  nsgt, nsigt_real, nsdual, nstight
 
 % Author: Nicki Holighaus, Gino Velasco
-% Date: 03.03.13
+% Date: 23.04.13
 
 % Check input arguments
 

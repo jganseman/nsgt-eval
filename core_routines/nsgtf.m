@@ -1,6 +1,8 @@
 function [c,Ls] = nsgtf(f,g,shift,M)
 %NSGTF  Nonstationary Gabor filterbank
 %   Usage: [c,Ls] = nsgtf(f,g,shift,M)
+%          [c,Ls] = nsgtf(f,g,shift)
+%          c = nsgtf(...)
 %
 %   Input parameters: 
 %         f         : The signal to be analyzed (For multichannel
@@ -16,22 +18,37 @@ function [c,Ls] = nsgtf(f,g,shift,M)
 %         c         : Transform coefficients (matrix or cell array)
 %         Ls        : Original signal length (in samples)
 %
-%   Given the cell array *g* of windows and the frequency shift vector 
-%   *shift*, this function computes the corresponding nonstationary Gabor 
-%   filterbank coefficients for *f*. 
-% 
-%   The transform produces phase-locked coefficients in the sense that each 
-%   window is considered to be centered at 0 and the signal itself is 
-%   shifted accordingly.
+%   Given the cell array *g* of windows, the time shift vector *shift*, and
+%   channel numbers *M*, `nsgtf` computes the corresponding nonstationary 
+%   Gabor filterbank of *f*. Let $P(n)=\sum_{l=1}^{n} shift(l)$, then the 
+%   output `c = nsgtf(f,g,shift,M)` is a cell array with 
+%
+%   ..         Ls-1                                      
+%      c{n}(m)= sum fft(f)(l)*conj(g\{n\}(l-P(n)))*exp(2*pi*i*(l-P(n))*m/M(n))
+%               l=0                                     
+%
+%   .. math:: c\{n\}(m) = \sum_{l=0}^{Ls-1} \hat{f}[l]\overline{g\{n\}[l-P(n)]}e^{-2\pi i(l-P(n))m/M(n)},
+%
+%   where `m` runs from `0` to `M(n)-1`.
+%
+%   If multichannel input is used, the same nonstationary Gabor system is 
+%   applied to each channel and each entry of *c* will be a 2D array with 
+%   c{n}(:,CH) being the entries corresponding to channel *CH*.
+%
+%   If *M* is scalar or uniform, then *c* is converted into a regular
+%   array. 
+%
+%   The choice of phase-locked coefficients (by inserting (l-P(n)) in the 
+%   complex exponential prevents border artifacts for combinations of 
+%   window functions *g{n}* that do not have full support and *M(n)* that 
+%   do not divide *Ls*.
 %
 %   See also:  nsigtf, nsdual, nstight
 %
-%   More information can be found at:
-%   http://univie.ac.at/nonstatgab/
-%
+%   References: badohojave11 dogrhove11
 
 % Author: Nicki Holighaus, Gino Velasco
-% Date: 03.03.13
+% Date: 23.04.13
 
 % Check input arguments
 if nargin < 5

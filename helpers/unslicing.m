@@ -37,7 +37,7 @@ function f_rec = unslicing(f_sliced,sl_len,tr_area,slices)
 %    tw(1+(hopsize-tr_area)/2:(3*hopsize+tr_area)/2) ...
 %        = ones(hopsize+tr_area,1);
 %    tw([(3*hopsize+tr_area)/2+(1:tr_area2/2), ...
-%        (hopsize-tr_area)/2+(-tr_area2/2+1:0)]) = hannwin(tr_area2);
+%        (hopsize-tr_area)/2+(-tr_area2/2+1:0)]) = winfuns('hann',tr_area2);
 %
 % -------------------------------------------------
 

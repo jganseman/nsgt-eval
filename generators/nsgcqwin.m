@@ -15,9 +15,31 @@ function [g,shift,M] = nsgcqwin(fmin,fmax,bins,sr,Ls,varargin)
 %         shift     : Vector of shifts between the center frequencies
 %         M         : Vector of lengths of the window functions
 %
-%   Creates a set of windows whose centers correspond to center frequencies 
-%   to be used for the nonstationary Gabor transform with varying Q-factor.
+%   Create a nonstationary Gabor filterbank with constant or varying 
+%   Q-factor and relevant frequency range from *fmin* to *fmax*. To allow
+%   for perfect reconstruction, the frequencies outside that range will be
+%   captured by 2 additional filters placed on the zero and Niyquist
+%   frequencies, respectively.
 %
+%   The Q-factor (quality factor) is the ratio of center frequency to
+%   bandwidth `cent_freq/bandwidth`.
+%
+%   To create a constant-Q filterbank with a fixed number of bins per 
+%   octave, use a scalar parameter *bins*. The default parameters serve to
+%   set up a filter sequence with approximately 1/2 overlap and only
+%   approximately constant Q-factor (up to 1 sample deviation). The 
+%   optional switch *fractional* can be set to 1 to allow for fractional 
+%   sampling and exactly constant Q-factor.
+%
+%   Alteratively, a vector *bins* can be supplied. In this case, successive
+%   octaves can have different numbers of filters regularly spaced on a
+%   logarithmic scale, e.g. *bins(1)* filters will be placed between `fmin`
+%   and `2*fmin`, *bins(2)* filters between `2*fmin` and `4*fmin` and so
+%   on.
+%
+%   For more details on the construction of the constant-Q nonstationary 
+%   Gabor filterbank, please check the reference.
+%   
 %   Optional input arguments arguments can be supplied like this::
 %
 %       nsgcqwin(fmin,fmax,bins,sr,Ls,'min_win',min_win)
@@ -29,25 +51,26 @@ function [g,shift,M] = nsgcqwin(fmin,fmax,bins,sr,Ls,varargin)
 %
 %     'Qvar',Qvar              Bandwidth variation factor
 %
-%     'wL_fac',wL_fac          Filter lengths are rounded to multiples of 
-%                              this
+%     'bwfac',bwfac            Channel numbers *M* are rounded to multiples 
+%                              of this
 %
 %     'fractional',fractional  Allow fractional shifts and bandwidths
 %
-%     'winfun',winfun          Window function handle
+%     'winfun',winfun          String containing the window name
 %
-%   See also:  nsgtf, nsgtf_real, hannwin, blackharr
+%   See also:  nsgtf, nsgtf_real, winfuns
 %
+%   References: dogrhove11 dogrhove12
 
 % Authors: Nicki Holighaus, Gino Velasco, Monika Doerfler
-% Date: 04.03.13
+% Date: 23.04.13
 
 % Set defaults
 Qvar = 1;
-wL_fac = 1;
+bwfac = 1;
 min_win = 4;
 fractional = 0;
-winfun = @hannwin;
+winfun = 'hann';
 
 % Check input arguments
 
@@ -69,8 +92,8 @@ if nargin >= 6
                 min_win = varargin{kk+1};
             case {'Qvar'}
                 Qvar = varargin{kk+1};
-            case {'wL_fac'}
-                wL_fac = varargin{kk+1};
+            case {'bwfac'}
+                bwfac = varargin{kk+1};
             case {'fractional'}
                 fractional = varargin{kk+1};
             case {'winfun'}
@@ -99,20 +122,22 @@ elseif length(bins) < b
     bins = [bins ; bins(end)*ones(b-length(bins),1)];
 end
 
-fbas = zeros(sum(bins),1);
+fbas = zeros(sum(bins)+1,1);
 
 ll = 0;
 for kk = 1:length(bins);
-    fbas(ll+(1:bins(kk))) = ...
-        fmin*2.^(((kk-1)*bins(kk):(kk*bins(kk)-1)).'/bins(kk));
+    fbas(ll+(1:bins(kk)+1)) = ...
+        fmin*2.^(((kk-1)*bins(kk):(kk*bins(kk))).'/bins(kk));
     ll = ll+bins(kk);
 end
 
-temp = find(fbas>=fmax,1);
-if fbas(temp) >= nf
+temp = find(fbas >= fmax,1);
+if fbas(temp-1) + (fbas(temp) - fbas(temp-2))/2 >= nf
+    fbas = fbas(1:temp-2);
+elseif fbas(temp) + (fbas(temp+1) - fbas(temp-1))/2 >= nf
     fbas = fbas(1:temp-1);
-else
-    fbas = fbas(1:temp);
+else 
+    fbas = fbas(1:temp); 
 end
 
 Lfbas = length(fbas);
@@ -153,8 +178,6 @@ else
     M = bw;
 end
 
-N = length(shift);
-
 for ii = 1:2*(Lfbas+1)
     if bw(ii) < min_win;
         bw(ii) = min_win;
@@ -164,21 +187,21 @@ end
 
 if fractional
     g = arrayfun(@(x,y,z) ...
-        winfun(([0:ceil(z/2),-floor(z/2):-1]'-x)/y)/sqrt(y),corr_shift,...
+        winfuns(winfun,([0:ceil(z/2),-floor(z/2):-1]'-x)/y)/sqrt(y),corr_shift,...
         bw,M,'UniformOutput',0);
 else
-    g = arrayfun(@(x) winfun(x)/sqrt(x),...
+    g = arrayfun(@(x) winfuns(winfun,x)/sqrt(x),...
         bw,'UniformOutput',0);
 end
 
-M = wL_fac*ceil(M/wL_fac);
+M = bwfac*ceil(M/bwfac);
 
 % Setup Tukey window for 0- and Nyquist-frequency
 for kk = [1,Lfbas+2]
     if M(kk) > M(kk+1);
         g{kk} = ones(M(kk),1);
         g{kk}((floor(M(kk)/2)-floor(M(kk+1)/2)+1):(floor(M(kk)/2)+...
-            ceil(M(kk+1)/2))) = hannwin(M(kk+1));
+            ceil(M(kk+1)/2))) = winfuns('hann',M(kk+1));
         g{kk} = g{kk}/sqrt(M(kk));
     end
 end

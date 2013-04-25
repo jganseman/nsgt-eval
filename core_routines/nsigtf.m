@@ -1,40 +1,45 @@
-function fr = nsigtf(c,gd,shift,Ls)
+function fr = nsigtf(c,g,shift,Ls)
 %NSIGTF  Nonstationary Gabor filterbank synthesis
-%   Usage: fr = nsigtf(c,gd,shift,Ls)
+%   Usage: fr = nsigtf(c,g,shift,Ls)
+%          fr = nsigtf(c,g,shift)
 %
 %   Input parameters: 
 %         c         : Cell array of non-stationary Gabor coefficients
-%         gd        : Cell array of synthesis filters
+%         g         : Cell array of synthesis filters
 %         shift     : Vector of time shifts
 %         Ls        : Length of the analyzed signal
 %   Output parameters:
 %         fr        : Synthesized real-valued signal (Channels are stored 
 %                     in the columns)
 %
-%   Given the cell array *c* of non-stationary Gabor coefficients, and a 
-%   set of filter and frequency shifts this function computes the 
-%   corresponding inverse non-stationary Gabor transform.
+%   Given the cell array *c* of nonstationary Gabor filterbank 
+%   coefficients, a set of filters *g* and frequency shifts *shift*, this 
+%   function computes the corresponding nonstationary Gabor filterbank
+%   synthesis. Let `N=numel(g)` and $P(n)=\sum_{l=1}^{n} shift(l)$, then 
+%   the synthesis formula reads:
 %
-%   If a non-stationary Gabor frame was used to produce the coefficients 
-%   and 'gd' is a corresponding dual frame, this function should give 
-%   perfect reconstruction of the analyzed signal (up to numerical errors).
+%   ..               N-1 
+%       fft(fr)(l) = sum sum c{n}(m)g{n}[l-P(n)]*exp(-2*pi*i*(l-P(n))*m/M(n)),
+%                    n=0  m
+%   
+%   .. math::  fft(fr)[l] = \sum_{n=0}^{N-1}\sum_{m} c\{n\}(m)g\{n\}[l-P(n)] e^{-2\pi i(l-P(n))m/M(n)},
+%
+%   for $l=0,\cdots,Ls-1$. The final reconstruction step then is 
+%   `fr = ifft(fr)`. In practice, the synthesis formula is realized by `fft` 
+%   and overlap-add.
 % 
-%   The inverse transform is computed by simple overlap-add. For each entry
-%   of the cell array *c*, the coefficients of frequencies around a certain 
-%   position in time, the inverse Fourier transform is taken, giving 'time 
-%   slices' of a signal. These slices are added onto each other with an 
-%   overlap depending on the window lengths and positions, thus 
-%   (re-)constructing a signal. For multichannel signals, the overlap-add
-%   procedure is done for each channel.
+%   If a nonstationary Gabor frame was used to produce the coefficients 
+%   and *g* is a corresponding dual frame, this function should perfectly 
+%   reconstruct the originally analyzed signal to numerical precision.
+%   
+%   Multichannel output will save each channel in a column of *fr*.
 %
 %   See also:  nsgtf, nsdual, nstight
 % 
-%   More information can be found at:
-%   http://univie.ac.at/nonstatgab/
-%
+%   References: badohojave11 dogrhove11 
 
 % Author: Nicki Holighaus, Gino Velasco
-% Date: 03.03.13
+% Date: 23.04.13
 
 %Check input arguments
 if nargin < 3
@@ -65,7 +70,7 @@ end
 % windows
 
 for ii = 1:N
-    Lg = length(gd{ii});
+    Lg = length(g{ii});
     Lc = length(c{ii}(:,1));
     
     win_range = mod(timepos(ii)+(-floor(Lg/2):ceil(Lg/2)-1),NN)+1;
@@ -74,7 +79,7 @@ for ii = 1:N
     temp = temp(mod([end-floor(Lg/2)+1:end,1:ceil(Lg/2)]-1,Lc)+1,:);
     
     fr(win_range,:) = fr(win_range,:) + ...
-        bsxfun(@times,temp,gd{ii}([Lg-floor(Lg/2)+1:Lg,1:ceil(Lg/2)]));
+        bsxfun(@times,temp,g{ii}([Lg-floor(Lg/2)+1:Lg,1:ceil(Lg/2)]));
 end
 
 fr = ifft(fr);

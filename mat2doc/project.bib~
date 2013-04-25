@@ -6,24 +6,6 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-@article{ho13,
-  title={{Structure of nonstationary Gabor frames and their dual
-systems}},
-  author={Holighaus, N.},
-  journal="Preprint",
-  year=2013,
-}
-
-@book{ch08,
-  author = "{C}hristensen, {O}le",
-  year = "2008",
-  title = "{F}rames and {B}ases. {A}n {I}ntroductory {C}ourse.",
-  booktitle = "{F}rames and {B}ases. {A}n {I}ntroductory {C}ourse.",
-  publisher = "{A}pplied and {N}umerical {H}armonic {A}nalysis. {B}asel {B}irkh{\"a}user",
-  language = "english",
-  zbl = "pre05179846",
-}
-
 @misc{wikiwins,
   title = "Window function - Wikipedia article",
   howpublished = "{http://en.wikipedia.org/wiki/Window_function}",

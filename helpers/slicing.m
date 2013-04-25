@@ -57,7 +57,7 @@ f = [f;zeros(hopsize*rows-Ls,1)];
 f_sliced = zeros(sl_len,rows);
 
 % Construct Tukey window for slicing
-tw = hannwin(2*tr_area);
+tw = winfuns('hann',2*tr_area);
 tw = [tw(tr_area+1:end);ones(sl_len/2-tr_area,1);tw(1:tr_area)];
 
 % The columns of the following matrix contain the indices of (possibly)

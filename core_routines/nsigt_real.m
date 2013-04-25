@@ -1,10 +1,10 @@
-function fr = nsigt_real(c,gd,shift,M,Ls)
+function fr = nsigt_real(c,g,shift,M,Ls)
 % NSIGT_REAL  Nonstationary Gabor synthesis for real signals
-%   Usage: fr = nsigt_real(c,gd,shift,M,Ls)
+%   Usage: fr = nsigt_real(c,g,shift,M,Ls)
 %
 %   Input parameters: 
 %         c         : Cell array of non-stationary Gabor coefficients
-%         gd        : Cell array of synthesis windows
+%         g         : Cell array of synthesis windows
 %         shift     : Vector of time shifts
 %         M         : Number of frequency channels (vector/scalar)
 %         Ls        : Length of the analyzed signal
@@ -12,35 +12,41 @@ function fr = nsigt_real(c,gd,shift,M,Ls)
 %         fr        : Synthesized real-valued signal (Channels are stored 
 %                     in the columns)
 %
-%   Given the cell array *c* of non-stationary Gabor coefficients, and a 
-%   set of windows, time shifts and channel numbers, this function computes
-%   the corresponding inverse non-stationary Gabor transform.
+%   Given the cell array *c* of nonstationary Gabor coefficients, a set of 
+%   windows *g* and time shifts *shift*, this function computes the 
+%   corresponding real-valued nonstationary Gabor synthesis. Let 
+%   `N=numel(g)` and $P(n)=\sum_{l=1}^{n} shift(l)$, then the complex 
+%   valued synthesis formula reads:
 %
-%   This routine always assumes that the output is supposed to be
-%   real-valued.
+%   ..          N-1 
+%       fr(l) = sum sum c{n}(m)g{n}[l-P(n)]*exp(2*pi*i*(l-P(n))*m/M(n)),
+%               n=0  m
+%   
+%   .. math::  fr[l] = \sum_{n=0}^{N-1}\sum_{m} c\{n\}(m)g\{n\}[l-P(n)] e^{2\pi i(l-P(n))m/M(n)},
+%
+%   for $l=0,\cdots,Ls-1$. In practice, the synthesis formula is realized 
+%   by `ifft` and overlap-add. In the real valued case, `ifftreal` provides
+%   the missing frequency content normally given by the coefficients
+%   `c{n}(m)` for $m \geq floor(M(n)/2)$.
 % 
-%   If a non-stationary Gabor frame was used to produce the coefficients 
-%   and 'gd' is a corresponding dual frame, this function should give 
-%   perfect reconstruction of the analyzed signal (up to numerical errors).
-% 
-%   The inverse transform is computed by simple overlap-add. For each entry
-%   of the cell array *c*, the coefficients of frequencies around a certain 
-%   position in time, the inverse Fourier transform is taken, giving 'time 
-%   slices' of a signal. These slices are added onto each other with an 
-%   overlap depending on the window lengths and positions, thus 
-%   (re-)constructing a signal. For multichannel signals, the overlap-add
-%   procedure is done for each channel.
+%   If a nonstationary Gabor frame was used to produce the coefficients 
+%   and *g* is a corresponding dual frame, this function should perfectly 
+%   reconstruct the originally analyzed signal to numerical precision.
+%
+%   Note that `nsigt_real` requires the input parameter *M* to guarantee
+%   that the vectors used in the overlap-add process are of the correct
+%   length.
+%
+%   Multichannel output will save each channel in a column of *fr*.
 %
 %   See also:  nsgt_real, nsdual, nstight
 % 
-%   More information can be found at:
-%   http://univie.ac.at/nonstatgab/
-%
+%   References: badohojave11
 
 % Author: Nicki Holighaus, Gino Velasco
-% Date: 03.03.13
+% Date: 23.04.13
 
-% some preparation
+% Preparation
 
 if nargin < 4
     error('Not enough input arguments');
@@ -71,7 +77,7 @@ end
 % windows
 
 for ii = 1:N
-    Lg = length(gd{ii});
+    Lg = length(g{ii});
     
     win_range = mod(timepos(ii)+(-floor(Lg/2):ceil(Lg/2)-1),NN)+1;
     
@@ -80,7 +86,7 @@ for ii = 1:N
         length(temp))+1,:);
     
     fr(win_range,:) = fr(win_range,:) + ...
-        bsxfun(@times,temp,gd{ii}([Lg-floor(Lg/2)+1:Lg,1:ceil(Lg/2)]));
+        bsxfun(@times,temp,g{ii}([Lg-floor(Lg/2)+1:Lg,1:ceil(Lg/2)]));
 end
 
 fr = fr(1:Ls,:); % Truncate the signal to original length (if given)

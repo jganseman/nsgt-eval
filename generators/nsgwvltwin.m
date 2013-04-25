@@ -11,27 +11,36 @@ function [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun)
 %         bins      : Desired number of bins per octave
 %         sr        : Sampling rate of f (in Hz)
 %         Ls        : signal length
-%         winfun    : window function to be used, the following are
-%                     available:
-%                     @hannwin    - |hannwin|, Hann window (default),
-%                     @gausscw    - |gausscw|, Gaussian window,
-%                     @wp2inp     - |wp2inp|, Uncertainty minimizer,
+%         winfun    : String containing the window name, e.g. the following
+%                     are available:
+%                     'hann'      - Hann window (default),
+%                     'blackharr' - Blackman-Harris window,
+%                     'gauss'     - Truncated Gaussian window,
+%                     'wp2inp'    - Uncertainty minimizer
 %   Output parameters:
 %         g         : Cell array of Fourier transforms of the analysis
 %                     Wavelets
 %         shift     : Vector of frequency shifts
 %         M         : Number of time channels
-%         fb        : frame bounds of the system
+%         fb        : Frame bounds of the resulting system
 %
-%   Given the function the necessary parameters described below, this
-%   wrapper function computes a painless Wavlet system. If you do not know
-%   how to use this function, please use |wvlttrans| instead.
+%   Given the parameter set *fmin*, *bw*, *bins*, *sr* and *Ls*, this
+%   function constructs a painless system of bandlimited Wavelets spanning 
+%   the range of frequencies from *fmin* to $2^{k/bins} fmin$ with $k$ such 
+%   that the dilate centered at this frequency will be completely contained 
+%   in the positive frequencies, but the Wavelet at $2^{k+1/bins} fmin$
+%   would not be. The number of scales per octave is determined by the 
+%   input parameter *bins*, while the Wavelet corresponding to the largest
+%   (time-)scale will is constructed to have a bandwidth of *bw* Hz. The 
+%   low and high frequencies will be spanned by a plateau-like filter each 
+%   to ensure the frame property. 
 %
-%   More information about the functions used can be found at:
-%   http://nuhag.eu/nonstatgab/
+%   If you are not familiar with Wavelet systems, please use |wvlttrans| 
+%   instead.
 %
-%   See also:  wvlttrans, invwvlttrans, hannwin, gausscw, wp2inp
+%   See also:  wvlttrans, invwvlttrans, winfuns
 %
+%   References: badohojave11
 
 % Author: Christoph Wiesmeyr, Nicki Holighaus
 % Date: 04.03.13
@@ -39,7 +48,7 @@ function [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun)
 % Check input parameters
 
 if nargin < 6
-    winfun = @hannwin;
+    winfun = 'hann';
     if nargin < 5
 	error('Not enough input arguments');
     end
@@ -91,7 +100,7 @@ points = arrayfun(@(x,y) ceil(x)*delta:delta:y*delta,bl,br,...
 points = arrayfun(@(x) k*(log(points{x})/log(a)-x+1),1:scales,...
     'UniformOutput',0);
 
-g(2:scales+1) = cellfun(winfun,points,'UniformOutput',0);
+g(2:scales+1) = cellfun(@(x) winfuns(winfun,x),points,'UniformOutput',0);
 g(2:scales+1) = arrayfun(@(x) g{x}/sqrt(M(x)),2:scales+1,...
     'UniformOutput',0);
 g(end:-1:scales+3) = cellfun(@(x) flipud(x),g(2:scales+1),...

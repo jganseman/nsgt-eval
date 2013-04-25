@@ -14,18 +14,15 @@ function [SF,V0] = specflux(f,win_length,tgap)
 %   This is a helper function for `onsetdet` and not meant to
 %   be used individually.
 %
-%   Uses routines from LTFAT 0.97 or higher, available at:
-%   http://ltfat.sourceforge.net/
-%
 %   Computes the spectral flux onset-detection function
 %   of *f* with a Hann window of length *win_length*. 
 %   The STFT is taken with time shift parameter *tgap*
 %   and *win_length* frequency channels.
 %
-%
 %   See also:  onsetdet
 %
-%   External: DGT (LTFAT routine)
+%   Externals: COMP_DGT_FB (LTFAT routine, included in NSGToolbox V0.1.0 
+%              and higher)
 
 % Author: Nicki Holighaus
 % Date: 04.03.13
@@ -38,9 +35,13 @@ end
 
 % Compute the Gabor transform (sampled STFT) of f
 
-win=hannwin(win_length);
+win=winfuns('hann',win_length);
 
-V0 = dgt(f,win,tgap,win_length);
+if size(f,2) > 1
+    f = f.';
+end
+
+V0 = comp_dgt_fb(f,win,tgap,win_length);
 
 % Compute the spectral flux 
 
