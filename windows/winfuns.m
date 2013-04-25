@@ -3,7 +3,7 @@ function g = winfuns(name,x,L)
 %   Usage:  g = winfuns(name,x)
 %           g = winfuns(name,N,L)
 %           g = winfuns(name,N)
-%
+%   
 %   Input parameters: 
 %         name      : String containing the window name
 %         x         : Vector of sampling positions
@@ -11,12 +11,12 @@ function g = winfuns(name,x,L)
 %         L         : Output length (in samples)
 %   Output parameters:
 %         g         : Output window
-%
+%   
 %   This function serves to compute a variety of standard and some more 
 %   exotic window functions. Most of the functions used are detailed and 
 %   discussed in classical papers (see references below), but several are
 %   included for special purposes in the toolbox only.
-%
+%   
 %   Given a character string *name* containing the name of the desired
 %   window function, the function offers 2 modes of operation. If the 
 %   second input parameter is a vector *x* of sampling values, then the
@@ -25,7 +25,7 @@ function g = winfuns(name,x,L)
 %   whole-point centered window with a support of *N* samples is produced 
 %   and, given *L*, zero-extended to length *L*.
 %
-%  The following windows are available:
+%   The following windows are available:
 %
 %     'hann'         von Hann window. Forms a PU. The Hann window has a
 %                    mainlobe with of 8/M, a PSL of -31.5 dB and decay rate

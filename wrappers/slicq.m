@@ -36,30 +36,32 @@ function [c,g,shift,M,Ls,sl_len,tr_area] = ...
 %         sl_len    : Slice length
 %         tr_area   : Transition area length
 %
-%   This wrapper function computes the sliced constant-Q nonstationary 
-%   Gabor transform of the signal *f* given by the specified parameter set. 
-%   The parameters are identical to the parameters for |nsgcqwin| slice 
-%   and transition area length. Those additional parameters are the slice 
-%   and transition area lengths as well as (optionally) the desired number 
-%   of frequency channels *M*, if a fixed number of channels is desired, 
-%   and the parameter *Qvar* that allows variation of the overlap between 
-%   frequency channels.
+%   This is a wrapper function for the sliced constant-Q nonstationary 
+%   Gabor transform of the signal *f*. The signal is smoothly sliced into
+%   half-overlap segments of length *sl_len* weighted by a Tukey window 
+%   with trnasition areas of length *tr_area* and total length of 
+%   `sl_len/2 + tr_area`. 
 %
-%   For more information on the constant-Q nonstationary Gabor transform, 
-%   see
-%   http://www.univie.ac.at/nonstatgab/
+%   Subsequently, a constant-Q nonstationary Gabor transform with essential
+%   frequency range *fmin* to *fmax* and *bins* bins per octave will be
+%   applied to each segment using |nsgcqwin| with modified Blackman-Harris 
+%   windows and |nsgtf|. 
 %
-%   For more information on sliced transforms, see
-%   N. Holighaus, M. Doerfler, G. Velasco, and T. Grill, "A framework for 
-%   invertible, real-time constant-q transforms," Audio, Speech, and 
-%   Language Processing, IEEE Transactions on, vol. 21, no. 4, 
-%   pp. 775-785, April 2013.
+%   The additional parameters are an optional fixed number of time steps 
+%   *M* per slice in each frequency channel and a bandwidth variation 
+%   factor *Qvar*. Setting the minimum support *min_win* of the filters 
+%   used helps in preserving shape and localisation of low frequency
+%   filters, but may lead to a varying Q-factor in that frequency range.
+%   
+%   See the help of |nsgcqwin| for more information on the constant-Q
+%   nonstationary Gabor transform.
 %
 %   See also:  islicq, nsgtf, nsgcqwin, slicing
 %
+%   References:  dogrhove11 dogrhove12
 
 % Author: Nicki Holighaus
-% Date: 04.03.13
+% Date: 25.04.13
 
 if size(f,1) == 1
     f = f.';

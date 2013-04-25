@@ -22,14 +22,8 @@ function [pos,V0] = onsetdet(f,win_length,thre,range,multi,shift,showplot)
 %         pos       : Onset sequence
 %         V0        : Regular discrete Gabor transform of f
 %
-%   Uses routines from LTFAT 0.97 or higher, available at:
-%   http://ltfat.sourceforge.net/
-%
 %   This routine produces a sequence of onsets using a straightforward
-%   realization of the onset detection procedure described in 
-%
-%   S. Dixon. Onset Detection Revisited. Proc. DAFx 06, pages 133-137, 
-%   September 2006.
+%   realization of the spectral flux onset detection procedure.
 %
 %   Uses a Hann window STFT analysis and the spectral flux onset detection
 %   function.
@@ -44,7 +38,7 @@ function [pos,V0] = onsetdet(f,win_length,thre,range,multi,shift,showplot)
 %
 %   See also:  onsetnsgt, invonsetnsgt, specflux, peakpick
 %
-%   External: DGT (LTFAT routine)
+%   References:  badohojave11 di06
 
 % Author: Nicki Holighaus
 % Date: 04.03.13

@@ -12,13 +12,18 @@ function fr = invonsetnsgt(c,g,shift,M,Ls)
 %   Output parameters: 
 %         fr        : Reconstructed signal
 %
-%   Help text goes here.
+%   This is a wrapper function for the inverse scaleframe nonstationary 
+%   Gabor transform with onset detection based adaptation. It basically
+%   just forwards the input to |nsdual| and |nsigt_real|. 
+%
+%   For more information see |onsetnsgt|.
 %
 %   See also:  onsetnsgt, nsigt_real, nsdual
 %
+%   References:  badohojave11
 
 % Author: Nicki Holighaus
-% Date: 04.03.13
+% Date: 25.04.13
 
 if nargin < 5
     if nargin < 4

@@ -12,8 +12,7 @@ function plot_wins(g,shift,normalize)
 %   Helper function that plots a non-stationary Gabor frame
 %   determined by the cell array *g* and posititon vector *shift*.
 %
-%   See also:  nsgsclwin, nsgwvltwin, nsgerbwin, nsgcqwin
-%
+%   See also:  nsgsclwin, nsgwvltwin, nsgerbwin, nsgcqwin%
 
 % Author:  Nicki Holighaus
 % Date: 04.03.13

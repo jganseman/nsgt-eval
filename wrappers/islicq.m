@@ -15,28 +15,30 @@ function [fr,gd] = islicq(c,g,shift,M,Ls,sl_len,tr_area)
 %         fr        : Reconstructed signal
 %         gd        : Cell array of synthesis windows
 %
-%   This wrapper function implements the inverse constant-Q nonstationary
-%   Gabor transform. Given the output of |slicq|, this routine 
-%   synthesizes the signal *fr* from the coefficient array *c*. If *c* is 
-%   unaltered and the system specified by *g*, *shift* and *M* is a 
-%   painless frame, then *fr* will be equal to the signal analyzed by 
-%   |slicq|.
+%   This is a wrapper function for the inverse sliced constant-Q 
+%   nonstationary Gabor transform. Given an array of coefficients *c* 
+%   corresponding to a sliced nonstationary Gabor system *g*, *shift*, *M* 
+%   with slice length *sl_len*, this function computes the corrsponding
+%   synthesis operation. 
 %
-%   For more information on the constant-Q nonstationary Gabor transform, 
-%   see
-%   http://www.univie.ac.at/nonstatgab/
+%   That is, |nsdual| is used to compute the canonical dual frame of the
+%   system *g*, *shift*, *M* if possible. Afterwards, a sliced signal is
+%   synthesized using this dual system and the function |nsigtf|. Finally
+%   the synthesized signal is unsliced by the helper function |unslicing|.
+%   
+%   If the output of |slicq| is used as input for this function, and the
+%   system *g*, *shift*, *M* used is a painless frame, then the originally
+%   analyzed function is reconstructed perfectly.
 %
-%   For more information on sliced transforms, see
-%   N. Holighaus, M. Doerfler, G. Velasco, and T. Grill, "A framework for 
-%   invertible, real-time constant-q transforms," Audio, Speech, and 
-%   Language Processing, IEEE Transactions on, vol. 21, no. 4, 
-%   pp. 775-785, April 2013.
+%   See the help of |nsgcqwin| for more information on the constant-Q
+%   nonstationary Gabor transform.
 %
 %   See also:  slicq, nsigtf, nsdual, unslicing
 %
+%   References:  dogrhove11 dogrhove12
 
 % Author: Nicki Holighaus
-% Date: 04.03.13
+% Date: 25.04.13
 
 if nargin < 7
     error('Not enough input arguments');

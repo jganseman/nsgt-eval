@@ -13,10 +13,10 @@ function [c,g,shift,M,Ls,fb,tgtfl] = wvlttrans(f,fmin,sr,bins,bw,winfun)
 %   Input parameters: 
 %         f         : Input signal
 %         fmin      : Desired minimum center frequency (in Hz)
-%         bandwidth : Desired bandwidth in the first frequency band (in Hz)
-%         bins      : Desired number of bins per octave
 %         sr        : Sampling rate of f (in Hz)
-%         winfun    : Window function to be used
+%         bins      : Desired number of bins per octave
+%         bw        : Desired bandwidth in the first frequency band (in Hz)
+%         winfun    : String containing the desired window function name
 %   Output parameters: 
 %         c         : Cell array of Wavelet coefficients
 %         g         : Cell array of Fourier transforms of the analysis
@@ -27,18 +27,29 @@ function [c,g,shift,M,Ls,fb,tgtfl] = wvlttrans(f,fmin,sr,bins,bw,winfun)
 %         fb	    : Frame bounds (vector)
 %         tgtfl     : Tightflag (1 if frame is tight)
 %
-%   Given the function *f* and the necessary parameters, this wrapper 
-%   function performs the corresponding Wavelet transform
+%   This is a wrapper function for the painless Wavelet transform via
+%   nonstationary Gabor filterbank. Given a signal *f* and minimum
+%   frequency *fmin*, a tight system with $4$ scales per octave is
+%   constructed using logarithmically sampled Hann windows with 3/4
+%   overlap. The additional parameters *sr*, *bins*, *bw* and *winfun* can
+%   be specified to individually construct different Wavelet systems.
 %
-%   More information about the functions used can be found at:
-%   http://univie.ac.at/nonstatgab/
+%   To construct systems with specific overlap factors $(n-1)/n$, choose
+%   $bw = 2^{n/(2 bins)}-2^{-n/(2 bins)}$.
+%
+%   In addition to the Wavelet coefficients *c*, also the analysis system
+%   *g*, *shift*, *M* can be returned, as can the length *Ls* of the input
+%   signal *f*, the frame bounds of the system *g*, *shift*, *M* and a flag
+%   indicating if a tight frame was used. These parameters are necessary to
+%   perform reconstruction with the inverse Wavelet transform wrapper
+%   |invwvlttrans|.
 %
 %   See also:  invwvlttrans, nsgtf, nsgwvltwin
 %
-
+%   References: badohojave11
 
 % Author: Nicki Holighaus, Christoph Wiesmeyr
-% Date: 04.03.13
+% Date: 25.04.13
 
 
 % set default window function

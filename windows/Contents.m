@@ -2,9 +2,8 @@
 %
 %  Nicki Holighaus, 2011-2013.
 %
-%  FIR windows
-%    HANNWIN       -  Hann window
-%    BLACKHARR     -  Blackman-Harris window
+%  Window function generator
+%    WINFUNS       -  Window function generator
 %  
 %  For help, bug reports, suggestions etc. please send email to
 %  nholighaus@kfs.oeaw.ac.at

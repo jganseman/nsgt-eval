@@ -11,8 +11,8 @@ function [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun)
 %         bins      : Desired number of bins per octave
 %         sr        : Sampling rate of f (in Hz)
 %         Ls        : signal length
-%         winfun    : String containing the window name, e.g. the following
-%                     are available:
+%         winfun    : String containing the window fucntion name, e.g. the 
+%                     following are available:
 %                     'hann'      - Hann window (default),
 %                     'blackharr' - Blackman-Harris window,
 %                     'gauss'     - Truncated Gaussian window,
@@ -43,7 +43,7 @@ function [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun)
 %   References: badohojave11
 
 % Author: Christoph Wiesmeyr, Nicki Holighaus
-% Date: 04.03.13
+% Date: 25.04.13
 
 % Check input parameters
 

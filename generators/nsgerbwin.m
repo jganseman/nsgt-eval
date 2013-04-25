@@ -48,14 +48,15 @@ function [g,shift,M] = nsgerbwin(bins,sr,Ls,varargin)
 %     'bwfac',bwfac            Channel numbers *M* are rounded to multiples 
 %                              of this
 %
-%     'winfun',winfun          String containing the window name
+%     'winfun',winfun          String containing the desired window 
+%                              function name
 %
 %   See also:  nsgtf, nsgtf_real, winfuns
 %
 %   References: badohojave11 nebahoso13 
 
 % Author: Thibaud Necciari, Nicki Holighaus
-% Date: 23.04.13
+% Date: 25.04.13
 
 % Set defaults
 Qvar = 1;

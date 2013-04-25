@@ -56,14 +56,15 @@ function [g,shift,M] = nsgcqwin(fmin,fmax,bins,sr,Ls,varargin)
 %
 %     'fractional',fractional  Allow fractional shifts and bandwidths
 %
-%     'winfun',winfun          String containing the window name
+%     'winfun',winfun          String containing the desired window 
+%                              function name
 %
 %   See also:  nsgtf, nsgtf_real, winfuns
 %
 %   References: dogrhove11 dogrhove12
 
 % Authors: Nicki Holighaus, Gino Velasco, Monika Doerfler
-% Date: 23.04.13
+% Date: 25.04.13
 
 % Set defaults
 Qvar = 1;
