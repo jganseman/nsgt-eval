@@ -163,16 +163,16 @@ end
 bw(Lfbas+1) = (fbas(Lfbas+1))*(2^(1/bins(end))-2^(-1/bins(end)));
 bw(Lfbas+3:2*Lfbas+2) = bw(Lfbas+1:-1:2);
 
-rfbas = zeros(size(fbas));
-rfbas(1:Lfbas+2) = floor(fbas(1:Lfbas+2));
-rfbas(Lfbas+3:end) = ceil(fbas(Lfbas+3:end));
+posit = zeros(size(fbas));
+posit(1:Lfbas+2) = floor(fbas(1:Lfbas+2));
+posit(Lfbas+3:end) = ceil(fbas(Lfbas+3:end));
 
-shift = [mod(-rfbas(end),Ls); diff(rfbas)];
+shift = [mod(-posit(end),Ls); diff(posit)];
 
 bw = Qvar*bw;
 
 if fractional
-    corr_shift = fbas-rfbas;
+    corr_shift = fbas-posit;
     M = ceil(bw+1);
 else
     bw = round(bw);

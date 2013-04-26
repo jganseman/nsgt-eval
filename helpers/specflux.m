@@ -11,7 +11,7 @@ function [SF,V0] = specflux(f,win_length,tgap)
 %         SF        : spectral flux of *f*
 %         V0        : STFT coefficients of *f*
 % 
-%   This is a helper function for `onsetdet` and not meant to
+%   This is a helper function for |onsetdet| and not meant to
 %   be used individually.
 %
 %   Computes the spectral flux onset-detection function
@@ -19,13 +19,15 @@ function [SF,V0] = specflux(f,win_length,tgap)
 %   The STFT is taken with time shift parameter *tgap*
 %   and *win_length* frequency channels.
 %
-%   See also:  onsetdet
-%
 %   Externals: COMP_DGT_FB (LTFAT routine, included in NSGToolbox V0.1.0 
 %              and higher)
+%
+%   See also:  onsetdet
+%
+%   References:  di06
 
 % Author: Nicki Holighaus
-% Date: 04.03.13
+% Date: 26.04.13
 
 % Check input arguments
 

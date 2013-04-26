@@ -105,9 +105,9 @@ G = zeros(sum(M),Ls);
 % Setup the necessary parameters
 N = length(shift);
 
-timepos = cumsum(shift);
-NN = timepos(end);
-timepos = timepos-shift(1);
+posit = cumsum(shift);
+NN = posit(end);
+posit = posit-shift(1);
 
 
 % Construct the analysis operator matrix explicitly
@@ -115,7 +115,7 @@ rows = [1;1+cumsum(M)];
 for ii = 1:N
     Lg = length(g{ii});
     
-    win_range = mod(timepos(ii)+(-floor(Lg/2):ceil(Lg/2)-1),NN)+1;
+    win_range = mod(posit(ii)+(-floor(Lg/2):ceil(Lg/2)-1),NN)+1;
     G(rows(ii),win_range) = g{ii}([Lg-floor(Lg/2)+1:Lg,1:ceil(Lg/2)]);
     
     if phaselock == 1

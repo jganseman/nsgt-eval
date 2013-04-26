@@ -103,7 +103,7 @@ end
 
 f = fft(f);
 
-timepos = cumsum(shift)-shift(1); % Calculate positions from shift vector
+posit = cumsum(shift)-shift(1); % Calculate positions from shift vector
 
 % A small amount of zero-padding might be needed (e.g. for scale frames)
 
@@ -111,13 +111,13 @@ fill = sum(shift)-Ls;
 f = [f;zeros(fill,CH)];
 
 Lg = cellfun(@length,g);
-N = find(timepos-floor(Lg/2) <= (Ls+fill)/2,1,'last');
+N = find(posit-floor(Lg/2) <= (Ls+fill)/2,1,'last');
 c=cell(N,1); % Initialisation of the result
 
 % The actual transform
 for ii = 1:N
     idx = [ceil(Lg(ii)/2)+1:Lg(ii),1:ceil(Lg(ii)/2)];
-    win_range = mod(timepos(ii)+(-floor(Lg(ii)/2):ceil(Lg(ii)/2)-1),...
+    win_range = mod(posit(ii)+(-floor(Lg(ii)/2):ceil(Lg(ii)/2)-1),...
         Ls+fill)+1;
     
     if M(ii) < Lg(ii) % if the number of frequency channels is too small,

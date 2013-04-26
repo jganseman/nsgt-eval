@@ -98,6 +98,7 @@ end
 
 Ls = length(f);
 N = length(shift);
+posit = cumsum(shift)-shift(1);
 
 frmop = @(x) nsigtf(nsgtf(x,g,shift,M),g,shift,Ls);
 
@@ -109,7 +110,7 @@ else
     for ii = 1:N
         Lg = length(g{ii});
 
-        win_range = mod(timepos(ii)+(-floor(Lg/2):ceil(Lg/2)-1),Ls)+1;
+        win_range = mod(posit(ii)+(-floor(Lg/2):ceil(Lg/2)-1),Ls)+1;
         diagonal(win_range) = diagonal(win_range) + ...
             (fftshift(g{ii}).^2)*M(ii);   
     end

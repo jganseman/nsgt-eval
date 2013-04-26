@@ -7,7 +7,7 @@ function f_sliced = slicing(f,sl_len,tr_area,Ls)
 %         f         : signal to be sliced
 %         sl_len    : slice length (in samples, must be even)
 %         tr_area   : length of each transition area (in samples,
-%                     optional, default is $\lceil sl\_len/16\rceil$)
+%                     optional, default is $ceil( sl\_len/16 )$)
 %         Ls        : length of *f* (optional)
 %   Output parameters:
 %         f_sliced  : Matrix containing the slices of f as columns
@@ -20,9 +20,10 @@ function f_sliced = slicing(f,sl_len,tr_area,Ls)
 %    
 %   See also:  slicq, islicq, unslicing
 %
+%   References:  dogrhove12
 
 % Author: Nicki Holighaus
-% Date: 04.03.13
+% Date: 26.04.13
 
 if nargin < 4
     Ls = length(f);

@@ -6,23 +6,26 @@ function plot_wins(g,shift,normalize)
 %   Input parameters:
 %         g         : Cell array of windows/filters
 %         shift     : Vector of time/frequency shifts
-%         normalize : Re-normalize the windows to approximately uniform 
-%                     height
+%         normalize : Re-normalize the windows to have approximately 
+%                     uniform height
 %
-%   Helper function that plots a non-stationary Gabor frame
-%   determined by the cell array *g* and posititon vector *shift*.
+%   This helper function plots the distribution of the windows/filters of a
+%   nonstationary Gabor systen/filterbank along the time/frequency axis. 
+%   The shape of the windows/filters is determined from the cell array *g* 
+%   and their position on the respective axis from the posititon vector 
+%   *shift*.
 %
-%   See also:  nsgsclwin, nsgwvltwin, nsgerbwin, nsgcqwin%
+%   See also:  nsgsclwin, nsgwvltwin, nsgerbwin, nsgcqwin
 
 % Author:  Nicki Holighaus
-% Date: 04.03.13
+% Date: 26.04.13
 
 if nargin < 3
     normalize = 0;
 end
 
 N = length(shift);
-timepos = cumsum(shift)-shift(1);
+posit = cumsum(shift)-shift(1);
 
 % Every second window is plotted in red, the other ones in blue
 
@@ -33,7 +36,7 @@ color = ['b', 'r'];
 for ii = 1:N
     Lg = length(g{ii});
     
-    win_range = timepos(ii)+(-floor(Lg/2):ceil(Lg/2)-1);
+    win_range = posit(ii)+(-floor(Lg/2):ceil(Lg/2)-1);
     if normalize == 1 % If normalize is set to 1, normalize
         % the windows to have the same maximum
         plot(win_range, fftshift(g{ii}).*sqrt(length(g{ii})), ...

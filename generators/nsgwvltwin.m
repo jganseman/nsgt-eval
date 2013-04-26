@@ -79,7 +79,7 @@ scales = floor(log2(Ls/2/br)*bins)+1;
 % Prepare Wavelet system container
 g = cell(2*scales+2,1);
 M = zeros(2*scales+2,1);
-timepos = M;
+posit = M;
 
 %% Compute the Wavelet system parameters for all scales
 pow2 = 2.^((0:scales-1)/bins)';
@@ -111,13 +111,13 @@ Lg = cellfun(@length,points)';
 
 % Construct positions and relative shifts of the Wavelets
 
-timepos(1) = 1;
-timepos(scales+2) = floor(Ls/2)+1;
-timepos(2:scales+1) = ceil(bl) + floor(Lg/2)+1;
-timepos(end:-1:scales+3) = Ls-timepos(2:scales+1) ...
+posit(1) = 1;
+posit(scales+2) = floor(Ls/2)+1;
+posit(2:scales+1) = ceil(bl) + floor(Lg/2)+1;
+posit(end:-1:scales+3) = Ls-posit(2:scales+1) ...
                                 + 1 + mod(Lg-1,2);
 
-shift = [Ls-mod(timepos(end)-1,Ls);diff(timepos)];
+shift = [Ls-mod(posit(end)-1,Ls);diff(posit)];
 
 %% Compute 'scaling' or 'padding' functions for the 0- and
 %% Nyquist-frequency
@@ -127,12 +127,12 @@ shift = [Ls-mod(timepos(end)-1,Ls);diff(timepos)];
 
 diagonal=zeros(Ls,1);
 for ii = 2:scales+1
-  win_range = mod(timepos(ii)+...
+  win_range = mod(posit(ii)+...
       (-floor(length(g{ii})/2):ceil(length(g{ii})/2)-1)-1,Ls)+1;
   diagonal(win_range) = diagonal(win_range) + M(ii)*fftshift(g{ii}).^2 ;   
 end
 for ii = scales+3:2*scales+2
-  win_range = mod(timepos(ii)+...
+  win_range = mod(posit(ii)+...
       (-floor(length(g{ii})/2):ceil(length(g{ii})/2)-1)-1,Ls)+1;
   diagonal(win_range) = diagonal(win_range) + M(ii)*fftshift(g{ii}).^2 ;
 end
@@ -162,7 +162,7 @@ end
     Lg = cellfun(@length,g);
     
     for ii = [1,scales+2]
-      range = mod(timepos(ii)+(-floor(Lg(ii)/2):ceil(Lg(ii)/2)-1)-1,Ls)+1;
+      range = mod(posit(ii)+(-floor(Lg(ii)/2):ceil(Lg(ii)/2)-1)-1,Ls)+1;
       diagonal(range) = diagonal(range) + (fftshift(g{ii}).^2)*M(ii);
     end
     

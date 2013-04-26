@@ -6,6 +6,7 @@ function plotslicq(c,shift,varargin)
 %           plotslicq(c,shift,sr,cutout,dynrange)
 %           plotslicq(c,shift,sr,cutout)
 %           plotslicq(c,shift,sr)
+%           plotslicq(c,shift)
 %
 %   Input parameters:
 %         c        : Array of coefficients.
@@ -20,17 +21,20 @@ function plotslicq(c,shift,varargin)
 %                    bins)
 %         dynrange : Colorscale dynamic range in dB (default 60 dB)
 %
-%   This wrapper function for |plotnsgtf| re-organizes sliCQ transform
-%   coefficients in such a way, that the sliCQ spectrogram is plotted 
-%   correctly.
-%   The coefficients are given as first input parameter, the remaining 
-%   input parameters are the same as for |plotnsgtf|.
+%   This is a wrapper function for |plotnsgtf| that rearranges the 
+%   coefficients of a sliced nonstationary Gabor filterbank, in particluar
+%   those of a sliced constant-Q nonstationary Gabor filterbank, to
+%   resemble a full length transform.
+%
+%   For an explaination of the parameters, please refer to the help of
+%   |plotnsgtf|.
 %
 %   See also:  plotnsgtf, slicq
 %
+%   References:  dogrhove12
 
 % Author: Nicki Holighaus
-% Date: 04.03.13
+% Date: 26.04.13
 
 if nargin < 2
     error('Not enough input arguments');

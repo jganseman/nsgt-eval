@@ -6,6 +6,13 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+@inproceedings{di06,
+  author="Dixon, S.",
+  title="Onset detection revisited",  
+  booktitle={Proceedings of the 9th International Conference on Digital Audio Effects},
+  year={2006}
+}
+
 @article{gr93,
   author = "{G}r{\"o}chenig, {K}arlheinz",
   year = "1993",

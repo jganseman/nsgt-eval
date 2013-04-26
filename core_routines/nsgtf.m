@@ -110,7 +110,7 @@ end
 
 f = fft(f);
 
-timepos = cumsum(shift)-shift(1); % Calculate positions from shift vector
+posit = cumsum(shift)-shift(1); % Calculate positions from shift vector
 
 % A small amount of zero-padding might be needed (e.g. for scale frames)
 
@@ -125,7 +125,7 @@ for ii = 1:N
     Lg = length(g{ii});
     
     idx = [ceil(Lg/2)+1:Lg,1:ceil(Lg/2)];
-    win_range = mod(timepos(ii)+(-floor(Lg/2):ceil(Lg/2)-1),Ls+fill)+1;
+    win_range = mod(posit(ii)+(-floor(Lg/2):ceil(Lg/2)-1),Ls+fill)+1;
     
     if M(ii) < Lg % if the number of frequency channels is too small,
         % aliasing is introduced

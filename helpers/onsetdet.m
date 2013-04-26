@@ -23,13 +23,17 @@ function [pos,V0] = onsetdet(f,win_length,thre,range,multi,shift,showplot)
 %         V0        : Regular discrete Gabor transform of f
 %
 %   This routine produces a sequence of onsets using a straightforward
-%   realization of the spectral flux onset detection procedure.
+%   realization of a spectral flux based onset detection process as
+%   described, e.g. by Dixon (see reference).
 %
-%   Uses a Hann window STFT analysis and the spectral flux onset detection
-%   function.
+%   The spectral flux onset detection function is computed with a 16 times 
+%   redundant Gabor transform using a Hann window, implemented in 
+%   |specflux|. 
 %
-%   A local maximum of the onset detection function is chosen as onset
-%   if it is larger than the local mean by at least *thre*. 
+%   Local maxima of the onset detection function are chosen as onset if it 
+%   larger than the local mean by at least the threshold parameter *thre*. 
+%   This choice is performed by |peakpick|, a simple peakpicking algorithm.
+%
 %   A time slice is considered a local maximum if its spectral flux value 
 %   is larger than those of the surrounding slices on an area of $+-range$.
 %   The local mean is computed as the mean value of the spectral flux
@@ -41,7 +45,7 @@ function [pos,V0] = onsetdet(f,win_length,thre,range,multi,shift,showplot)
 %   References:  badohojave11 di06
 
 % Author: Nicki Holighaus
-% Date: 04.03.13
+% Date: 26.04.13
 
 % Check input arguments and set default arguments if necessary
 

@@ -54,10 +54,10 @@ function g = winfuns(name,x,L)
 %                    a mainlobe width of 16/M, a PSL of -92.04 dB and decay
 %                    rate of 6 dB/Octave.
 %
-%     'modblackharr' Modified Blackman-Harris window. This slightly 
-%                    modified version of the Blackman-Harris window has 
-%                    a mainlobe width of 16/M, a PSL of -90.24 dB and decay
-%                    rate of 18 dB/Octave.
+%     'modblackharr'  Modified Blackman-Harris window. This slightly 
+%                     modified version of the Blackman-Harris window has 
+%                     a mainlobe width of 16/M, a PSL of -90.24 dB and decay
+%                     rate of 18 dB/Octave.
 %
 %     'nuttall'      Nuttall window. The Nuttall window has a mainlobe 
 %                    width of 16/M, a PSL of -93.32 dB and decay rate of 

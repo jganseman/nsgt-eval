@@ -63,9 +63,9 @@ else
     CH = size(c{1},2);
 end
 
-timepos = cumsum(shift);        % Calculate positions from shift vector
-NN = timepos(end);              % Reconstruction length before truncation
-timepos = timepos-shift(1);   	% Adjust positions
+posit = cumsum(shift);        % Calculate positions from shift vector
+NN = posit(end);              % Reconstruction length before truncation
+posit = posit-shift(1);   	% Adjust positions
 
 fr = zeros(NN,CH); % Initialize output
 
@@ -79,7 +79,7 @@ end
 for ii = 1:N
     Lg = length(g{ii});
     
-    win_range = mod(timepos(ii)+(-floor(Lg/2):ceil(Lg/2)-1),NN)+1;
+    win_range = mod(posit(ii)+(-floor(Lg/2):ceil(Lg/2)-1),NN)+1;
     
     temp = ifftreal(c{ii},M(ii),1)*M(ii);
     temp = temp(mod([end-floor(Lg/2)+1:end,1:ceil(Lg/2)]-1,...

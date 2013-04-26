@@ -6,6 +6,8 @@ function plotnsgtf(c,shift,sr,fmin,fmax,bins,cutout,dynrange)
 %           plotnsgtf(c,shift,sr,cutout,dynrange)
 %           plotnsgtf(c,shift,sr,cutout)
 %           plotnsgtf(c,shift,sr)
+%           plotnsgtf(c,shift)
+%           plotnsgtf(c)
 %
 %   Input parameters:
 %         c        : Array of coefficients.
@@ -20,19 +22,25 @@ function plotnsgtf(c,shift,sr,fmin,fmax,bins,cutout,dynrange)
 %                    bins)
 %         dynrange : Colorscale dynamic range in dB (default 60 dB)
 %
-%   This variation of LTFATs plotndgt allows to plot only a part of the 
-%   spectrogram obtained from the frequency side version of the
-%   non-stationary Gabor transform and also accepting matrix array
-%   input. If runs with the necessary input parameters (fmin,fmax,bins) of
-%   the transform, it adjusts the plot labels according to those 
-%   parameters.
+%   Given a coefficient array *c* and the frequency shift vector *shift*, 
+%   this function plots the dB-scaled nonstationary Gabor filterbank 
+%   spectrogram corresponding to *c*. The vector *shift* and sampling rate 
+%   *sr* are used to determine the correct time axis labels. The frequency
+%   axis is by default labeled by bin number. 
+%
+%   For constant-Q nonstationary Gabor filterbanks, labeling with the
+%   actual center frequencies is supported, requiring the filterbank 
+%   parameters *fmin*, *fmax* and *bins* as additional input.
+%
+%   The shown frequency range can be controlled with the *cutout* parameter 
+%   (default: 2) and the dynamic range of the spectrogram can be adjusted 
+%   with *dynrange*.
 %
 %   See also:  nsgtf, plotnsgt, plotslicq
-%
 
 % Author:  Gino Velasco, Nicki Holighaus and Radu C. Frunza
-% Original code by: Florent Jaillet
-% Date: 04.03.13
+% Original code by Florent Jaillet
+% Date: 26.04.13
 
 ticklabels = 1;
 
@@ -63,6 +71,7 @@ if nargin < 8
 end
 
 N = length(shift);
+L=sum(shift);
 
 % For the coefficient output of nsgtf_real, adjust the frequeny
 % channels shown, if necessary
@@ -72,8 +81,6 @@ if N > size(c,1) && cutout < 2
 end
 
 clf %Clear previous figures
-
-timepos=cumsum(shift)-shift(1);
 
 % Compute maximum of the representation for colorscale dynamic handling.
 if iscell(c) == 1
@@ -102,15 +109,15 @@ if iscell(c) == 1
         % +eps is here to avoid log of 0
         % Octave cannot plot images that are only one point wide, so we use
         % images that are to points wide
-        imagesc([0,timepos(end)+shift(1)-1]/sr,[ii,ii+1],[temp,temp].',...
+        imagesc([0,L-1]/sr,[ii,ii+1],[temp,temp].',...
             [ma-dynrange,ma]);
     end
     hold('off');
     axis('tight');
 else
-    imagesc([0, (timepos(end)+shift(1)-1)/sr],[1 size(c,2)],...
+    imagesc([0, (L-1)/sr],[1 size(c,2)],...
         20*log10(abs(c)'+eps),[ma-dynrange, ma]);
-    select=[0,(timepos(end)+shift(1)-1)/sr,1,round(size(c,2)/cutout)+1];
+    select=[0,(L-1)/sr,1,round(size(c,2)/cutout)+1];
     axis(select);
     set(gca,'YDir','normal');
 end

@@ -7,20 +7,28 @@ function plotnsgt(c,shift,sr,varargin)
 %   Input parameters:
 %         c        : Array of coefficients.
 %         shift    : Vector of time shifts
-%         sr       : signal sample rate in Hz (default 1 Hz)
-%         cutout   : Desired part of the spectrogram, e.g.
-%                    choice of `2` shows frequencies up to Nyquist
-%                    (`X` shows the $number_of_bins/X$ lowest frequency 
-%                    bins)
-%         dynrange : Colorscale dynamic range in dB (default 60 dB)
+%         sr       : Sampling rate in Hz (default 1 Hz)
+%         varargin : Optional input parameters (see table below)
 %
-%   This variation of LTFATs plotndgt allows to plot only a part of the 
-%   spectrogram obtained from the non-stationary Gabor transform and also 
-%   accepting matrix array input.
+%   Given a coefficient array *c* and the time shift vector *shift*, this
+%   function plots the dB-scaled nonstationary Gabor spectrogram 
+%   corresponding to *c*. To capture the correct position of the 
+%   coefficients in the time frequency plane, the columns of the 
+%   spectrogram (coefficients corresponding to the same time position) are 
+%   stretched accordingly.
+%
+%   If additionally, the sampling rate *sr* is provided, time and frequency 
+%   axes will be labeled properly. 
+%
+%   If the coefficients were obtained using |nsgt_real|, the *realsig*
+%   switch should be used, otherwise only half the desired frequency range
+%   will be displayed. The shown frequency range can be controlled with the
+%   *cutout* parameter (default: 2) and the dynamic range of the
+%   spectrogram can be adjusted with *dynrange*.
 %
 %   Optional input arguments arguments can be supplied like this::
 %
-%       plotnsgt(c,shift,sr,'min_win',min_win)
+%       plotnsgt(c,shift,sr,'dynrange',dynrange)
 %
 %   The arguments must be character strings followed by an
 %   argument:
@@ -36,11 +44,10 @@ function plotnsgt(c,shift,sr,varargin)
 %                          representation for real-valued signals
 %
 %   See also:  nsgt, plotnsgt
-%
 
 % Author:  Nicki Holighaus
-% Original code by: Florent Jaillet
-% Date: 04.03.13
+% Original code by Florent Jaillet
+% Date: 26.04.13
 
 if nargin < 3
     % Default value for sampling frequency.
@@ -84,11 +91,11 @@ end
 
 clf %Clear previous figures
 
-timepos=cumsum(shift)-shift(1);
+posit=cumsum(shift)-shift(1);
 
 % Compute time limit for the representation of each window.
-tlim=diff(timepos)/2;
-tlim=[timepos(1)-tlim(1);timepos(1:end-1)+tlim;timepos(end)+tlim(end)];
+tlim=diff(posit)/2;
+tlim=[posit(1)-tlim(1);posit(1:end-1)+tlim;posit(end)+tlim(end)];
 tlim=tlim/sr;
 
 % Compute maximum of the representation for colorscale dynamic handling.

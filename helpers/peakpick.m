@@ -10,7 +10,7 @@ function peaks = peakpick(SF,thre,range,multi)
 %   Output parameters:
 %         peaks     : significant maxima of *SF*
 %
-%   This is a helper function for 'onsetdet' and not meant to be used 
+%   This is a helper function for |onsetdet| and not meant to be used 
 %   individually.
 %
 %   For an onset detection function *SF*, the routine picks only those 
@@ -23,9 +23,10 @@ function peaks = peakpick(SF,thre,range,multi)
 %
 %   See also:  onsetdet
 %
+%   References:  di06
 
 % Author: Nicki Holighaus
-% Date: 04.03.13
+% Date: 26.04.13
 
 % Check input arguments
 

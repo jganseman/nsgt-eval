@@ -48,7 +48,7 @@ if nargin < 2
 end
 
 N = length(g);
-timepos = cumsum(shift)-shift(1);
+posit = cumsum(shift)-shift(1);
 
 Lg = cellfun(@length,g);
 g = cellfun(@fftshift,g,'UniformOutput',0);
@@ -56,7 +56,7 @@ g = cellfun(@fftshift,g,'UniformOutput',0);
 if nargin < 5
     steps = Inf;
     if nargin < 4
-        Ls = timepos(end)+shift(1);
+        Ls = posit(end)+shift(1);
         if nargin < 3
             M = Lg;
         end
@@ -68,7 +68,7 @@ S0 = sparse(Ls,Ls);
 
 for ll = 1:N
     
-    win_range = mod(timepos(ll)+(-floor(Lg(ll)/2):ceil(Lg(ll)/2)-1),Ls)+1;
+    win_range = mod(posit(ll)+(-floor(Lg(ll)/2):ceil(Lg(ll)/2)-1),Ls)+1;
     S0(win_range,1) = S0(win_range,1) + M(ll)*abs(g{ll}).^2;
     
     for kk = 1:min(B(ll),steps)
