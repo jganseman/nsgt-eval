@@ -1,4 +1,4 @@
-%DEMO_NSGTF Sliced constant-Q usage and comparison demo
+%DEMO_SLICQ Sliced constant-Q usage and comparison demo
 %
 %   This script sets up different nonstationary Gabor filterbank frames 
 %   with the specified parameters, computes windows and corresponding 
@@ -66,7 +66,7 @@ Ls = length(s); % Length of signal (in samples)
 
 % Conpute constant-Q filters
 
-[gCQ,shiftCQ,MCQ] = nsgcqwin(fminCQ,fmaxCQ,binsCQ,sr,Ls,'winfun','modblackharr');
+[gCQ,shiftCQ,MCQ] = nsgcqwin(fmin,fmax,bins,sr,Ls,'winfun','modblackharr');
 
 % Compute corresponding dual windows.
 
@@ -114,8 +114,6 @@ rec_err = norm(s-s_r)/norm(s);
 
 fprintf(['Relative error of constant-Q reconstruction (should be close '...
     'to zero.): %e \n'],rec_err);
-
-s_r = nsigtf(cERB,gdERB,shiftERB,Ls);
 
 % Print relative error of sliCQ reconstruction.
 rec_err = norm(s-s_rSCQ)/norm(s);

@@ -18,32 +18,33 @@
 %
 %      This figure shows a (color coded) image of the constant-Q 
 %      coefficient modulus. 
+
 %
 %   .. figure::
-%
+%   
 %      windows + dual windows (ERBlet)
 %
 %      This figure shows the window functions used in the ERBlet filterbank
 %      and the corresponding canonical dual windows. 
-%
+%   
 %   .. figure::
-%
+%   
 %      ERBlet spectrogram (absolute value of coefficients in dB)
-%
+%   
 %      This figure shows a (color coded) image of the ERBlet coefficient
-%      modulus. 
-%
+%      modulus.
+%   
 %   .. figure::
-%
+%   
 %      windows + dual windows (Wavelet)
-%
+%   
 %      This figure shows the window functions used in the Wavelet 
 %      filterbank and the corresponding canonical dual windows. 
-%
+%   
 %   .. figure::
-%
+%   
 %      Wavelet spectrogram (absolute value of coefficients in dB)
-%
+%   
 %      This figure shows a (color coded) image of the Wavelet coefficient
 %      modulus. 
 %
@@ -76,7 +77,6 @@ Qvar = .5;
 
 fminWV = 130;
 binsWV = 6;
-
 fac = 2^(2/binsWV)-2^(-2/binsWV);
 bwWV = fminWV*fac;
 
@@ -118,6 +118,7 @@ cWV = nsgtf(s,gWV,shiftWV,MWV);
 %% Plot the windows and spectrograms
 
 % constant-Q
+
 figure;
 
 subplot(211); plot_wins(gCQ,shiftCQ);
@@ -139,7 +140,7 @@ subplot(212); plot_wins(gdERB,shiftERB);
 figure;
 
 plotnsgtf(cERB,shiftERB,sr,2,60);
-
+ 
 % Wavelet
 
 figure;
@@ -151,7 +152,6 @@ subplot(212); plot_wins(gdWV,shiftWV);
 figure;
 
 plotnsgtf(cWV,shiftWV,sr,2,60);
-
 
 %% Test reconstruction
 s_r = nsigtf(cCQ,gdCQ,shiftCQ,Ls);

@@ -1,5 +1,6 @@
 .. role:: linkrole(raw)
    :format: html
+.. |demo_slicq| replace:: :linkrole:`<a href="/doc/demos/demo_slicq.php">demo_slicq</a>`
 .. |nsigt| replace:: :linkrole:`<a href="/doc/core_routines/nsigt.php">nsigt</a>`
 .. |nsgtf| replace:: :linkrole:`<a href="/doc/core_routines/nsgtf.php">nsgtf</a>`
 .. |plot_wins| replace:: :linkrole:`<a href="/doc/plotting/plot_wins.php">plot_wins</a>`
