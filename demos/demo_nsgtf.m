@@ -18,7 +18,6 @@
 %
 %      This figure shows a (color coded) image of the constant-Q 
 %      coefficient modulus. 
-
 %
 %   .. figure::
 %   
