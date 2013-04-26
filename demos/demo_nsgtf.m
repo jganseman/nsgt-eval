@@ -1,49 +1,90 @@
-%DEMO_NSGTF CQ/VQ-type Nonstationary Gabor filterbank usage demo 
+%DEMO_NSGTF Nonstationary Gabor filterbank usage demo 
 %
-%   This script sets up a nonstationary Gabor filterbank frame with the 
-%   specified parameters, computes windows and corresponding canonical dual 
-%   windows and a test signal, and plots the windows and the energy of the 
-%   coefficients.
-%
-%   .. figure::
-%
-%      windows + dual windows
-%
-%      This figure shows the window functions used and the corresponding
-%      canonical dual windows. 
+%   This script sets up different nonstationary Gabor filterbank frames 
+%   with the specified parameters, computes windows and corresponding 
+%   canonical dual windows as well as the transform and reconstruction of a 
+%   test signal, and plots the windows and the energy of the coefficients.
 %
 %   .. figure::
 %
-%      spectrogram (absolute value of coefficients in dB)
+%      windows + dual windows (constant-Q)
 %
-%      This figure shows a (color coded) image of the nsgtf coefficient
+%      This figure shows the window functions used in the constant-Q 
+%      filterbank and the corresponding canonical dual windows. 
+%
+%   .. figure::
+%
+%      constant-Q spectrogram (absolute value of coefficients in dB)
+%
+%      This figure shows a (color coded) image of the constant-Q 
+%      coefficient modulus. 
+%
+%   .. figure::
+%
+%      windows + dual windows (ERBlet)
+%
+%      This figure shows the window functions used in the ERBlet filterbank
+%      and the corresponding canonical dual windows. 
+%
+%   .. figure::
+%
+%      ERBlet spectrogram (absolute value of coefficients in dB)
+%
+%      This figure shows a (color coded) image of the ERBlet coefficient
 %      modulus. 
 %
-%   See also:  nsgtf, nsigtf, nsdual, nsgcqwin
+%   .. figure::
 %
+%      windows + dual windows (Wavelet)
+%
+%      This figure shows the window functions used in the Wavelet 
+%      filterbank and the corresponding canonical dual windows. 
+%
+%   .. figure::
+%
+%      Wavelet spectrogram (absolute value of coefficients in dB)
+%
+%      This figure shows a (color coded) image of the Wavelet coefficient
+%      modulus. 
+%
+%   See also:  nsgtf, nsigtf, nsdual, nsgcqwin, nsgerbwin, nsgwvltwin
 
 % Author: Gino Velasco, Nicki Holighaus
 % Date: 04.03.13
 
 
-%% Setup parameters and load the signal.
+%% Setup parameters for the constant-Q.
 
-fmin = 130; % Minimum desired frequency (in Hz)
+fminCQ = 130; % Minimum desired frequency (in Hz)
 
-fmax = 22050; % Maximum desired frequency (in Hz)
-% fmax is taken to be the Nyquist frequency if not indicated
+fmaxCQ = 22050; % Maximum desired frequency (in Hz)
+% fmaxCQ is taken to be the Nyquist frequency if not indicated
 
-%fmax = floor(fmin*2^(floor(log2(22050/fmin))));
+%fmaxCQ = floor(fmin*2^(floor(log2(22050/fmin))));
 
-bins = 12; % Number of bins per octave
+binsCQ = 12; % Number of bins per octave
 
-%bins = [12; 24; 36; 48; 12]; % Number of bins per octave (in Hz)
+% Use this to test the variabe-Q transform
+% binsCQ = [12; 24; 36; 48; 12]; % Number of bins per octave (in Hz)
 
-%% Test signals
+%% Setup parameters for the ERBlets.
 
-[s,fs] = wavread('glockenspiel.wav'); name = 'Glockenspiel';
+binsERB = 2;
+Qvar = .5;
 
-%[s,fs] = wavread('your_own_signal.wav'); name = 'Your own signal';
+%% Setup parameters for the Wavelets.
+
+fminWV = 130;
+binsWV = 6;
+
+fac = 2^(2/binsWV)-2^(-2/binsWV);
+bwWV = fminWV*fac;
+
+%% Load the test signal.
+
+[s,sr] = wavread('glockenspiel.wav'); name = 'Glockenspiel';
+
+%[s,sr] = wavread('your_own_signal.wav'); name = 'Your own signal';
 
 Ls = length(s); % Length of signal (in samples)
 
@@ -52,35 +93,87 @@ Ls = length(s); % Length of signal (in samples)
 %  resolution evolving over frequency. In particular, the centers of the
 %  windows correspond to geometrically spaced center frequencies.
 
-[g,shift,M] = nsgcqwin(fmin,fmax,bins,fs,Ls);
+[gCQ,shiftCQ,MCQ] = nsgcqwin(fminCQ,fmaxCQ,binsCQ,sr,Ls);
+
+[gERB,shiftERB,MERB] = nsgerbwin(binsERB,sr,Ls,'Qvar',Qvar);
+
+[gWV,shiftWV,MWV] = nsgwvltwin(fminWV,bwWV,binsWV,sr,Ls);
 
 % Compute corresponding dual windows.
 
-gd = nsdual(g,shift,M);
+gdCQ = nsdual(gCQ,shiftCQ,MCQ);
 
-% Plot the windows and the corresponding dual windows
+gdERB = nsdual(gERB,shiftERB,MERB);
 
-figure;
-
-subplot(211); plot_wins(g,shift);
-
-subplot(212); plot_wins(gd,shift);
+gdWV = nsdual(gWV,shiftWV,MWV);
 
 %% Calculate the coefficients
 
-c = nsgtf(s,g,shift,M);
+cCQ = nsgtf(s,gCQ,shiftCQ,MCQ);
 
-%% Plot the resulting spectrogram
+cERB = nsgtf(s,gERB,shiftERB,MERB);
+
+cWV = nsgtf(s,gWV,shiftWV,MWV);
+
+%% Plot the windows and spectrograms
+
+% constant-Q
+figure;
+
+subplot(211); plot_wins(gCQ,shiftCQ);
+
+subplot(212); plot_wins(gdCQ,shiftCQ);
 
 figure;
 
-plotnsgtf(c,shift,fs,2,60);
+plotnsgtf(cCQ,shiftCQ,sr,2,60);
+
+% ERBlet
+
+figure;
+
+subplot(211); plot_wins(gERB,shiftERB);
+
+subplot(212); plot_wins(gdERB,shiftERB);
+
+figure;
+
+plotnsgtf(cERB,shiftERB,sr,2,60);
+
+% Wavelet
+
+figure;
+
+subplot(211); plot_wins(gWV,shiftWV);
+
+subplot(212); plot_wins(gdWV,shiftWV);
+
+figure;
+
+plotnsgtf(cWV,shiftWV,sr,2,60);
+
 
 %% Test reconstruction
-s_r = nsigtf(c,gd,shift,Ls);
+s_r = nsigtf(cCQ,gdCQ,shiftCQ,Ls);
 
-% Print relative error of reconstruction.
+% Print relative error of constant-Q reconstruction.
 rec_err = norm(s-s_r)/norm(s);
 
-fprintf(['Relative error of reconstruction (should be close to zero.):'...
-    '   %e \n'],rec_err);
+fprintf(['Relative error of constant-Q reconstruction (should be close '...
+    'to zero.): %e \n'],rec_err);
+
+s_r = nsigtf(cERB,gdERB,shiftERB,Ls);
+
+% Print relative error of ERBlet reconstruction.
+rec_err = norm(s-s_r)/norm(s);
+
+fprintf(['Relative error of ERBlet reconstruction (should be close '...
+    'to zero.): %e \n'],rec_err);
+
+s_r = nsigtf(cWV,gdWV,shiftWV,Ls);
+
+% Print relative error of Wavelet reconstruction.
+rec_err = norm(s-s_r)/norm(s);
+
+fprintf(['Relative error of Wavelet reconstruction (should be close '...
+    'to zero.): %e \n'],rec_err);

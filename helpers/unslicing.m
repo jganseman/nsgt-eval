@@ -4,9 +4,9 @@ function fr = unslicing(f_sliced,sl_len,tr_area,slices)
 %
 %   Input parameters:
 %         f_sliced      : Matrix containing signal slices as columns
-%         sl_len        : slice length (in samples, optional)
+%         sl_len        : slice length (in samples)
 %         tr_area       : length of each transition area (in samples,
-%                         optional, default is $\lfloor sl\_len/16\rfloor$)
+%                         optional, default is $ceil( sl\_len/16 )$)
 %         slices        : number of slices in *f_sliced* (optional)
 %   Output parameters:
 %         fr      : signal resulting from the overlap-add procedure
@@ -25,6 +25,17 @@ function fr = unslicing(f_sliced,sl_len,tr_area,slices)
 
 % Author: Nicki Holighaus
 % Date: 26.04.13
+
+if nargin < 4
+    if nargin < 2
+        error('Too few input arguments');
+    end
+    slices = size(f_sliced,2);
+end
+
+if nargin < 3 || tr_area > ceil(sl_len/2)
+    tr_area = 2*ceil(sl_len/16);
+end
 
     hopsize = sl_len/2;
     L = slices*sl_len/2;

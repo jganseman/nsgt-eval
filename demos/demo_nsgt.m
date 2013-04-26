@@ -45,9 +45,9 @@ multi = 3; % Area multiplier for the peak picking algorithm
 
 %% Test signals
 
-[s,fs] = wavread('glockenspiel.wav'); name = 'Glockenspiel';
+[s,sr] = wavread('glockenspiel.wav'); name = 'Glockenspiel';
 
-%[s,fs] = wavread('your_own_signal.wav'); name = 'Your own signal';
+%[s,sr] = wavread('your_own_signal.wav'); name = 'Your own signal';
 
 Ls = length(s); % Length of signal (in samples)
 
@@ -79,7 +79,7 @@ c = nsgt(s,g,shift);
 
 figure;
 
-plotnsgt(c,shift,fs,'dynrange',60);
+plotnsgt(c,shift,sr,'dynrange',60);
 
 %% Test reconstruction
 s_r = nsigt(c,gd,shift,Ls);

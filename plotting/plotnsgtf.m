@@ -80,7 +80,7 @@ if N > size(c,1) && cutout < 2
     cutout = cutout/2;
 end
 
-clf %Clear previous figures
+cla %Clear previous axes
 
 % Compute maximum of the representation for colorscale dynamic handling.
 if iscell(c) == 1

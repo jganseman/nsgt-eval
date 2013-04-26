@@ -20,6 +20,8 @@ http://univie.ac.at/nonstatgab/
 
 Revision History:
 
+V0.1.0: Extensive restructuring, the NSGToolbox uses the mat2doc documentation system now. Note that 'hannwin', 'blackharr', 'gausscw' and 'wp2inp' are implemented in the same function 'winfuns' now. 
+
 V0.09: Restructuring and some convention changes, operators added
 help files are still to do
 

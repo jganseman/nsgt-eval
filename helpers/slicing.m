@@ -1,4 +1,4 @@
-function f_sliced = slicing(f,sl_len,tr_area,Ls) 
+function [f_sliced,sl_len,tr_area] = slicing(f,sl_len,tr_area,Ls) 
 %SLICING  Cut a signal into uniform slices with half-overlap
 %   Usage:  f_sliced = slicing(f,sl_len,tr_area,Ls)
 %           f_sliced = slicing(f,sl_len,tr_area)
@@ -11,6 +11,9 @@ function f_sliced = slicing(f,sl_len,tr_area,Ls)
 %         Ls        : length of *f* (optional)
 %   Output parameters:
 %         f_sliced  : Matrix containing the slices of f as columns
+%         sl_len    : possibly corrected slice length (in samples, even)
+%         tr_area   : possibly corrected transition area length (in 
+%                     samples, even)
 %    
 %   This function cuts a signal into compactly supported pieces of length
 %   *sl_len* using a uniform partition of unity composed of Tukey windows
@@ -38,7 +41,7 @@ end
 
 if mod(sl_len,2) == 1
     sl_len = 2*ceil(sl_len/2);
-    warning('sl_len was increased by 1 as to be even');
+    warning('SLICING:oddlength','sl_len was increased by 1 as to be even');
 end
 
 if sl_len > Ls
@@ -47,7 +50,8 @@ end
 
 if mod(tr_area,2) == 1
     tr_area = 2*ceil(tr_area/2);
-    warning('tr_area was increased by 1 as to be even');
+    warning('SLICING:oddlength',['tr_area was increased by 1 ',...
+        'as to be even']);
 end
 
 rows = ceil(2*Ls/sl_len);

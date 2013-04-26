@@ -89,7 +89,7 @@ if realsig
     cutout = cutout/2;
 end
 
-clf %Clear previous figures
+cla %Clear previous axes
 
 posit=cumsum(shift)-shift(1);
 
