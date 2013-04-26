@@ -85,6 +85,8 @@ bwWV = fminWV*fac;
 
 %[s,sr] = wavread('your_own_signal.wav'); name = 'Your own signal';
 
+s = s(1:88200);
+
 Ls = length(s); % Length of signal (in samples)
 
 %% Window design
