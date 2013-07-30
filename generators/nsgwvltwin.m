@@ -12,7 +12,7 @@ function [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun)
 %         sr        : Sampling rate (in Hz)
 %         Ls        : Signal length
 %         winfun    : String containing the window function name, see
-%                     |winfun|
+%                     |winfuns|
 %   Output parameters:
 %         g         : Cell array of Wavelet filters
 %         shift     : Vector of frequency shifts
