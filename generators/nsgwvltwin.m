@@ -9,17 +9,12 @@ function [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun)
 %         bw        : Desired bandwidth in the first frequency band
 %                     (in Hz)
 %         bins      : Desired number of bins per octave
-%         sr        : Sampling rate of f (in Hz)
-%         Ls        : signal length
-%         winfun    : String containing the window fucntion name, e.g. the 
-%                     following are available:
-%                     'hann'      - Hann window (default),
-%                     'blackharr' - Blackman-Harris window,
-%                     'gauss'     - Truncated Gaussian window,
-%                     'wp2inp'    - Uncertainty minimizer
+%         sr        : Sampling rate (in Hz)
+%         Ls        : Signal length
+%         winfun    : String containing the window function name, see
+%                     |winfun|
 %   Output parameters:
-%         g         : Cell array of Fourier transforms of the analysis
-%                     Wavelets
+%         g         : Cell array of Wavelet filters
 %         shift     : Vector of frequency shifts
 %         M         : Number of time channels
 %         fb        : Frame bounds of the resulting system
@@ -27,7 +22,7 @@ function [g,shift,M,fb] = nsgwvltwin(fmin,bw,bins,sr,Ls,winfun)
 %   Given the parameter set *fmin*, *bw*, *bins*, *sr* and *Ls*, this
 %   function constructs a painless system of bandlimited Wavelets spanning 
 %   the range of frequencies from *fmin* to $2^{k/bins} fmin$ with $k$ such 
-%   that the dilate centered at this frequency will be completely contained 
+%   that the dilation centered at this frequency will be completely contained 
 %   in the positive frequencies, but the Wavelet at $2^{k+1/bins} fmin$
 %   would not be. The number of scales per octave is determined by the 
 %   input parameter *bins*, while the Wavelet corresponding to the largest

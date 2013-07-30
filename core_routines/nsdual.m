@@ -3,7 +3,7 @@ function gd = nsdual(g,shift,M)
 %   Usage: gd = nsdual(g,shift,M)
 %
 %   Input parameters:
-%         g         : Cell array of window functions
+%         g         : Cell array of window functions/filters
 %         shift     : Vector of time/frequency shifts
 %         M         : Number of frequency channels (vector/scalar)
 %   Output parameters:
@@ -11,15 +11,15 @@ function gd = nsdual(g,shift,M)
 %
 %   Given a non-stationary Gabor frame specified by the windows *g*, shift 
 %   parameters *shift*, and channel numbers *M*, `nsdual` computes the
-%   canonical dual frame windows *gd* by inverting the diagonal of the
-%   frame operator and applying the inverse to *g*. More explicitly,
+%   canonical dual frame windows/filters *gd* by inverting the diagonal of 
+%   the frame operator and applying the inverse to *g*. More explicitly,
 %
 %   .. gd{n} = g{n} / ( sum M(l) |g{l}|^2 ), 
 %                        l  
 %
 %   .. math:: gd\{n\} = \frac{ g\{n\} }{ \sum_{l} M(l) |g\{l\}|^2 }
 %
-%   If *g*, *shift*, *M* specified a painless frame, i.e. 
+%   If *g*, *shift*, *M* specify a painless frame, i.e. 
 %   $|supp(g\{n\}) | \leq M(n)~\forall~n$ and 
 %
 %   .. A <= sum ( M(n) |g{n}|^2 ) <= B, for some 0 < A <= B < infty

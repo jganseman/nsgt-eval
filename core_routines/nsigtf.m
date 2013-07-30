@@ -4,7 +4,7 @@ function fr = nsigtf(c,g,shift,Ls)
 %          fr = nsigtf(c,g,shift)
 %
 %   Input parameters: 
-%         c         : Cell array of non-stationary Gabor coefficients
+%         c         : Cell array of nonstationary Gabor coefficients
 %         g         : Cell array of synthesis filters
 %         shift     : Vector of time shifts
 %         Ls        : Length of the analyzed signal
@@ -22,7 +22,7 @@ function fr = nsigtf(c,g,shift,Ls)
 %       fft(fr)(l) = sum sum c{n}(m)g{n}[l-P(n)]*exp(-2*pi*i*(l-P(n))*m/M(n)),
 %                    n=0  m
 %   
-%   .. math::  fft(fr)[l] = \sum_{n=0}^{N-1}\sum_{m} c\{n\}(m)g\{n\}[l-P(n)] e^{-2\pi i(l-P(n))m/M(n)},
+%   .. math::  \textbf{FFT}(fr)[l] = \sum_{n=0}^{N-1}\sum_{m} c\{n\}(m)g\{n\}[l-P(n)] e^{-2\pi i(l-P(n))m/M(n)},
 %
 %   for $l=0,\cdots,Ls-1$. The final reconstruction step then is 
 %   `fr = ifft(fr)`. In practice, the synthesis formula is realized by `fft` 

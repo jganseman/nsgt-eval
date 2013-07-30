@@ -5,10 +5,10 @@ function peaks = peakpick(SF,thre,range,multi)
 %   Input parameters: 
 %         SF        : Onset detection function
 %         thre      : Threshold value
-%         range     : relevance area for local maximum
-%         multi     : asymmetric extension factor for relevance area
+%         range     : Relevance area for local maximum
+%         multi     : Asymmetric extension factor for relevance area
 %   Output parameters:
-%         peaks     : significant maxima of *SF*
+%         peaks     : Significant maxima of *SF*
 %
 %   This is a helper function for |onsetdet| and not meant to be used 
 %   individually.

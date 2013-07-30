@@ -6,14 +6,14 @@ function [g,shift,M] = nsgerbwin(bins,sr,Ls,varargin)
 %   Input parameters: 
 %         bins      : Desired bins per ERB
 %         sr        : Sampling rate of f (in Hz)
-%         Ls        : signal length
+%         Ls        : Signal length
 %         varargin  : Optional input pairs (see table below)
 %   Output parameters: 
-%         g         : Cell array of ERBlets
+%         g         : Cell array of ERBlet filters
 %         shift     : Vector of frequency shifts
 %         M         : Number of time channels
 %
-%   Create a nonstationary Gabor filterbank composed of filter regularly 
+%   Create a nonstationary Gabor filterbank composed of filters regularly 
 %   spaced on the ERB frequency scale and having constant Equivalent 
 %   Rectangular Bandwidth. 
 %
@@ -21,7 +21,7 @@ function [g,shift,M] = nsgerbwin(bins,sr,Ls,varargin)
 %
 %   .. ERBnum(x) = 9.2645*sign(x)*log(1+abs(x)*0.00437).
 %
-%   .. math:: ERBnum(x) = 9.2645\operatorname{sgn}(x)\log(1+0.00437|x|).
+%   .. math:: ERB_{num}(x) = 9.2645\operatorname{sgn}(x)\log(1+0.00437|x|).
 %
 %   The Equivalent Rectangular Bandwidth at frequency `x` is 
 %
@@ -34,7 +34,7 @@ function [g,shift,M] = nsgerbwin(bins,sr,Ls,varargin)
 %
 %   The result can serve as input parameters for |nsgtf| to obtain the
 %   ERBlet analysis coefficients or |nsigtf| to synthesize from
-%   coefficients, as well as their counterparts for real valued signals.
+%   coefficients, as well as their counterparts for real-valued signals.
 %
 %   Optional input arguments arguments can be supplied like this::
 %

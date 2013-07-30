@@ -1,27 +1,28 @@
 %DEMO_SLICQ Sliced constant-Q usage and comparison demo
 %
-%   This script sets up different nonstationary Gabor filterbank frames 
-%   with the specified parameters, computes windows and corresponding 
-%   canonical dual windows as well as the transform and reconstruction of a 
-%   test signal, and plots the windows and the energy of the coefficients.
+%   This script sets up constant-Q and sliced CQ nonstationary Gabor 
+%   filterbank frames with the specified parameters, computes filters and 
+%   corresponding canonical dual filters as well as the transform and 
+%   reconstruction of a test signal, and compares the analyis and synthesis
+%   filters and spectrograms.
 %
 %   .. figure::
 %
-%      windows + dual windows (constant-Q)
+%      filters + dual filters (constant-Q)
 %
-%      This figure shows the window functions used in the constant-Q 
-%      filterbank and the corresponding canonical dual windows. 
-%
-%   .. figure::
-%
-%      windows + dual windows (sliCQ)
-%
-%      This figure shows the window functions used in the sliced constant-Q
-%      filterbank and the corresponding canonical dual windows. 
+%      This figure shows the filter functions used in the constant-Q 
+%      filterbank and the corresponding canonical dual filters. 
 %
 %   .. figure::
 %
-%      constantQ/sliCQ spectrogram (absolute value of coefficients in dB)
+%      filters + dual filters (sliCQ)
+%
+%      This figure shows the filter functions used in the sliced constant-Q
+%      filterbank and the corresponding canonical dual filters. 
+%
+%   .. figure::
+%
+%      constant-Q/sliCQ spectrogram (absolute value of coefficients in dB)
 %
 %      This figure shows (color coded) images of the constant-Q and sliced
 %      constant-Q coefficient modulus. 
@@ -60,15 +61,15 @@ tr_area = 1024;
 Ls = length(s); % Length of signal (in samples)
 
 %% Window design
-%  Define a set of windows for the nonstationary Gabor transform with
+%  Define a set of filters for the nonstationary Gabor transform with
 %  resolution evolving over frequency. In particular, the centers of the
-%  windows correspond to geometrically spaced center frequencies.
+%  filters correspond to geometrically spaced center frequencies.
 
 % Conpute constant-Q filters
 
 [gCQ,shiftCQ,MCQ] = nsgcqwin(fmin,fmax,bins,sr,Ls,'winfun','modblackharr');
 
-% Compute corresponding dual windows.
+% Compute corresponding dual filters.
 
 gdCQ = nsdual(gCQ,shiftCQ,MCQ);
 
@@ -81,16 +82,16 @@ cCQ = nsgtf(s,gCQ,shiftCQ,MCQ);
 
 [s_rSCQ,gdSCQ] = islicq(cSCQ,gSCQ,shiftSCQ,MSCQ,Ls,sl_len,tr_area);
 
-%% Plot the windows and spectrograms
+%% Plot the filters and spectrograms
 
-% constant-Q windows
+% constant-Q filters
 figure;
 
 subplot(211); plot_wins(gCQ,shiftCQ);
 
 subplot(212); plot_wins(gdCQ,shiftCQ);
 
-% sliCQ windows
+% sliCQ filters
 
 figure;
 

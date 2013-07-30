@@ -4,7 +4,7 @@ function fr = nsigt(c,g,shift,Ls)
 %          fr = nsigt(c,g,shift)
 %
 %   Input parameters: 
-%         c         : Cell array of non-stationary Gabor coefficients
+%         c         : Cell array of nonstationary Gabor coefficients
 %         g         : Cell array of synthesis windows
 %         shift     : Vector of time shifts
 %         Ls        : Length of the analyzed signal

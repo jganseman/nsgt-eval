@@ -2,7 +2,7 @@
 %
 %  Nicki Holighaus, 2011-2013.
 %
-%  Helper functions for the Onset-based nonstationary Gabor wrapper
+%  Helper functions for the Onset-based transform
 %    ONSETDET       -  Onset detection wrapper
 %    SPECFLUX       -  Spectral flux onset detection function
 %    PEAKPICK       -  Peakpicking routine

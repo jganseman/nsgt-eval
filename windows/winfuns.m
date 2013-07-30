@@ -28,39 +28,39 @@ function g = winfuns(name,x,L)
 %   The following windows are available:
 %
 %     'hann'         von Hann window. Forms a PU. The Hann window has a
-%                    mainlobe with of 8/M, a PSL of -31.5 dB and decay rate
+%                    mainlobe with of 8/N, a PSL of -31.5 dB and decay rate
 %                    of 18 dB/Octave.
 %
 %     'cos'          Cosine window. This is the square root of the Hanning
-%                    window. The sine window has a mainlobe width of 8/M,
+%                    window. The cosine window has a mainlobe width of 6/N,
 %                    a  PSL of -22.3 dB and decay rate of 12 dB/Octave.
 %                  
 %     'rec'          Rectangular window. The rectangular window has a
-%                    mainlobe width of 4/M, a  PSL of -13.3 dB and decay
+%                    mainlobe width of 4/N, a  PSL of -13.3 dB and decay
 %                    rate of 6 dB/Octave. Forms a PU. Alias: `'square'`
 %
 %     'tri'          Triangular window. 
 %
 %     'hamming'      Hamming window. Forms a PU that sums to 1.08 instead
 %                    of 1.0 as usual. The Hamming window has a
-%                    mainlobe width of 8/M, a  PSL of -42.7 dB and decay
+%                    mainlobe width of 8/N, a  PSL of -42.7 dB and decay
 %                    rate of 6 dB/Octave.
 %
 %     'blackman'     Blackman window. The Blackman window has a
-%                    mainlobe width of 12/M, a PSL of -58.1 dB and decay
+%                    mainlobe width of 12/N, a PSL of -58.1 dB and decay
 %                    rate of 18 dB/Octave.
 %
 %     'blackharr'    Blackman-Harris window. The Blackman-Harris window has 
-%                    a mainlobe width of 16/M, a PSL of -92.04 dB and decay
+%                    a mainlobe width of 16/N, a PSL of -92.04 dB and decay
 %                    rate of 6 dB/Octave.
 %
 %     'modblackharr'  Modified Blackman-Harris window. This slightly 
 %                     modified version of the Blackman-Harris window has 
-%                     a mainlobe width of 16/M, a PSL of -90.24 dB and decay
+%                     a mainlobe width of 16/N, a PSL of -90.24 dB and decay
 %                     rate of 18 dB/Octave.
 %
 %     'nuttall'      Nuttall window. The Nuttall window has a mainlobe 
-%                    width of 16/M, a PSL of -93.32 dB and decay rate of 
+%                    width of 16/N, a PSL of -93.32 dB and decay rate of 
 %                    18 dB/Octave.
 %
 %     'nuttall10'    2-term Nuttall window with 1 continuous derivative. 
@@ -70,30 +70,30 @@ function g = winfuns(name,x,L)
 %                    Alias: `'hamming'`.
 %
 %     'nuttall20'    3-term Nuttall window with 3 continuous derivatives. 
-%                    The window has a mainlobe width of 12/M, a PSL of 
+%                    The window has a mainlobe width of 12/N, a PSL of 
 %                    -46.74 dB and decay rate of 30 dB/Octave.
 %
 %     'nuttall11'    3-term Nuttall window with 1 continuous derivative. 
-%                    The window has a mainlobe width of 12/M, a PSL of 
+%                    The window has a mainlobe width of 12/N, a PSL of 
 %                    -64.19 dB and decay rate of 18 dB/Octave.
 %
 %     'nuttall02'    3-term Nuttall window with 0 continuous derivatives. 
-%                    The window has a mainlobe width of 12/M, a PSL of 
+%                    The window has a mainlobe width of 12/N, a PSL of 
 %                    -71.48 dB and decay rate of 6 dB/Octave.
 %
 %     'nuttall30'    4-term Nuttall window with 5 continuous derivatives. 
-%                    The window has a mainlobe width of 16/M, a PSL of 
+%                    The window has a mainlobe width of 16/N, a PSL of 
 %                    -60.95 dB and decay rate of 42 dB/Octave.
 %
 %     'nuttall21'    4-term Nuttall window with 3 continuous derivatives. 
-%                    The window has a mainlobe width of 16/M, a PSL of 
+%                    The window has a mainlobe width of 16/N, a PSL of 
 %                    -82.60 dB and decay rate of 30 dB/Octave.
 %
 %     'nuttall12'    4-term Nuttall window with 1 continuous derivatives. 
 %                    Alias: `'nuttall'`.
 %
 %     'nuttall03'    4-term Nuttall window with 0 continuous derivatives. 
-%                    The window has a mainlobe width of 16/M, a PSL of 
+%                    The window has a mainlobe width of 16/N, a PSL of 
 %                    -98.17 dB and decay rate of 6 dB/Octave.
 %
 %     'gauss'        Truncated, stretched Gaussian: exp(-18*x^2) restricted
@@ -124,9 +124,9 @@ if numel(x) == 1
     if L<N
         error('Output length L must be larger than or equal to N');
     end
-    if mod(N,2) == 0 % For even M the sampling interval is [-.5,.5-1/M]
+    if mod(N,2) == 0 % For even N the sampling interval is [-.5,.5-1/N]
         x = [0:1/N:.5-1/N,-N*ones(1,L-N),-.5:1/N:-1/N]';
-    else % For odd M the sampling interval is [-.5+1/(2M),.5-1/(2M)]
+    else % For odd N the sampling interval is [-.5+1/(2N),.5-1/(2N)]
         x = [0:1/N:.5-.5/N,-N*ones(1,L-N),-.5+.5/N:1/N:-1/N]';
     end
 end

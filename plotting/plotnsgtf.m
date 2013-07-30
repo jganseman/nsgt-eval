@@ -18,7 +18,7 @@ function plotnsgtf(c,shift,sr,fmin,fmax,bins,cutout,dynrange)
 %         bins     : Bins per octave (in constant or vector form)
 %         cutout   : Desired part of the spectrogram, e.g.
 %                    choice of `2` shows frequencies up to Nyquist
-%                    (`X` shows the $number_of_bins/X$ lowest frequency 
+%                    (`X` shows the $number\_of\_bins/X$ lowest frequency 
 %                    bins)
 %         dynrange : Colorscale dynamic range in dB (default 60 dB)
 %

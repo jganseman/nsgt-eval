@@ -16,14 +16,14 @@ function [c,g,shift,M,Ls] = onsetnsgt(f,thre,short,max_win,win_length)
 %         c         : Cell array of transform coefficients
 %         g         : Cell array of analysis windows
 %         shift     : Vector of time shifts
-%         M         : Number of time channels
+%         M         : Number of frequency channels
 %         Ls        : Original signal length
 %
 %   This is a wrapper function for the scaleframe nonstationary Gabor
 %   transforms with onset detection based adaptation. Given a signal *f*,
 %   this wrapper computes the spectral flux onset detection function based
 %   on a regular discrete Gabor transform with redundancy 16 using a Hann
-%   widnow of length *win_length*. A simple peakpicking algorithm
+%   window of length *win_length*. A simple peakpicking algorithm
 %   determines the significant maxima in the spectral flux function. Those
 %   are assumed to be the onsets in *f*.
 %
@@ -32,7 +32,7 @@ function [c,g,shift,M,Ls] = onsetnsgt(f,thre,short,max_win,win_length)
 %  
 %   Note: The current wrapper only supports the threshold parameter *thre* 
 %   of the onset detection algorithm. To obtain optimal results, the 
-%   remaining parameters need to be fine tuned as well. An experieced user
+%   remaining parameters need to be fine tuned as well. An experienced user
 %   should use |onsetdet|, |nsgsclwin| and |nsgt_real| on separately
 %   instead. Also see the Onset How-To included in the toolbox.
 %

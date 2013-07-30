@@ -1,5 +1,5 @@
 function plot_wins(g,shift,normalize)
-%PLOT_WINS  Plot Nonstationary Gabor windows/filters
+%PLOT_WINS  Plot nonstationary Gabor windows/filters
 %   Usage:  plot_wins(g,shift)
 %           plot_wins(g,shift,normalize)
 %
@@ -10,9 +10,9 @@ function plot_wins(g,shift,normalize)
 %                     uniform height
 %
 %   This helper function plots the distribution of the windows/filters of a
-%   nonstationary Gabor systen/filterbank along the time/frequency axis. 
+%   nonstationary Gabor system/filterbank along the time/frequency axis. 
 %   The shape of the windows/filters is determined from the cell array *g* 
-%   and their position on the respective axis from the posititon vector 
+%   and their position on the respective axis from the position vector 
 %   *shift*.
 %
 %   See also:  nsgsclwin, nsgwvltwin, nsgerbwin, nsgcqwin

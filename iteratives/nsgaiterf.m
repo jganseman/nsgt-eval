@@ -10,7 +10,7 @@ function [c,Ls,res,Nit]=nsgaiterf(f,g,shift,M,varargin)
 %         f         : Input signal
 %         g         : Cell array of filters
 %         shift     : Vector of shifts between the center frequencies
-%         M         : Vector of lengths of the filters
+%         M         : Number of time steps
 %         varargin  : Optional input pairs (see table below)
 %   Output parameters: 
 %         c         : Filterbank coefficients
@@ -30,7 +30,7 @@ function [c,Ls,res,Nit]=nsgaiterf(f,g,shift,M,varargin)
 %
 %   ..  c{n}(m) = < f , S^{-1} g_{n,m} > = < S^{-1} f , g_{n,m} >
 %
-%   ..  math:: c{n}(m) = \langle f, \mathbf{S}^{-1} g_{n,m} \rangle = \langle \mathbf{S}^{-1} f, g_{n,m} \rangle
+%   ..  math:: c\{n\}(m) = \langle f, \mathbf{S}^{-1} g_{n,m} \rangle = \langle \mathbf{S}^{-1} f, g_{n,m} \rangle
 %
 %
 %   The conjugate gradients algorithm uses the frame operator, or rather 
@@ -96,11 +96,13 @@ if nargin >= 3
     end
 end
 
+f = fft(f);
 Ls = length(f);
 N = length(shift);
 posit = cumsum(shift)-shift(1);
 
-frmop = @(x) nsigtf(nsgtf(x,g,shift,M),g,shift,Ls);
+
+frmop = @(x) nsigt(nsgt(x,g,shift,M),g,shift,Ls);
 
 if prec == 0
     [f,tmp1,tmp2,Nit,res] = pcg(frmop,f,tol,Mit);
@@ -118,6 +120,7 @@ else
     [f,tmp1,tmp2,Nit,res] = pcg(frmop,f,tol,Mit,D);    
 end
 
+f = ifft(f);
 c = nsgtf(f,g,shift,M);
 
 if nargout>1

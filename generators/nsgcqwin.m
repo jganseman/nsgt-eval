@@ -11,14 +11,14 @@ function [g,shift,M] = nsgcqwin(fmin,fmax,bins,sr,Ls,varargin)
 %         Ls        : Length of signal (in samples)
 %         varargin  : Optional input pairs (see table below)
 %   Output parameters: 
-%         g         : Cell array of window functions
+%         g         : Cell array of constant-Q/variable-Q filters
 %         shift     : Vector of shifts between the center frequencies
 %         M         : Vector of lengths of the window functions
 %
 %   Create a nonstationary Gabor filterbank with constant or varying 
 %   Q-factor and relevant frequency range from *fmin* to *fmax*. To allow
 %   for perfect reconstruction, the frequencies outside that range will be
-%   captured by 2 additional filters placed on the zero and Niyquist
+%   captured by 2 additional filters placed on the zero and Nyquist
 %   frequencies, respectively.
 %
 %   The Q-factor (quality factor) is the ratio of center frequency to
@@ -29,9 +29,9 @@ function [g,shift,M] = nsgcqwin(fmin,fmax,bins,sr,Ls,varargin)
 %   set up a filter sequence with approximately 1/2 overlap and only
 %   approximately constant Q-factor (up to 1 sample deviation). The 
 %   optional switch *fractional* can be set to 1 to allow for fractional 
-%   sampling and exactly constant Q-factor.
+%   sampling and exact constant Q-factor.
 %
-%   Alteratively, a vector *bins* can be supplied. In this case, successive
+%   Alternatively, a vector *bins* can be supplied. In this case, successive
 %   octaves can have different numbers of filters regularly spaced on a
 %   logarithmic scale, e.g. *bins(1)* filters will be placed between `fmin`
 %   and `2*fmin`, *bins(2)* filters between `2*fmin` and `4*fmin` and so

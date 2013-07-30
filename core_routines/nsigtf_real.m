@@ -3,7 +3,7 @@ function fr = nsigtf_real(c,g,shift,Ls)
 %   Usage: fr = nsigtf_real(c,g,shift,M,Ls)
 %
 %   Input parameters: 
-%         c         : Cell array of non-stationary Gabor coefficients
+%         c         : Cell array of nonstationary Gabor coefficients
 %         g         : Cell array of synthesis filters
 %         shift     : Vector of time shifts
 %         M         : Number of time channels (vector/scalar)

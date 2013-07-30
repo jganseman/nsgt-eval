@@ -4,21 +4,21 @@ function [f_sliced,sl_len,tr_area] = slicing(f,sl_len,tr_area,Ls)
 %           f_sliced = slicing(f,sl_len,tr_area)
 %
 %   Input parameters:
-%         f         : signal to be sliced
-%         sl_len    : slice length (in samples, must be even)
-%         tr_area   : length of each transition area (in samples,
+%         f         : Signal to be sliced
+%         sl_len    : Slice length (in samples, must be even)
+%         tr_area   : Length of each transition area (in samples,
 %                     optional, default is $ceil( sl\_len/16 )$)
-%         Ls        : length of *f* (optional)
+%         Ls        : Length of *f* (optional)
 %   Output parameters:
 %         f_sliced  : Matrix containing the slices of f as columns
-%         sl_len    : possibly corrected slice length (in samples, even)
-%         tr_area   : possibly corrected transition area length (in 
+%         sl_len    : Possibly corrected slice length (in samples, even)
+%         tr_area   : Possibly corrected transition area length (in 
 %                     samples, even)
 %    
 %   This function cuts a signal into compactly supported pieces of length
 %   *sl_len* using a uniform partition of unity composed of Tukey windows
 %   with plateau area $sl\_len/2-tr\_area$ and transition areas of length
-%   *sl_len*. The resulting signal slices are stored in the columns of the
+%   *tr_area*. The resulting signal slices are stored in the columns of the
 %   output.
 %    
 %   See also:  slicq, islicq, unslicing

@@ -21,17 +21,17 @@ function [c,g,shift,M,Ls,sl_len,tr_area] = ...
 %         sl_len    : Desired slice length (in samples)
 %         tr_area   : Transition area length (in samples, $\leq sl\_len/2$)
 %         sr        : Sampling rate (in Hz)
-%         M         : Desired number of time channels per slice, if set to 
-%                     $0$, a channel vactor will be computed (*M* must be a 
+%         M         : Desired number of time steps per slice, if set to 
+%                     $0$, a channel vector will be computed (*M* must be a 
 %                     multiple of $4$ or will be set to $4*ceil(M/4)$)
 %         min_win   : Minimum window bandwidth (default 16 samples)
 %         Qvar      : Factor varying the bandwidth. $Qvar=X$ leads to a 
 %                     Q-factor of $Q/X$
 %   Output parameters:
 %         c         : Cell array of coefficients
-%         g         : Cell array of analysis windows
-%         shift     : Vector of frequency shifts of windows
-%         M         : Number of channels (vector or constant)
+%         g         : Cell array of analysis filters
+%         shift     : Vector of frequency shifts of filters
+%         M         : Number of time steps per slice (vector or constant)
 %         Ls        : Original signal length
 %         sl_len    : Slice length
 %         tr_area   : Transition area length
@@ -39,7 +39,7 @@ function [c,g,shift,M,Ls,sl_len,tr_area] = ...
 %   This is a wrapper function for the sliced constant-Q nonstationary 
 %   Gabor transform of the signal *f*. The signal is smoothly sliced into
 %   half-overlap segments of length *sl_len* weighted by a Tukey window 
-%   with trnasition areas of length *tr_area* and total length of 
+%   with transition areas of length *tr_area* and total length of 
 %   `sl_len/2 + tr_area`. 
 %
 %   Subsequently, a constant-Q nonstationary Gabor transform with essential
@@ -50,7 +50,7 @@ function [c,g,shift,M,Ls,sl_len,tr_area] = ...
 %   The additional parameters are an optional fixed number of time steps 
 %   *M* per slice in each frequency channel and a bandwidth variation 
 %   factor *Qvar*. Setting the minimum support *min_win* of the filters 
-%   used helps in preserving shape and localisation of low frequency
+%   used helps in preserving shape and localization of low frequency
 %   filters, but may lead to a varying Q-factor in that frequency range.
 %   
 %   See the help of |nsgcqwin| for more information on the constant-Q

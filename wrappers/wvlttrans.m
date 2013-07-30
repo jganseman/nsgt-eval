@@ -22,7 +22,7 @@ function [c,g,shift,M,Ls,fb,tgtfl] = wvlttrans(f,fmin,sr,bins,bw,winfun)
 %         g         : Cell array of Fourier transforms of the analysis
 %                     Wavelets
 %         shift     : Vector of frequency shifts
-%         M         : Number of time channels
+%         M         : Number of time steps
 %         Ls        : Original signal length
 %         fb	    : Frame bounds (vector)
 %         tgtfl     : Tightflag (1 if frame is tight)

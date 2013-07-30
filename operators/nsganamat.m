@@ -8,7 +8,7 @@ function G = nsganamat(g,shift,M,Ls,phaselock)
 %          G = nsganamat(g,shift,phaselock)
 %   
 %   Input parameters: 
-%         g         : Cell array of frequency side analysis windows
+%         g         : Cell array of analysis windows
 %         shift     : Vector of time shifts
 %         M         : Number of frequency channels (optional)
 %         Ls		: Transform length
@@ -34,7 +34,7 @@ function G = nsganamat(g,shift,M,Ls,phaselock)
 %
 %   ..  G(K_n + m,.) = conj(g{n})(. - P(n-1))*exp(-2*pi*i*(. - P(n-1))*m/M(n))
 %
-%   .. math:: G(K_n + m,cdot) = \overline{g\{n\}(\cdot - P(n-1))}*e^{-2\pi im(\cdot - P(n-1))/M(n)}
+%   .. math:: G(K_n + m,cdot) = \overline{g\{n\}(\cdot - P(n-1))}e^{-2\pi im(\cdot - P(n-1))/M(n)}
 %
 %   The conjugate transpose of *G* equals the synthesis operator
 %   corresponding to *g*, *shift* and *M*. Consequently, $c=Gf$ and 
@@ -47,7 +47,7 @@ function G = nsganamat(g,shift,M,Ls,phaselock)
 %  
 %   Note: While this routine can be used to gain some insight into 
 %   the structure of frame-related operators, it is not suited for use with
-%   transform lentghs over a few thousand samples.
+%   transform lengths over a few thousand samples.
 %   
 %   See also:  nsgt, nsigt, nsgfrmmat
 %

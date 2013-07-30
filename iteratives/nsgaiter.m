@@ -10,7 +10,7 @@ function [c,Ls,res,Nit]=nsgaiter(f,g,shift,M,varargin)
 %         f         : Input signal
 %         g         : Cell array of window functions
 %         shift     : Vector of shifts between the window positions
-%         M         : Vector of lengths of the window functions
+%         M         : Number of frequency channels
 %         varargin  : Optional input pairs (see table below)
 %   Output parameters: 
 %         c         : Transform coefficients
@@ -30,7 +30,7 @@ function [c,Ls,res,Nit]=nsgaiter(f,g,shift,M,varargin)
 %
 %   ..  c{n}(m) = < f , S^{-1} g_{n,m} > = < S^{-1} f , g_{n,m} >
 %
-%   ..  math:: c{n}(m) = \langle f, \mathbf{S}^{-1} g_{n,m} \rangle = \langle \mathbf{S}^{-1} f, g_{n,m} \rangle
+%   ..  math:: c\{n\}(m) = \langle f, \mathbf{S}^{-1} g_{n,m} \rangle = \langle \mathbf{S}^{-1} f, g_{n,m} \rangle
 %
 %   The conjugate gradients algorithm uses the frame operator, or rather 
 %   its efficient realization by applying |nsgt| and |nsigt| consecutively.

@@ -8,7 +8,7 @@ function [SF,V0] = specflux(f,win_length,tgap)
 %         win_length: Desired window length for the STFT
 %         tgap      : Time step for the STFT
 %   Output parameters:
-%         SF        : spectral flux of *f*
+%         SF        : Spectral flux of *f*
 %         V0        : STFT coefficients of *f*
 % 
 %   This is a helper function for |onsetdet| and not meant to

@@ -1,16 +1,16 @@
 %DEMO_NSGTF Nonstationary Gabor filterbank usage demo 
 %
 %   This script sets up different nonstationary Gabor filterbank frames 
-%   with the specified parameters, computes windows and corresponding 
-%   canonical dual windows as well as the transform and reconstruction of a 
-%   test signal, and plots the windows and the energy of the coefficients.
+%   with the specified parameters, computes filters and corresponding 
+%   canonical dual filters as well as the transform and reconstruction of a 
+%   test signal, and plots the filters and the energy of the coefficients.
 %
 %   .. figure::
 %
-%      windows + dual windows (constant-Q)
+%      filters + dual filters (constant-Q)
 %
-%      This figure shows the window functions used in the constant-Q 
-%      filterbank and the corresponding canonical dual windows. 
+%      This figure shows the filter functions used in the constant-Q 
+%      filterbank and the corresponding canonical dual filters. 
 %
 %   .. figure::
 %
@@ -21,10 +21,10 @@
 %
 %   .. figure::
 %   
-%      windows + dual windows (ERBlet)
+%      filters + dual filters (ERBlet)
 %
-%      This figure shows the window functions used in the ERBlet filterbank
-%      and the corresponding canonical dual windows. 
+%      This figure shows the filter functions used in the ERBlet filterbank
+%      and the corresponding canonical dual filters. 
 %   
 %   .. figure::
 %   
@@ -35,10 +35,10 @@
 %   
 %   .. figure::
 %   
-%      windows + dual windows (Wavelet)
+%      filters + dual filters (Wavelet)
 %   
-%      This figure shows the window functions used in the Wavelet 
-%      filterbank and the corresponding canonical dual windows. 
+%      This figure shows the filter functions used in the Wavelet 
+%      filterbank and the corresponding canonical dual filters. 
 %   
 %   .. figure::
 %   
@@ -90,9 +90,9 @@ s = s(1:88200);
 Ls = length(s); % Length of signal (in samples)
 
 %% Window design
-%  Define a set of windows for the nonstationary Gabor transform with
+%  Define a set of filters for the nonstationary Gabor transform with
 %  resolution evolving over frequency. In particular, the centers of the
-%  windows correspond to geometrically spaced center frequencies.
+%  filters correspond to geometrically spaced center frequencies.
 
 [gCQ,shiftCQ,MCQ] = nsgcqwin(fminCQ,fmaxCQ,binsCQ,sr,Ls);
 
@@ -100,7 +100,7 @@ Ls = length(s); % Length of signal (in samples)
 
 [gWV,shiftWV,MWV] = nsgwvltwin(fminWV,bwWV,binsWV,sr,Ls);
 
-% Compute corresponding dual windows.
+% Compute corresponding dual filters.
 
 gdCQ = nsdual(gCQ,shiftCQ,MCQ);
 
@@ -116,7 +116,7 @@ cERB = nsgtf(s,gERB,shiftERB,MERB);
 
 cWV = nsgtf(s,gWV,shiftWV,MWV);
 
-%% Plot the windows and spectrograms
+%% Plot the filters and spectrograms
 
 % constant-Q
 

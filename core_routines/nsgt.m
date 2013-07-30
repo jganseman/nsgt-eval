@@ -10,7 +10,7 @@ function [c,Ls] = nsgt(f,g,shift,M)
 %                     column storing a channel of the signal).
 %         g         : Cell array of frequency side analysis windows
 %         shift     : Vector of time shifts
-%         M         : Number of frequency channels (optional)
+%         M         : Number of frequency channels (optional).
 %                     If M is constant, the output is converted to a
 %                     matrix
 %   Output parameters:
@@ -32,13 +32,14 @@ function [c,Ls] = nsgt(f,g,shift,M)
 %
 %   If multichannel input is used, the same nonstationary Gabor system is 
 %   applied to each channel and each entry of *c* will be a 2D array with 
-%   c{n}(:,CH) being the entries corresponding to channel *CH*.
+%   c{n}(:,CH) being the entries corresponding to time position *n*, 
+%   signal channel *CH*.
 %
 %   If *M* is scalar or uniform, then *c* is converted into a regular
 %   array. 
 %
 %   The choice of phase-locked coefficients (by inserting (l-P(n)) in the 
-%   complex exponential prevents border artifacts for combinations of 
+%   complex exponential) prevents border artifacts for combinations of 
 %   window functions *g{n}* that do not have full support and *M(n)* that 
 %   do not divide *Ls*.
 %

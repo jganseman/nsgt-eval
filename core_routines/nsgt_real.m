@@ -10,7 +10,7 @@ function [c,Ls] = nsgt_real(f,g,shift,M)
 %                     column storing a channel of the signal).
 %         g         : Cell array of frequency side analysis windows
 %         shift     : Vector of time shifts
-%         M         : Number of frequency channels (optional)
+%         M         : Number of frequency channels (optional).
 %                     If M is constant, the output is converted to a
 %                     matrix
 %   Output parameters:

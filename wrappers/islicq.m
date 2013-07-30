@@ -5,8 +5,8 @@ function [fr,gd] = islicq(c,g,shift,M,Ls,sl_len,tr_area)
 %
 %   Input parameters:
 %         c         : Cell array of coefficients
-%         g         : Cell array of analysis windows
-%         shift     : Vector of frequency shifts of windows
+%         g         : Cell array of analysis filters
+%         shift     : Vector of frequency shifts of filters
 %         M         : Number of channels (vector/scalar)
 %         Ls        : Original signal length
 %         sl_len    : Slice length
@@ -18,7 +18,7 @@ function [fr,gd] = islicq(c,g,shift,M,Ls,sl_len,tr_area)
 %   This is a wrapper function for the inverse sliced constant-Q 
 %   nonstationary Gabor transform. Given an array of coefficients *c* 
 %   corresponding to a sliced nonstationary Gabor system *g*, *shift*, *M* 
-%   with slice length *sl_len*, this function computes the corrsponding
+%   with slice length *sl_len*, this function computes the corresponding
 %   synthesis operation. 
 %
 %   That is, |nsdual| is used to compute the canonical dual frame of the

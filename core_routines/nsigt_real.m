@@ -3,7 +3,7 @@ function fr = nsigt_real(c,g,shift,M,Ls)
 %   Usage: fr = nsigt_real(c,g,shift,M,Ls)
 %
 %   Input parameters: 
-%         c         : Cell array of non-stationary Gabor coefficients
+%         c         : Cell array of nonstationary Gabor coefficients
 %         g         : Cell array of synthesis windows
 %         shift     : Vector of time shifts
 %         M         : Number of frequency channels (vector/scalar)

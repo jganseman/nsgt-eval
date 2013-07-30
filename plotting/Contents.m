@@ -7,7 +7,7 @@
 %    PLOTNSGTF     -  Plot nonstationary Gabor filterbank coefficients
 %
 %  Dictionary plotting
-%    PLOT_WINS     -  Plot Nonstationary Gabor windows/filters
+%    PLOT_WINS     -  Plot nonstationary Gabor windows/filters
 %
 %  Advanced spectrograms
 %    PLOTSLICQ     -  `plotnsgtf` wrapper for sliced transforms (sliCQ)

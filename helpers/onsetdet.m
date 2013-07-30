@@ -9,14 +9,14 @@ function [pos,V0] = onsetdet(f,win_length,thre,range,multi,shift,showplot)
 %          pos = onsetdet(...)
 %
 %   Input parameters:
-%         f         : The signal to be analyzed (single channel only)
+%         f         : Signal to be analyzed (single channel only)
 %         win_length: Window length for the STFT analysis (in samples)
 %         thre      : Peak-picking threshold
 %         range     : Area of interest for the choice of local maxima 
 %         multi     : Area of interest multiplication factor for the   
 %                     peak-picking
 %         shift     : Readjustment of the peaks 
-%                     (in $shift*win_length/16$)
+%                     (in $shift~\cdot~win\_length/16$)
 %         showplot  : Plot the results (0/1) 
 %   Output parameters:
 %         pos       : Onset sequence
@@ -30,7 +30,7 @@ function [pos,V0] = onsetdet(f,win_length,thre,range,multi,shift,showplot)
 %   redundant Gabor transform using a Hann window, implemented in 
 %   |specflux|. 
 %
-%   Local maxima of the onset detection function are chosen as onset if it 
+%   Local maxima of the onset detection function are chosen as onset if 
 %   larger than the local mean by at least the threshold parameter *thre*. 
 %   This choice is performed by |peakpick|, a simple peakpicking algorithm.
 %

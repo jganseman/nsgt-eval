@@ -8,10 +8,9 @@ function [c,Ls] = nsgtf(f,g,shift,M)
 %         f         : The signal to be analyzed (For multichannel
 %                     signals, input should be a matrix which each
 %                     column storing a channel of the signal).
-%         g         : Cell array of Fourier transforms of the analysis 
-%                     windows
+%         g         : Cell array of analysis filters
 %         shift     : Vector of frequency shifts
-%         M         : Number of time channels (optional)
+%         M         : Number of time channels (optional).
 %                     If M is constant, the output is converted to a
 %                     matrix
 %   Output parameters:
@@ -33,13 +32,14 @@ function [c,Ls] = nsgtf(f,g,shift,M)
 %
 %   If multichannel input is used, the same nonstationary Gabor system is 
 %   applied to each channel and each entry of *c* will be a 2D array with 
-%   c{n}(:,CH) being the entries corresponding to channel *CH*.
+%   c{n}(:,CH) being the entries corresponding to frequency channel *n*, 
+%   signal channel *CH*.
 %
 %   If *M* is scalar or uniform, then *c* is converted into a regular
 %   array. 
 %
 %   The choice of phase-locked coefficients (by inserting (l-P(n)) in the 
-%   complex exponential prevents border artifacts for combinations of 
+%   complex exponential) prevents border artifacts for combinations of 
 %   window functions *g{n}* that do not have full support and *M(n)* that 
 %   do not divide *Ls*.
 %

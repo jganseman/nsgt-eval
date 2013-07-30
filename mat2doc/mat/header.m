@@ -1,5 +1,5 @@
 % Copyright (C) 2013 Nicki Holighaus.
-% This file is part of NSGToolbox version 0.0.9.
+% This file is part of NSGToolbox version 0.1.0
 % 
 % This work is licensed under the Creative Commons 
 % Attribution-NonCommercial-ShareAlike 3.0 Unported 

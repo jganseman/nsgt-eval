@@ -8,10 +8,9 @@ function [c,Ls] = nsgtf_real(f,g,shift,M)
 %         f         : A real-valued signal to be analyzed (For multichannel
 %                     signals, input should be a matrix which each
 %                     column storing a channel of the signal).
-%         g         : Cell array of Fourier transforms of the analysis 
-%                     windows
+%         g         : Cell array of analysis filters
 %         shift     : Vector of frequency shifts
-%         M         : Number of time channels (optional)
+%         M         : Number of time channels (optional).
 %                     If M is constant, the output is converted to a
 %                     matrix
 %   Output parameters:

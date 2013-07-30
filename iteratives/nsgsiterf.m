@@ -11,7 +11,7 @@ function [fr,res,Nit]=nsgsiterf(c,g,shift,M,varargin)
 %         c         : Nonstationary Gabor coefficients
 %         g         : Cell array of filters
 %         shift     : Vector of shifts between the center frequencies
-%         M         : Vector of lengths of the filters
+%         M         : Number of time steps
 %         Ls        : Original signal length
 %         varargin  : Optional input pairs (see table below)
 %   Output parameters: 
@@ -106,9 +106,11 @@ posit = cumsum(shift);
 L = posit(end);
 posit = posit-shift(1);
 
-frmop = @(x) nsigtf(nsgtf(x,g,shift,M),g,shift,L);
+frmop = @(x) nsigt(nsgt(x,g,shift,M),g,shift,L);
 
 fr = nsigtf(c,g,shift,L);
+
+fr = fft(fr);
 
 if prec == 0
     [fr,tmp1,tmp2,Nit,res] = pcg(frmop,fr,tol,Mit);
@@ -125,6 +127,8 @@ else
     D = spdiags(diagonal,0,L,L);
     [fr,tmp1,tmp2,Nit,res] = pcg(frmop,fr,tol,Mit,D);    
 end
+
+fr = ifft(fr);
 
 if  exist('Ls','var')
     fr = fr(1:Ls,:);

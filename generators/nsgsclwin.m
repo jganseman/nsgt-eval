@@ -14,7 +14,7 @@ function [g,shift,M] = nsgsclwin(positions,short,max_win,Ls)
 %         shift     : Vector of time shifts
 %         M         : Vector of window lengths
 %
-%   Create non-stationary Gabor frame from a sequence of positions, e.g. 
+%   Create nonstationary Gabor frame from a sequence of positions, e.g. 
 %   an onset sequence. This routine builds scale-type frames with fixed 
 %   scale parameter $Q = 2$ and overlap parameters $O_1 = 2/3$, 
 %   $O_2 = 1/3$. Currently, Hann windows of varying length are used as 

@@ -17,16 +17,16 @@ function plotslicq(c,shift,varargin)
 %         bins     : Bins per octave (in constant or vector form)
 %         cutout   : Desired part of the spectrogram, e.g.
 %                    choice of `2` shows frequencies up to Nyquist
-%                    (`X` shows the $number_of_bins/X$ lowest frequency 
+%                    (`X` shows the $number\_of\_bins/X$ lowest frequency 
 %                    bins)
 %         dynrange : Colorscale dynamic range in dB (default 60 dB)
 %
 %   This is a wrapper function for |plotnsgtf| that rearranges the 
-%   coefficients of a sliced nonstationary Gabor filterbank, in particluar
+%   coefficients of a sliced nonstationary Gabor filterbank, in particular
 %   those of a sliced constant-Q nonstationary Gabor filterbank, to
 %   resemble a full length transform.
 %
-%   For an explaination of the parameters, please refer to the help of
+%   For an explanation of the parameters, please refer to the help of
 %   |plotnsgtf|.
 %
 %   See also:  plotnsgtf, slicq

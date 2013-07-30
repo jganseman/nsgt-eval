@@ -11,7 +11,7 @@ function [fr,res,Nit]=nsgsiter(c,g,shift,M,varargin)
 %         c         : Nonstationary Gabor coefficients
 %         g         : Cell array of window functions
 %         shift     : Vector of shifts between the window positions
-%         M         : Vector of lengths of the window functions
+%         M         : Number of frequency channels
 %         Ls        : Original signal length
 %         varargin  : Optional input pairs (see table below)
 %   Output parameters: 

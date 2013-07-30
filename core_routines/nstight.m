@@ -3,7 +3,7 @@ function gt = nstight(g,shift,M)
 %   Usage: gt = nstight(g,shift,M)
 %
 %   Input parameters:
-%         g         : Cell array of window functions
+%         g         : Cell array of window functions/filters
 %         shift     : Vector of time/frequency shifts
 %         M         : Number of frequency channels (vector/scalar)
 %   Output parameters:
@@ -11,9 +11,9 @@ function gt = nstight(g,shift,M)
 %
 %   Given a non-stationary Gabor frame specified by the windows *g*, shift 
 %   parameters *shift*, and channel numbers *M*, `nstight` computes the
-%   canonical tight frame windows *gt* by inverting the diagonal of the
-%   frame operator and applying the square root fo the inverse to *g*. More 
-%   explicitly,
+%   canonical tight frame windows/filters *gt* by inverting the diagonal of 
+%   the frame operator and applying the square root to the inverse to *g*. 
+%   More explicitly,
 %
 %   .. gt{n} = g{n} / sqrt ( sum M(l) |g{l}|^2 ).
 %                             l  

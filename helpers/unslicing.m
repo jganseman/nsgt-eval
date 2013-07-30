@@ -4,12 +4,12 @@ function fr = unslicing(f_sliced,sl_len,tr_area,slices)
 %
 %   Input parameters:
 %         f_sliced      : Matrix containing signal slices as columns
-%         sl_len        : slice length (in samples)
-%         tr_area       : length of each transition area (in samples,
+%         sl_len        : Slice length (in samples)
+%         tr_area       : Length of each transition area (in samples,
 %                         optional, default is $ceil( sl\_len/16 )$)
-%         slices        : number of slices in *f_sliced* (optional)
+%         slices        : Number of slices in *f_sliced* (optional)
 %   Output parameters:
-%         fr      : signal resulting from the overlap-add procedure
+%         fr      : Signal resulting from the overlap-add procedure
 %
 %   This function performs a windowed overlap-add procedure on the columns 
 %   of the input matrix *f_sliced*. The signal is assumed to have been cut 
