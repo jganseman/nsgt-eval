@@ -1,0 +1,19 @@
+PDFNAME = $(shell ../scripts/pdfname.py)
+
+all:	$(PDFNAME)
+
+%.pdf: %.tex Makefile $(shell ls *.bib)
+	pslatex $*
+	-bibtex $*
+	pslatex $*
+	pslatex $*
+	dvips -t A4 $*.dvi
+	ps2pdf $*.ps $*.pdf
+
+texclean:	
+	-rm *.aux *.bbl *.blg *.log *.dvi *.ps
+
+clean:	texclean
+	-rm $(PDFNAME)
+
+.PHONY: all texclean clean

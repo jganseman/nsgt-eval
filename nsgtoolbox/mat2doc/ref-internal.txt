@@ -1,0 +1,84 @@
+.. |nsigt| replace:: `nsigt`
+.. _nsigt: /doc/core_routines/nsigt.php
+.. |nsgtf| replace:: `nsgtf`
+.. _nsgtf: /doc/core_routines/nsgtf.php
+.. |plot_wins| replace:: `plot_wins`
+.. _plot_wins: /doc/plotting/plot_wins.php
+.. |plotslicq| replace:: `plotslicq`
+.. _plotslicq: /doc/plotting/plotslicq.php
+.. |plotnsgt| replace:: `plotnsgt`
+.. _plotnsgt: /doc/plotting/plotnsgt.php
+.. |plotnsgtf| replace:: `plotnsgtf`
+.. _plotnsgtf: /doc/plotting/plotnsgtf.php
+.. |nsgaiter| replace:: `nsgaiter`
+.. _nsgaiter: /doc/iteratives/nsgaiter.php
+.. |nsgsiter| replace:: `nsgsiter`
+.. _nsgsiter: /doc/iteratives/nsgsiter.php
+.. |onsetnsgt| replace:: `onsetnsgt`
+.. _onsetnsgt: /doc/wrappers/onsetnsgt.php
+.. |invwvlttrans| replace:: `invwvlttrans`
+.. _invwvlttrans: /doc/wrappers/invwvlttrans.php
+.. |unslicing| replace:: `unslicing`
+.. _unslicing: /doc/helpers/unslicing.php
+.. |demo_nsgt| replace:: `demo_nsgt`
+.. _demo_nsgt: /doc/demos/demo_nsgt.php
+.. |invonsetnsgt| replace:: `invonsetnsgt`
+.. _invonsetnsgt: /doc/wrappers/invonsetnsgt.php
+.. |hannwin| replace:: `hannwin`
+.. _hannwin: /doc/windows/hannwin.php
+.. |slicq| replace:: `slicq`
+.. _slicq: /doc/wrappers/slicq.php
+.. |wp2inp| replace:: `wp2inp`
+.. _wp2inp: /doc/helpers/wp2inp.php
+.. |blackharr| replace:: `blackharr`
+.. _blackharr: /doc/windows/blackharr.php
+.. |onsetdet| replace:: `onsetdet`
+.. _onsetdet: /doc/helpers/onsetdet.php
+.. |islicq| replace:: `islicq`
+.. _islicq: /doc/wrappers/islicq.php
+.. |demo_nsgtf| replace:: `demo_nsgtf`
+.. _demo_nsgtf: /doc/demos/demo_nsgtf.php
+.. |gausscw| replace:: `gausscw`
+.. _gausscw: /doc/helpers/gausscw.php
+.. |nsgt_startup| replace:: `nsgt_startup`
+.. _nsgt_startup: /doc///nsgt_startup.php
+.. |specflux| replace:: `specflux`
+.. _specflux: /doc/helpers/specflux.php
+.. |wvlttrans| replace:: `wvlttrans`
+.. _wvlttrans: /doc/wrappers/wvlttrans.php
+.. |nsigt_real| replace:: `nsigt_real`
+.. _nsigt_real: /doc/core_routines/nsigt_real.php
+.. |nsdual| replace:: `nsdual`
+.. _nsdual: /doc/core_routines/nsdual.php
+.. |nsgt| replace:: `nsgt`
+.. _nsgt: /doc/core_routines/nsgt.php
+.. |nsgcqwin| replace:: `nsgcqwin`
+.. _nsgcqwin: /doc/generators/nsgcqwin.php
+.. |nsgtf_real| replace:: `nsgtf_real`
+.. _nsgtf_real: /doc/core_routines/nsgtf_real.php
+.. |nsganamat| replace:: `nsganamat`
+.. _nsganamat: /doc/operators/nsganamat.php
+.. |nsgt_real| replace:: `nsgt_real`
+.. _nsgt_real: /doc/core_routines/nsgt_real.php
+.. |slicing| replace:: `slicing`
+.. _slicing: /doc/helpers/slicing.php
+.. |nsigtf| replace:: `nsigtf`
+.. _nsigtf: /doc/core_routines/nsigtf.php
+.. |nsgerbwin| replace:: `nsgerbwin`
+.. _nsgerbwin: /doc/generators/nsgerbwin.php
+.. |peakpick| replace:: `peakpick`
+.. _peakpick: /doc/helpers/peakpick.php
+.. |nsgfrmmat| replace:: `nsgfrmmat`
+.. _nsgfrmmat: /doc/operators/nsgfrmmat.php
+.. |nsgsclwin| replace:: `nsgsclwin`
+.. _nsgsclwin: /doc/generators/nsgsclwin.php
+.. |nsigtf_real| replace:: `nsigtf_real`
+.. _nsigtf_real: /doc/core_routines/nsigtf_real.php
+.. |nsgsiterf| replace:: `nsgsiterf`
+.. _nsgsiterf: /doc/iteratives/nsgsiterf.php
+.. |nstight| replace:: `nstight`
+.. _nstight: /doc/core_routines/nstight.php
+.. |nsgwvltwin| replace:: `nsgwvltwin`
+.. _nsgwvltwin: /doc/generators/nsgwvltwin.php
+.. |nsgaiterf| replace:: `nsgaiterf`
+.. _nsgaiterf: /doc/iteratives/nsgaiterf.php

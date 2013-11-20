@@ -1,0 +1,1675 @@
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options false
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 0
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+mat2doc: A documentation converter
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+mat2doc
+\family default
+ is a collection of python scripts for generating documentation for Matlab/Octav
+e projects.
+ It allows you to only write your documentation once, in the headers of
+ the Matlab-files, and then use this information to generate HTML and LaTeX
+ documenation.
+\end_layout
+
+\begin_layout Standard
+To do this, 
+\family typewriter
+mat2doc
+\family default
+ uses a simple language, where you insert a capital letter at the beginning
+ of lines, to indicate what type content the line contains
+\end_layout
+
+\begin_layout Subsection
+Features
+\end_layout
+
+\begin_layout Itemize
+Three outputs: HTML, LaTeX/PDF and Matlab.
+ The Matlab output is simply the description text with the markup letters
+ appropriatly stripped.
+\end_layout
+
+\begin_layout Itemize
+Semi-automatic recognition of code appearing in the text and markup of whole
+ code lines.
+ They will be typeset with a typewriter font in HTML and LaTeX output.
+\end_layout
+
+\begin_layout Itemize
+Support for LaTeX display formulas.
+ They are converted to png images in the HTML output.
+\end_layout
+
+\begin_layout Itemize
+BibTex support: Enter the bibtex key of a citation, and 
+\family typewriter
+mat2doc
+\family default
+ generates a bibliography from a bibtex file.
+\end_layout
+
+\begin_layout Itemize
+Contents files are parsed to produce index files in HTML and table of contents
+ in LaTeX.
+\end_layout
+
+\begin_layout Itemize
+Demo files are executed by Matlab / Octave, and HTML pages containing the
+ text output and figures are generated.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+See also
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+Demos
+\begin_inset Quotes erd
+\end_inset
+
+ lines generate a list of hyperlinks in the HTML output.
+\end_layout
+
+\begin_layout Itemize
+Possibily to specify lines that should only appear in the HTML, LaTeX or
+ Matlab output.
+ This makes is possible to do almost anything, but you have to write more
+ text.
+\end_layout
+
+\begin_layout Itemize
+Very limited support of inline LaTeX formulas.
+\end_layout
+
+\begin_layout Itemize
+Protection of common characters that would break LaTeX, e.g.
+ [ ] and %.
+ 
+\end_layout
+
+\begin_layout Subsection
+Requirements
+\end_layout
+
+\begin_layout Standard
+The script itself is written in Python, so you need to have a recent version
+ of python installed.
+ Besides that it requires:
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+Tex4HT
+\family default
+, http://www.cse.ohio-state.edu/~gurari/TeX4ht/mn.html, if you want to convert
+ LaTeX formulas to png files.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+Bibtex2html
+\family default
+, http://www.lri.fr/~filliatr/bibtex2html/ and
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+Lynx
+\family default
+, http://lynx.browser.org/ if you want to convert bibtex references to HTML
+ and text.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+mat2doc
+\family default
+ has only been tested on linux.
+ It should be possible to port it to Windows.
+\end_layout
+
+\begin_layout Subsection
+Running it
+\end_layout
+
+\begin_layout Standard
+To run the program type something like
+\end_layout
+
+\begin_layout LyX-Code
+python printdoc.py ltfat/mat2docconf.py mat
+\end_layout
+
+\begin_layout Standard
+or simply
+\end_layout
+
+\begin_layout LyX-Code
+./printdoc.py ltfat/mat2docconf.py mat
+\end_layout
+
+\begin_layout Standard
+This executes the 
+\family typewriter
+printdoc.py
+\family default
+ program with two mandatory arguments:
+\end_layout
+
+\begin_layout Itemize
+The first one is the full name of the configuration file for your project,
+ in this case 
+\family typewriter
+mat2docconf.py.
+\end_layout
+
+\begin_layout Itemize
+The second one is the name of a Python class defined in this configuration
+ file.
+ This would typically be one of 
+\family typewriter
+html
+\family default
+, 
+\family typewriter
+mat
+\family default
+ or 
+\family typewriter
+tex
+\family default
+, but you may define others if you would like for example html output with
+ different headers etc.
+\end_layout
+
+\begin_layout Section
+The description language
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+mat2doc
+\family default
+ does do things to parse the body of your help text:
+\end_layout
+
+\begin_layout Itemize
+It looks for lines beginning with a capital letter to indicate the special
+ meaning of this line.
+\end_layout
+
+\begin_layout Itemize
+It scans the words in the text to look for code segments and inline formulas.
+\end_layout
+
+\begin_layout Standard
+The special lines are detailed below.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+F Display LaTeX formulas.
+\end_layout
+
+\begin_deeper
+\begin_layout List
+\labelwidthstring 00.00.0000
+HTML Consequtive lines beginning with F are sendt to Tex4HT, which generates
+ a png image of the formula.
+ A link to this image is then inserted in the HTML file.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+LaTeX The line is sendt straight to LaTeX
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+Matlab The line is removed.
+ Use 
+\begin_inset Quotes eld
+\end_inset
+
+M
+\begin_inset Quotes erd
+\end_inset
+
+ lines to insert a textual representation of the formula that can be seen
+ in Matlab.
+\end_layout
+
+\end_deeper
+\begin_layout List
+\labelwidthstring 00.00.0000
+M Matlab only line.
+ This line is 
+\emph on
+only
+\emph default
+ visible in the Matlab output.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+C Code line.
+ Consequtive lines are joined together to form a block.
+\end_layout
+
+\begin_deeper
+\begin_layout List
+\labelwidthstring 00.00.0000
+HTML The lines are displayed using 
+\family typewriter
+<pre>
+\family default
+ and 
+\family typewriter
+</pre>
+\family default
+.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+LaTeX The lines are displayed using the verbatim environment.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+Matlab The lines are displayed as they are.
+\end_layout
+
+\end_deeper
+\begin_layout List
+\labelwidthstring 00.00.0000
+R List of references.
+ This line only contains a list of Bibtex keys, that are looked up the bibtex
+ file specified in the configuration file.
+\end_layout
+
+\begin_deeper
+\begin_layout List
+\labelwidthstring 00.00.0000
+HTML A header is inserted, and bibtex2html are used to convert the references
+ to HTML.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+LaTeX A header is inserted, and then the keys are cited as usual so the
+ actual textual representation of the citation will appear in a list of
+ references in the back of the document.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+Matlab A header is inserted, and then 
+\family typewriter
+bibtex2html
+\family default
+ and 
+\family typewriter
+lynx
+\family default
+ are used to convert the references to text.
+ They are inserted immidiatly following the header with a bit of extra space.
+\end_layout
+
+\end_deeper
+\begin_layout List
+\labelwidthstring 00.00.0000
+Blank
+\begin_inset space ~
+\end_inset
+
+lines Blank lines indicate a new paragraph.
+\end_layout
+
+\begin_layout Standard
+In addition to this 
+\family typewriter
+mat2doc
+\family default
+ will also seach normal lines and 
+\begin_inset Quotes eld
+\end_inset
+
+Input parameters
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+Output parameters
+\begin_inset Quotes erd
+\end_inset
+
+ lines for code.
+ 
+\family typewriter
+mat2doc
+\family default
+ look for words satisfying some simple conditions.
+ Here a 
+\begin_inset Quotes eld
+\end_inset
+
+word
+\begin_inset Quotes erd
+\end_inset
+
+ means a collection of letters separated by spaces! This is simple, but
+ perhaps not what you expect.
+ Some examples of such words: 
+\begin_inset Quotes eld
+\end_inset
+
+(here
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+there.
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+p=q
+\begin_inset Quotes erd
+\end_inset
+
+ and so on.
+ Note that 
+\begin_inset Quotes eld
+\end_inset
+
+p = q
+\begin_inset Quotes erd
+\end_inset
+
+ is three separate words.
+\end_layout
+
+\begin_layout Itemize
+If a word (plus possibly a final 
+\begin_inset Quotes eld
+\end_inset
+
+.
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+,
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+:
+\begin_inset Quotes erd
+\end_inset
+
+ at the end) appears in the 
+\begin_inset Quotes eld
+\end_inset
+
+Usage
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+Input parameters
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+Output parameters
+\begin_inset Quotes erd
+\end_inset
+
+ lines, it is considered code.
+ Note that it is possible to specify a list of names that should 
+\emph on
+not
+\emph default
+ be considered code in the configuration file.
+ Such examples would be e.g.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+a
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+order
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+If a word begins with _ as in 
+\begin_inset Quotes eld
+\end_inset
+
+_a
+\begin_inset Quotes erd
+\end_inset
+
+ it is considered code, and the _ character is removed.
+ Very efficient, if mat2doc does not recognize you word as being code.
+\end_layout
+
+\begin_layout Itemize
+If a word contains any of the characters [ ] < > = + it is considered code.
+\end_layout
+
+\begin_layout Itemize
+If a word starts with the name of the function followed by a parenthesis,
+ as in 
+\family typewriter
+DGT(
+\family default
+or 
+\family typewriter
+FFTREAL(
+\end_layout
+
+\begin_layout Section
+An example
+\end_layout
+
+\begin_layout Standard
+We now show a real world example.
+ Line numbers have been added to each line for reference.
+\end_layout
+
+\begin_layout LyX-Code
+01 function [c,Ls]=dgt(f,g,a,M,L)
+\end_layout
+
+\begin_layout LyX-Code
+02 %DGT  Discrete Gabor transform.
+\end_layout
+
+\begin_layout LyX-Code
+03 %   Usage:  c=dgt(f,g,a,M);
+\end_layout
+
+\begin_layout LyX-Code
+04 %           c=dgt(f,g,a,M,L);
+\end_layout
+
+\begin_layout LyX-Code
+05 %           [c,Ls]=dgt(f,g,a,M);
+\end_layout
+
+\begin_layout LyX-Code
+06 %           [c,Ls]=dgt(f,g,a,M,L);
+\end_layout
+
+\begin_layout LyX-Code
+07 %
+\end_layout
+
+\begin_layout LyX-Code
+08 %   Input parameters:
+\end_layout
+
+\begin_layout LyX-Code
+09 %         f     : Input data
+\end_layout
+
+\begin_layout LyX-Code
+10 %         g     : Window function.
+\end_layout
+
+\begin_layout LyX-Code
+11 %         a     : Length of time shift.
+\end_layout
+
+\begin_layout LyX-Code
+12 %         M     : Number of channels.
+\end_layout
+
+\begin_layout LyX-Code
+13 %         L     : Length of transform to do.
+\end_layout
+
+\begin_layout LyX-Code
+14 %   Output parameters:
+\end_layout
+
+\begin_layout LyX-Code
+15 %         c     : M*N array of coefficients.
+\end_layout
+
+\begin_layout LyX-Code
+16 %         Ls    : Length of input signal.
+\end_layout
+
+\begin_layout LyX-Code
+17 %
+\end_layout
+
+\begin_layout LyX-Code
+18 %   DGT(f,g,a,M) computes the Gabor coefficients of the input
+\end_layout
+
+\begin_layout LyX-Code
+19 %   signal f with respect to the window g and parameters _a and M.
+ The
+\end_layout
+
+\begin_layout LyX-Code
+20 %   output is a vector/matrix in a rectangular layout.
+\end_layout
+
+\begin_layout LyX-Code
+21 %
+\end_layout
+
+\begin_layout LyX-Code
+22 %   The length of the transform will be the smallest multiple of _a and
+ M
+\end_layout
+
+\begin_layout LyX-Code
+23 %   that is larger than the signal.
+ f will be zero-extended to the length of
+\end_layout
+
+\begin_layout LyX-Code
+24 %   the transform.
+ If f is a matrix, the transformation is applied to each
+\end_layout
+
+\begin_layout LyX-Code
+25 %   column.
+ The length of the transform done can be obtained by
+\end_layout
+
+\begin_layout LyX-Code
+26 %   L=size(c,2)*a;
+\end_layout
+
+\begin_layout LyX-Code
+27 %
+\end_layout
+
+\begin_layout LyX-Code
+28 %   The window g may be a text string decribing the window.
+ The following
+\end_layout
+
+\begin_layout LyX-Code
+29 %   types are recognized
+\end_layout
+
+\begin_layout LyX-Code
+30 %
+\end_layout
+
+\begin_layout LyX-Code
+31 %-  'gauss'     - Gaussian window.
+\end_layout
+
+\begin_layout LyX-Code
+32 %
+\end_layout
+
+\begin_layout LyX-Code
+33 %-  'dualgauss' - Canonical dual of Gaussian window.
+\end_layout
+
+\begin_layout LyX-Code
+34 %
+\end_layout
+
+\begin_layout LyX-Code
+35 %-  'tight'     - Tight window generated from a Gaussian.
+\end_layout
+
+\begin_layout LyX-Code
+36 %
+\end_layout
+
+\begin_layout LyX-Code
+37 %   DGT(f,g,a,M,L) computes the Gabor coefficients as above, but does
+\end_layout
+
+\begin_layout LyX-Code
+38 %   a transform of length L.
+ f will be cut or zero-extended to length L before
+\end_layout
+
+\begin_layout LyX-Code
+39 %   the transform is done.
+\end_layout
+
+\begin_layout LyX-Code
+40 %
+\end_layout
+
+\begin_layout LyX-Code
+41 %   [c,Ls]=DGT(f,g,a,M) or [c,Ls]=DGT(f,g,a,M,L) additionally returns
+ the
+\end_layout
+
+\begin_layout LyX-Code
+42 %   length of the input signal f.
+ This is handy for reconstruction:
+\end_layout
+
+\begin_layout LyX-Code
+43 %
+\end_layout
+
+\begin_layout LyX-Code
+44 %C               [c,Ls]=dgt(f,g,a,M);
+\end_layout
+
+\begin_layout LyX-Code
+45 %C               fr=idgt(c,gd,a,Ls);
+\end_layout
+
+\begin_layout LyX-Code
+46 %
+\end_layout
+
+\begin_layout LyX-Code
+47 %   will reconstruct the signal f no matter what the length of f is,
+ provided
+\end_layout
+
+\begin_layout LyX-Code
+48 %   that _gd is a dual window of g.
+\end_layout
+
+\begin_layout LyX-Code
+49 %
+\end_layout
+
+\begin_layout LyX-Code
+50 %   The Discrete Gabor Transform is defined as follows: Consider a window
+ g
+\end_layout
+
+\begin_layout LyX-Code
+51 %   and a one-dimensional signal f of length L and define $N=L/a$.
+\end_layout
+
+\begin_layout LyX-Code
+52 %   The output from c=DGT(f,g,a,M) is then given by
+\end_layout
+
+\begin_layout LyX-Code
+53 %
+\end_layout
+
+\begin_layout LyX-Code
+54 %M                 L-1 
+\end_layout
+
+\begin_layout LyX-Code
+55 %M    c(m+1,n+1) = sum f(l+1)*exp(-2*pi*i*m*l/M)*conj(g(l-a*n+1)), 
+\end_layout
+
+\begin_layout LyX-Code
+56 %M                 l=0  
+\end_layout
+
+\begin_layout LyX-Code
+57 %F   
+\backslash
+[c
+\backslash
+left(m+1,n+1
+\backslash
+right)=
+\backslash
+sum_{l=0}^{L-1}f(l+1)e^{-2
+\backslash
+pi ilm/M}
+\backslash
+overline{g(l-an+1)}
+\backslash
+]
+\end_layout
+
+\begin_layout LyX-Code
+58 %
+\end_layout
+
+\begin_layout LyX-Code
+59 %   where $m=0,...,M-1$ and $n=0,...,N-1$ and $l-an$ is computed modulo L.
+\end_layout
+
+\begin_layout LyX-Code
+60 %
+\end_layout
+
+\begin_layout LyX-Code
+61 %   See also:  idgt, longpar, dwilt, gabtight
+\end_layout
+
+\begin_layout LyX-Code
+62 %
+\end_layout
+
+\begin_layout LyX-Code
+63 %   Examples:  examp_dgt
+\end_layout
+
+\begin_layout LyX-Code
+64 %
+\end_layout
+
+\begin_layout LyX-Code
+65 %R  fest98 gr01
+\end_layout
+
+\begin_layout Standard
+We now go through the lines by line number:
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+01 The is the normal function declartion.
+ Currently, this declaration must come before the help text.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+02 The first line of the help text.
+ The name immidiatly following the % sign: 
+\family typewriter
+DGT
+\family default
+ is used for the name of the function and will appear in various places,
+ headings, file names etc.
+ The words following this will be used as a short description of the file.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+03-06 A usage block.
+ This is optional.
+ The lines will appear in HTML and LaTeX output using itemization.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+07-16 Input and output parameters.
+ These are optional.
+ mat2doc will write the variable names using typewriter font, and remember
+ the variable names appearing here.
+ If they are found in the body of the help text, they will be highligted.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+16-59 This forms the description of the function.
+ Everything in here will be diplayed togther in the HTML or LaTeX description.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+19 Here appears 
+\begin_inset Quotes eld
+\end_inset
+
+_a
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The variable 
+\begin_inset Quotes eld
+\end_inset
+
+a
+\begin_inset Quotes erd
+\end_inset
+
+ is a also a common word, and it will therefore not be automatically highlighted.
+ To force highlighting, a _ is put in front.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+35-38 Code lines.
+ They will be written in typewriter font.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+40 Square parenthesis [] appear here.
+ They will be protected in the LaTeX output so that they appear as they
+ should.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+41-45 Matlab only lines.
+ These lines contain a textual description of the display LaTeX formula
+ following these lines.
+ Notice that line 41 is essentially blank: This produces an empty line in
+ the Matlab file without making a paragraph break in HTML or LaTeX.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+46 The LaTeX inline formula, you may split this over several lines if you
+ prefer.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+47 An empty line appearing only in Matlab outout.
+ This avoids extra paragraphs in HTML and LaTeX.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+48 This line contains some inline formulas, they are passed straight to
+ TeX in the LaTeX output.
+ In HTML, the $-signs are simply removed, and the lines are not highlighted.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+52 In the HTML output, this generates a list of links in the header of the
+ html file.
+ In LaTeX, these are simply thrown away.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+54 Same as 52
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+56 References.
+ The reference keys are looked up in the Bibtex database specified in the
+ configuration file, expanded into full references, and a header is inserted.
+ 
+\end_layout
+
+\begin_layout Standard
+The Matlab output from this example is:
+\end_layout
+
+\begin_layout LyX-Code
+function [c]=dgt(f,gamma,p3,p4,p5)
+\end_layout
+
+\begin_layout LyX-Code
+%DGT  Discrete Gabor transform.
+\end_layout
+
+\begin_layout LyX-Code
+%   Usage:  c=dgt(f,gamma,a,b);
+\end_layout
+
+\begin_layout LyX-Code
+%           c=dgt(f,gamma,a,b,[]);
+\end_layout
+
+\begin_layout LyX-Code
+%           c=dgt(f,gamma,V);
+\end_layout
+
+\begin_layout LyX-Code
+%
+\end_layout
+
+\begin_layout LyX-Code
+%   Input parameters:
+\end_layout
+
+\begin_layout LyX-Code
+%         f     : Input data
+\end_layout
+
+\begin_layout LyX-Code
+%         gamma : Window function.
+\end_layout
+
+\begin_layout LyX-Code
+%         a     : Length of time shift.
+\end_layout
+
+\begin_layout LyX-Code
+%         b     : Length of frequency shift.
+\end_layout
+
+\begin_layout LyX-Code
+%         V     : 2x2 lattice matrix.
+\end_layout
+
+\begin_layout LyX-Code
+%   Output parameters:
+\end_layout
+
+\begin_layout LyX-Code
+%         c     : M*N array of coefficients.
+\end_layout
+
+\begin_layout LyX-Code
+%
+\end_layout
+
+\begin_layout LyX-Code
+%   DGT(f,gamma,a,b) computes the Gabor coefficients of the input
+\end_layout
+
+\begin_layout LyX-Code
+%   signal f with respect to the window gamma and parameters _a and b.
+ The
+\end_layout
+
+\begin_layout LyX-Code
+%   output is a vector/matrix of the same shape as f, but it will be longer
+\end_layout
+
+\begin_layout LyX-Code
+%   by the oversampling factor.
+\end_layout
+
+\begin_layout LyX-Code
+%
+\end_layout
+
+\begin_layout LyX-Code
+%   The length of the transform done will be equal to the length of gamma.
+\end_layout
+
+\begin_layout LyX-Code
+%   If f is a matrix, the transformation is applied to each column.
+\end_layout
+
+\begin_layout LyX-Code
+%
+\end_layout
+
+\begin_layout LyX-Code
+%   DGT(f,gamma,a,b,[]) computes the Gabor coefficients as above, but
+\end_layout
+
+\begin_layout LyX-Code
+%   returns the coefficients in a rectangular layout.
+ This does not work
+\end_layout
+
+\begin_layout LyX-Code
+%   for multiple signals.
+\end_layout
+
+\begin_layout LyX-Code
+%
+\end_layout
+
+\begin_layout LyX-Code
+%   DGT(f,gamma,V) computes the Gabor coefficients with respect to
+\end_layout
+
+\begin_layout LyX-Code
+%   the lattice defined by the 2x2 matrix V.
+ V must be in normal form.
+\end_layout
+
+\begin_layout LyX-Code
+%
+\end_layout
+
+\begin_layout LyX-Code
+%   The window gamma is assumed to be centered around its first element.
+\end_layout
+
+\begin_layout LyX-Code
+%
+\end_layout
+
+\begin_layout LyX-Code
+%   Consider a (multi)window gamma and a one-dimensional signal f, and
+\end_layout
+
+\begin_layout LyX-Code
+%   define:
+\end_layout
+
+\begin_layout LyX-Code
+%               L=size(g,1); % Length of the window   
+\end_layout
+
+\begin_layout LyX-Code
+%               M=L/b;       % Number of modulations
+\end_layout
+
+\begin_layout LyX-Code
+%               N=L/a;       % Number of translations
+\end_layout
+
+\begin_layout LyX-Code
+%               R=size(g,2); % Number of windows,      
+\end_layout
+
+\begin_layout LyX-Code
+%
+\end_layout
+
+\begin_layout LyX-Code
+%   The output from cr=DGT(f,gamma,a,b,[]) is then given by
+\end_layout
+
+\begin_layout LyX-Code
+% 
+\end_layout
+
+\begin_layout LyX-Code
+%                     L-1 
+\end_layout
+
+\begin_layout LyX-Code
+%     cr(m+1,n+1,r) = sum f(k)*exp(-2*pi*i*m*b*k/L)*conj(gamma(k-a*n+1,r)),
+ 
+\end_layout
+
+\begin_layout LyX-Code
+%                     k=0  
+\end_layout
+
+\begin_layout LyX-Code
+% 
+\end_layout
+
+\begin_layout LyX-Code
+%   where m=0,...,M-1 and n=0,...,N-1 and R=1,...,R.
+ The output from
+\end_layout
+
+\begin_layout LyX-Code
+%   c=DGT(f,gamma,a,b) is simply _c=cr(:), so all coefficients are stacked
+\end_layout
+
+\begin_layout LyX-Code
+%   in a vector.
+\end_layout
+
+\begin_layout LyX-Code
+% 
+\end_layout
+
+\begin_layout LyX-Code
+%   SEE ALSO:  IDGT, DWILT, CANTIGHT, HERMNF
+\end_layout
+
+\begin_layout LyX-Code
+%
+\end_layout
+
+\begin_layout LyX-Code
+%   EXAMPLES:  EXAMP_DGT
+\end_layout
+
+\begin_layout LyX-Code
+%
+\end_layout
+
+\begin_layout LyX-Code
+%   REFERENCES:
+\end_layout
+
+\begin_layout LyX-Code
+%     K.
+ Gröchenig.
+ Foundations of time-frequency analysis.
+ Appl.
+ Numer.
+ Harmon.
+\end_layout
+
+\begin_layout LyX-Code
+%     Anal.
+ Birkhäuser Boston, Boston, MA, 2001.
+\end_layout
+
+\begin_layout LyX-Code
+%     
+\end_layout
+
+\begin_layout LyX-Code
+%     H.
+ Feichtinger and T.
+ Strohmer.
+ Gabor analysis and algorithms.
+ Theory and
+\end_layout
+
+\begin_layout LyX-Code
+%     applications.
+ Birkhäuser, Boston, 1998.
+\end_layout
+
+\begin_layout Standard
+The HTML output can be found at http://www.univie.ac.at/nuhag-php/ltfat/doc/m/dgt.ph
+p.
+\end_layout
+
+\begin_layout Standard
+The LaTeX output is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+subsection{DGT}
+\end_layout
+
+\begin_layout Plain Layout
+
+Discrete Gabor transform.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Usage:
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{itemize}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\backslash
+texttt{c = dgt(f,gamma,a,b);}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\backslash
+texttt{c = dgt(f,gamma,a,b,{[}{]});}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\backslash
+texttt{c = dgt(f,gamma,V);}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{itemize}
+\end_layout
+
+\begin_layout Plain Layout
+
+Input parameters:
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{itemize}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\backslash
+texttt{f}: Input data
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\backslash
+texttt{gamma}: Window function.
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\backslash
+texttt{a}: Length of time shift.
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\backslash
+texttt{b}: Length of frequency shift.
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\backslash
+texttt{V}: 2x2 lattice matrix.
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{itemize}
+\end_layout
+
+\begin_layout Plain Layout
+
+Output parameters:
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{itemize}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\backslash
+texttt{c}: M*N array of coefficients.
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{itemize}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{DGT(f,gamma,a,b)} computes the Gabor coefficients of the input
+\end_layout
+
+\begin_layout Plain Layout
+
+signal 
+\backslash
+texttt{f} with respect to the window 
+\backslash
+texttt{gamma} and parameters 
+\backslash
+texttt{a} and 
+\backslash
+texttt{b}.
+ The
+\end_layout
+
+\begin_layout Plain Layout
+
+output is a vector/matrix of the same shape as 
+\backslash
+texttt{f}, but it will be longer
+\end_layout
+
+\begin_layout Plain Layout
+
+by the oversampling factor.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+The length of the transform done will be equal to the length of 
+\backslash
+texttt{gamma}.
+\end_layout
+
+\begin_layout Plain Layout
+
+If 
+\backslash
+texttt{f} is a matrix, the transformation is applied to each column.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{DGT(f,gamma,a,b,{[}{]})} computes the Gabor coefficients as above,
+ but
+\end_layout
+
+\begin_layout Plain Layout
+
+returns the coefficients in a rectangular layout.
+ This does not work
+\end_layout
+
+\begin_layout Plain Layout
+
+for multiple signals.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{DGT(f,gamma,V)} computes the Gabor coefficients with respect to
+\end_layout
+
+\begin_layout Plain Layout
+
+the lattice defined by the 2x2 matrix 
+\backslash
+texttt{V}.
+ 
+\backslash
+texttt{V} must be in normal form.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+The window 
+\backslash
+texttt{gamma} is assumed to be centered around its first element.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Consider a (multi)window 
+\backslash
+texttt{gamma} and a one-dimensional signal 
+\backslash
+texttt{f}, and
+\end_layout
+
+\begin_layout Plain Layout
+
+define:
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+              L=size(g,1); % Length of the window
+\end_layout
+
+\begin_layout Plain Layout
+
+              M=L/b;       % Number of modulations
+\end_layout
+
+\begin_layout Plain Layout
+
+              N=L/a;       % Number of translations
+\end_layout
+
+\begin_layout Plain Layout
+
+              R=size(g,2); % Number of windows,
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+The output from 
+\backslash
+texttt{cr=DGT(f,gamma,a,b,{[}{]})} is then given by
+\end_layout
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+[c
+\backslash
+left(m+1,n+1,r
+\backslash
+right)=
+\backslash
+sum_{k=0}^{L-1}f(k)e^{-2
+\backslash
+pi imbk/L}
+\backslash
+overline{
+\backslash
+gamma(k-an+1,r)}
+\backslash
+]
+\end_layout
+
+\begin_layout Plain Layout
+
+where $m=0,...,M-1$ and $n=0,...,N-1$ and $R=1,...,R$.
+ The output from
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{c=DGT(f,gamma,a,b)} is simply 
+\backslash
+texttt{c=cr(:),} so all coefficients are stacked
+\end_layout
+
+\begin_layout Plain Layout
+
+in a vector.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{References:} 
+\backslash
+cite{fest98}, 
+\backslash
+cite{gr01}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout Section
+The configuration file
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "ref"
+options "abbrv"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

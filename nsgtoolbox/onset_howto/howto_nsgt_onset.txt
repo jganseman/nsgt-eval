@@ -1,0 +1,110 @@
+Step-by-Step introduction to non-stationary Gabor via
+Onset detection using the attached MATLAB routines:
+
+1. Load the signal to be analyzed/processed into your
+   workspace, e.g.:
+
+   sig = wavread('glockenspiel.wav');
+
+   saves the wave-file type signal 'glock.wav' in the
+   current directory under the variable name 'sig'
+   (Be careful with stereo signals, though. The algorithms
+   presented here only work on single channels right now.)
+
+2. Run the onset detection algorithm on the signal. e.g.:
+
+   onsets = onsetdet(sig,2048,0.5,4,2,3,1);
+
+   computes a regular STFT with a 2048 samples Hann window
+   and its Spectral flux.  Then the peak-picking algorithm 
+   described in 
+   
+   S. Dixon. Onset Detection Revisited. Proc. DAFx’06,
+   pages 133–137, September 2006.  
+
+   is applied with parameters 'w=4,m=2,delta=0.5'. At last
+   the resulting values shifted by '3*C' to correct the delay
+   between peaks and the actual onsets (C=win_length/16=2048/16).
+   The results are plotted and saved in the variable 'onsets'.
+   The last parameter specifies if the results are to be plotted
+   or not.
+
+3. Create the adapted non-stationary Gabor scheme fitted to 
+   those onset positions, e.g.:
+
+   [wins,shift] = nsgsclwin(onsets,192,8,length(sig));
+
+   builds the dictionary for the onset vector 'onsets' using
+   windows of length 192*2^Q with Q in {0,...,8-1} and 
+   considering 'length(sig)' the final onset of the signal.
+   'wins' is the cell array of window functions (Hann windows are
+   used), 'shift' is the vector of the corresponding time shifts.
+
+[3(a). Plot the dictionary: plot_wins(wins,shift,normalize); ]
+[3(b). Compute the dual/tight dictionary: winsd = nsdual(wins,shift); ]
+[                                         winst = nstight(wins,shift);]
+
+4. Compute the Non-stationary Gabor transform, e.g.:
+ 
+   [coeffs,Ls] = nsgt(sig,wins,shift);
+
+   computes the non-stationary Gabor transform of 'sig' with
+   windows 'wins' and time shifts 'shift'. The coefficients 
+   are saved in the cell array 'coeffs'. 'Ls' gives the window 
+   length. At each time step the number of frequency channels
+   corresponds to the current window length (mimimum redundancy
+   for the painless case).
+
+[4(alt.). Compute the Non-stationary Gabor transform,    ]
+[         e.g.:                                          ]
+[                                                        ] 
+[   [coeffs,Ls] = nsgt(sig,wins,shift,MAT_SIZE);    	 ]
+[							 ]
+[   computes the non-stationary Gabor transform of 'sig' ] 
+[   with windows 'wins' and time shifts 'shift' using    ]
+[   matrix type output. This is recommended for plotting ] 
+[   but reconstruction is not supported. 'MAT_SIZE'      ]
+[   should be an integer specifying the number of        ]
+[   frequency channels.                                  ]
+
+[4(a). Plot the spectrogram: plotnsgt(coeffs,shift,2);   ]
+[      plots half the frequencies (up to Nyquist).       ]
+
+[5. Manipulate the coefficients, e.g.: thresholding,...  ]
+
+[6. Reconstruct, e.g.:                                   ]
+[                                                        ]
+[   sigrec = nsigt(coeffs,winsd,shift,Ls);               ]
+[                                                        ]
+[   reconstructs the signal from 'coeffs', using the     ]
+[   dictionary 'winsd' (dual frame). The result is saved ]
+[   in 'sigrec'.                                         ]
+
+To give it a try, copy the following lines of code to your 
+MATLAB command window (four plots are produced):
+
+----------------------------------------------------------
+
+sig = wavread('glockenspiel.wav');
+figure(1);
+onsets = onsetdet(sig,2048,0.5,4,2,3,1);
+title('Onset detection results');
+[wins,shift] = nsgsclwin(onsets,192,8,length(sig));
+winsd = nsdual(wins,shift);
+figure(2);
+subplot(2,1,1);
+plot_wins(wins,shift);
+title('Analysis dictionary');
+subplot(2,1,2);
+plot_wins(winsd,shift);
+title('Synthesis dictionary');
+[coeffs,Ls] = nsgt(sig,wins,shift);  
+figure(3);
+plotnsgt(coeffs,shift,2);
+title('Nonstationary Gabor transform');
+sigrec = nsigt(coeffs,winsd,shift,Ls);
+figure(4);
+plot(sig-sigrec);
+title('Absolute difference between original and reconstructed signal');
+
+----------------------------------------------------------
