@@ -1,0 +1,19 @@
+As it is quite complex to start a new git project depending on a ton
+of external libraries, here is a small how-to that describes how I
+created this repository and configured my local machines.
+
+
+1. Created repo nsgt-eval on github website.
+2. Locally, git clone https://github.com/jganseman/nsgt-eval.git
+
+3. git remote add ltfat git://git.code.sf.net/p/ltfat/code
+4. git fetch ltfat
+5. git merge -s ours --no-commit ltfat/master
+	% add folder prefix to whatever thing is pulled from this repo:
+6. git read-tree --prefix=ltfat/ -u ltfat/master
+7. git commit -m "Imported ltfat as subtree"
+	% pull the master branch of ltfat in subtree mode
+8. git pull -s subtree ltfat master
+
+
+
