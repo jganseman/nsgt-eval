@@ -6,6 +6,7 @@ created this repository and configured my local machines.
 1. Created repo nsgt-eval on github website.
 2. Locally, git clone https://github.com/jganseman/nsgt-eval.git
 
+	% ADD LTFAT
 3. git remote add ltfat git://git.code.sf.net/p/ltfat/code
 4. git fetch ltfat
 5. git merge -s ours --no-commit ltfat/master
@@ -15,5 +16,12 @@ created this repository and configured my local machines.
 	% pull the master branch of ltfat in subtree mode
 8. git pull -s subtree ltfat master
 
+	% ADD NSG TOOLBOX
+git remote add nsgtoolbox git://git.code.sf.net/p/nsg/code
+git fetch nsgtoolbox
+git merge -s ours --no-commit nsgtoolbox/master
+git read-tree --prefix=nsgtoolbox/ -u nsgtoolbox/master
+git commit -m "Imported nsgtoolbox as subtree"
+git pull -s subtree nsgtoolbox master
 
 
