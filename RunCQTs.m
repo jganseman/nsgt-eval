@@ -5,54 +5,10 @@
 % EUSIPCO 2012
 
 % Author: Joachim Ganseman, University of Antwerp, all rights reserved
+% Adaptations and updates: december 2013
 
-
-% This is a simple demo that demonstrates how the different implementations
+% This is a demo that demonstrates how the different implementations
 % of (almost) invertible CQTs need to be run on data.
-
-
-%%
-clear;
-addpath(genpath('./'));     % add subdirectories to path
-
-createfigs=0;       % boolean: create figures for paper
-
-%% Parameters
-
-fftsize = 1024;
-hopsize = fftsize / 4;
-
-bins_per_octave = 48;       % make this a multiple of 12 for music
-
-
-%% Read file
-datadir = getDataDirectory();       % directory with example files
-[origMix,samplerate] = wavread([datadir 'pianoclip4notes.wav']);
-
-  % if stereo, make mono
-  if size(origMix, 2) > 1
-     origMix = sum(origMix, 2) ./2 ; 
-  end
-  
-  
-% Do a stupid STFT
-RegularSTFT = stft(origMix, fftsize, hopsize, 0, 'hann');
-
-% invert
-InvOrigMix = stft(origMix, fftsize, hopsize, 0, 'hann');
-InvOrigMix = InvOrigMix(1:length(origMix))';
-
-% property of STFT distributed with Smaragdis' PLCA code: does not rescale.
-opt.nrsources=1;
-origcell{1} = origMix;
-invcell{1} = InvOrigMix;
-invcell =  scaleaudio(origcell, invcell, [], opt);
-
-% calculate reconstruction error
-rec_err = norm(origMix-invcell{1})/norm(origMix);
-fprintf(['STFT error:'...
-    '   %e \n'],rec_err);
-
   
   
 %% Test the Klapuri CQT transform
