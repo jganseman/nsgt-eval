@@ -11,6 +11,10 @@ function D = stft(x, f, w, h, sr)
 % dpwe 1994may05.  Uses built-in 'fft'
 % $Header: /home/empire6/dpwe/public_html/resources/matlab/pvoc/RCS/stft.m,v 1.4 2010/08/13 16:03:14 dpwe Exp $
 
+% Addition by Joachim Ganseman (Dec. 2013): make the transform unitary
+% By multiplying output with window correction factor. See comment %JGA
+
+
 if nargin < 2;  f = 256; end
 if nargin < 3;  w = f; end
 if nargin < 4;  h = 0; end
@@ -61,6 +65,10 @@ for b = 0:h:(s-f)
   c = c+1;
 end;
 
+%JGA: add window correction factor
+d = d ./ sqrt(mean(win.^2));
+
+
 % If no output arguments, plot a spectrogram
 if nargout == 0
   tt = [0:size(d,2)]*h/sr;
@@ -74,3 +82,4 @@ else
   % Otherwise, no plot, but return STFT
   D = d;
 end
+

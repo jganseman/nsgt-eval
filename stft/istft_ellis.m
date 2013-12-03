@@ -12,6 +12,9 @@ function x = istft(d, ftsize, w, h)
 % dpwe 1994may24.  Uses built-in 'ifft' etc.
 % $Header: /home/empire6/dpwe/public_html/resources/matlab/pvoc/RCS/istft.m,v 1.5 2010/08/12 20:39:42 dpwe Exp $
 
+% Addition by Joachim Ganseman (Dec. 2013): make the transform unitary
+% By multiplying output with window correction factor. See comment %JGA
+
 if nargin < 2; ftsize = 2*(size(d,1)-1); end
 if nargin < 3; w = 0; end
 if nargin < 4; h = 0; end  % will become winlen/2 later
@@ -38,7 +41,8 @@ if length(w) == 1
     win((halff+1):(halff+acthalflen)) = halfwin(1:acthalflen);
     win((halff+1):-1:(halff-acthalflen+2)) = halfwin(1:acthalflen);
     % 2009-01-06: Make stft-istft loop be identity for 25% hop
-    win = 2/3*win;
+    % JGA: can this a window correction factor be removed? TODO test
+    % win = 2/3*win;
   end
 else
   win = w;
@@ -59,3 +63,11 @@ for b = 0:h:(h*(cols-1))
   px = real(ifft(ft));
   x((b+1):(b+ftsize)) = x((b+1):(b+ftsize))+px.*win;
 end;
+
+
+% JGA: renormalize for overlap
+% x = x / (ftsize/h);
+
+% JGA: make transform unitary: renormalize with window correction factor
+% integrate with previous renormalization:
+x = x ./ ( sqrt(mean(win.^2)) * (ftsize/h) );
