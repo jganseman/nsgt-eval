@@ -27,7 +27,6 @@
 clear;
 addpath(genpath('./'));     % add subdirectories to path
 
-createfigs=0;       % boolean: create figures for paper
 
 %% Parameters
 
@@ -55,7 +54,7 @@ input = [ zeros(fftsize/2,1) ; origMix ; zeros(fftsize/2,1) ];
 
   
 disp('--- Starting ---')
-disp('*** STFT, Smaragdis implementation:')  
+disp('*** STFT, Smaragdis implementation (periodic Hann):')  
   
 % Do a stupid STFT
 SmarSTFT = stft(input, fftsize, hopsize, 0, 'hann');
@@ -66,7 +65,7 @@ InvSmarSTFT = InvSmarSTFT( fftsize/2 +1 : fftsize/2 +length(origMix) )';
 
 % calculate reconstruction error
 rec_err = norm(origMix-InvSmarSTFT)/norm(origMix);
-fprintf(['STFT error:'...
+fprintf(['  Normalized Reconstruction Error:'...
     '   %e \n'],rec_err);
 
 % property of STFT distributed with Smaragdis' PLCA code: does not rescale.
@@ -93,7 +92,7 @@ InvEllisSTFT = istft_ellis(EllisSTFT, fftsize, hann(fftsize, 'periodic')', hopsi
 InvEllisSTFT = InvEllisSTFT(fftsize/2+1:fftsize/2+length(origMix));
 
 rec_err = norm(origMix-InvEllisSTFT)/norm(origMix);
-fprintf(['STFT error:'...
+fprintf(['  Normalized Reconstruction Error:'...
     '   %e \n'],rec_err);
 
 % Problems with this implementation:
@@ -101,7 +100,6 @@ fprintf(['STFT error:'...
 %     different hopsizes will not lead to unity. f = f / (sz/hp);
 % - Window correction factor needed to be applied for general windows
 % This has been fixed in this repository.
-
 
 
 
@@ -115,7 +113,7 @@ InvDubnovSTFT = istft_catbox(DubnovSTFT, fftsize / hopsize, fftsize, 'smooth')';
 InvDubnovSTFT = InvDubnovSTFT(fftsize/2+1:fftsize/2+length(origMix));
 
 rec_err = norm(origMix-InvDubnovSTFT)/norm(origMix);
-fprintf(['STFT error:'...
+fprintf(['  Normalized Reconstruction Error:'...
     '   %e \n'],rec_err);
 
 % This implementation does the hop factor normalization correctly, but only
@@ -125,6 +123,8 @@ fprintf(['STFT error:'...
 % The 'smooth' version uses Hann on both.
 % For this implementation to be a unitary transform, use forward window with
 % average value 0.5
+% TODO : adapt for general windows ? 
+
 
 
 % Now try an implementation from Matthieu Hodgkinson
@@ -136,7 +136,7 @@ InvHodgSTFT = istft_hodg(HodgSTFT, indices, fftsize);
 InvHodgSTFT = InvHodgSTFT(fftsize/2+1:fftsize/2+length(origMix));
 
 rec_err = norm(origMix-InvHodgSTFT)/norm(origMix);
-fprintf(['STFT error:'...
+fprintf(['  Normalized Reconstruction Error:'...
     '   %e \n'],rec_err);
 
 % This implementation needed a hop correction factor added after the 
@@ -144,3 +144,7 @@ fprintf(['STFT error:'...
 % After that, it seems to be the most numerically correct implementation.
 % For this implementation to be a unitary transform, use forward window with
 % average value 0.5
+% TODO : adapt for general windows ? 
+
+
+disp('--- Finished ---')

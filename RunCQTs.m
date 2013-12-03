@@ -10,6 +10,30 @@
 % This is a demo that demonstrates how the different implementations
 % of (almost) invertible CQTs need to be run on data.
   
+
+%%
+clear;
+addpath(genpath('./'));     % add subdirectories to path
+
+createfigs=0;       % boolean: create figures for paper
+
+%% Parameters
+
+fftsize = 1024;
+hopsize = fftsize / 4;
+
+bins_per_octave = 48;       % make this a multiple of 12 for music
+
+
+% Read file
+datadir = getDataDirectory();       % directory with example files
+[origMix,samplerate] = wavread([datadir 'pianoclip4notes.wav']);
+
+  % if stereo, make mono
+  if size(origMix, 2) > 1
+     origMix = sum(origMix, 2) ./2 ; 
+  end
+
   
 %% Test the Klapuri CQT transform
 
