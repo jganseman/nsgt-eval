@@ -11,6 +11,14 @@
 %     includes negative-time values. Values of x_ corresponding to negative
 %     time indices are, after inverse transformation, discarded.
 
+% Addition by Joachim Ganseman (2013): This ISTFT does not use the applied 
+% window again, therefore only a window correction factor is necessary for
+% to compensate for the forward transform. Let's assume the forward
+% transform used a window with average value 0.5.
+% Also a correction for the hop size of the windows was needed
+% See end of file for additions
+
+
 function x_ = ISTFT(X_,m_,N)
 
 [M,chans,U] = size(X_);
@@ -27,3 +35,10 @@ for u=1:U
 end
 
 x_ = x_(1-m_(1):end,:);
+
+% JGA: hop factor:
+hopfactor = N/(m_(2)-m_(1));
+% JGA: apply hop factor and window factor correction:
+x_ = x_ ./hopfactor * 2;
+
+
