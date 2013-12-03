@@ -7,6 +7,11 @@ function [B,win_pos] =  stft (a,win,overlap,nfft)
 % nfft - fft size (could be >= winlen)
 % (c) Shlomo Dubnov sdubnov@ucsd.edu
 
+% Note by Joachim Ganseman (Dec. 2013): 
+% - To make this work properly, best use a Hann windows. 
+% - The forward transform does NOT implement a window correction factor
+% - A small error has been fixed (comment %JGA)
+
 [a, nshift] = shiftdim(a);
 
 if nargin < 2,
@@ -19,8 +24,8 @@ end
 %win could be a number, in which case default is hanning, or actual window
 %samples need to be provided
 if length(win) == 1,
-    window = hanning(win,'periodic');
-    winlen = win;
+    window = hann(win,'periodic');      % JGA: hanning -> hann
+    winlen = length(window);            % JGA: fix length calculation
 else
     window = win(:);
     winlen = length(window);
@@ -43,3 +48,4 @@ B = fft(b,nfft);
 
 %return value
 B = B(1:nfft/2+1,:);
+
