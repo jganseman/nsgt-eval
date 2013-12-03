@@ -16,6 +16,14 @@ function f = stft( x, sz, hp, pd, w, ll)
 
 % Paris Smaragdis 2006-2008, paris@media.mit.edu
 
+% Bugfix By Joachim Ganseman (Dec. 2013): windows should be periodic, as to
+% ascertain the Constant-Overlap-Add (COLA) condition for perfect STFT
+% reconstruction. This is an additional flag in the window functions.
+
+% Addition by Joachim Ganseman (Dec. 2013): make the transform unitary.
+% scale the output by the appropriate window correction factor, which is
+% the RMS of the window: sqrt(mean(window^2)).
+
 % Forward transform
 if isreal( x)
 
@@ -32,7 +40,7 @@ if isreal( x)
 
 	% Specified window is a string
 	if isstr( w)
-		w = feval( w, sz);
+		w = feval( w, sz , 'periodic');      %JGA: periodic added.
 	end
 
 	% Orient and zero pad input
@@ -63,7 +71,10 @@ if isreal( x)
 	% Chop again to given limits
 	if nargin == 6
 		f = f(1:ll,:);		
-	end
+    end
+    
+    %JGA: add scaling by window correction factor
+    f = f ./ sqrt(mean(w.^2));
 	
 	% Just plot
 	if nargout == 0
@@ -89,7 +100,7 @@ else
 
 	% Specified window is a string
 	if isstr( w)
-		w = feval( w, sz);
+		w = feval( w, sz ,'periodic');      %JGA: periodic added.
 	end
 
 	% Ignore padded part
@@ -112,4 +123,8 @@ else
 	% Norm for overlap
 	f = f / (sz/hp);
 %	f = f(sz+pd+1:end-sz-2*pd);
+
+    %JGA: add scaling by window correction factor
+    f = f ./ sqrt(mean(w.^2));
+
 end
