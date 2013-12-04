@@ -48,21 +48,24 @@ datadir = getDataDirectory();       % directory with example files
 
 % Because the signal does not start with 0 but our windows do, we zero-pad
 % the beginning as to not lose any information.
-input = [ zeros(fftsize/2,1) ; origMix ; zeros(fftsize/2,1) ];
+% TODO: can be done with less padding: See Hodgkinson STFT implementation.
+input = [ zeros(fftsize,1) ; origMix ; zeros(fftsize,1) ];
 % afterwards, chop as follows:   
-% InvOrigMix = InvOrigMix( fftsize/2 +1 : fftsize/2 +length(origMix) );
+% InvOrigMix = InvOrigMix( fftsize +1 : fftsize +length(origMix) );
 
   
 disp('--- Starting ---')
+disp('--- Smaragdis and labROSA, use Hann at FFT and IFFT ---')
 disp('*** STFT, Smaragdis implementation (periodic Hann):')  
   
-% Do a stupid STFT
+tic
+% Do STFT
 SmarSTFT = stft(input, fftsize, hopsize, 0, 'hann');
 
 % invert
 InvSmarSTFT = stft(SmarSTFT, fftsize, hopsize, 0, 'hann');
-InvSmarSTFT = InvSmarSTFT( fftsize/2 +1 : fftsize/2 +length(origMix) )';
-
+InvSmarSTFT = InvSmarSTFT( fftsize +1 : fftsize +length(origMix) )';
+toc
 % calculate reconstruction error
 rec_err = norm(origMix-InvSmarSTFT)/norm(origMix);
 fprintf(['  Normalized Reconstruction Error:'...
@@ -87,9 +90,11 @@ fprintf(['  Normalized Reconstruction Error:'...
 
 disp('*** STFT, LabRosa implementation (periodic hann):')
 % parameters: mixture, fftsize, windowvector, hopsize, samplerate
+tic
 EllisSTFT = stft_ellis(input, fftsize, hann(fftsize, 'periodic')', hopsize, samplerate);
 InvEllisSTFT = istft_ellis(EllisSTFT, fftsize, hann(fftsize, 'periodic')', hopsize)';  %ones(fftsize, 1)', hopsize)';      
-InvEllisSTFT = InvEllisSTFT(fftsize/2+1:fftsize/2+length(origMix));
+InvEllisSTFT = InvEllisSTFT(fftsize+1:fftsize+length(origMix));
+toc
 
 rec_err = norm(origMix-InvEllisSTFT)/norm(origMix);
 fprintf(['  Normalized Reconstruction Error:'...
@@ -102,15 +107,17 @@ fprintf(['  Normalized Reconstruction Error:'...
 % This has been fixed in this repository.
 
 
-
+disp('--- CATbox and Hodgkinson, use Hann at FFT and rectangular at IFFT ---')
 % Now try an implementation from Dubnov's CATbox
 
 disp('*** STFT, CATbox implementation (periodic hann):')  
 % parameters: signal, window, overlap, fftsize
+tic
 DubnovSTFT = stft_catbox(input, hann(fftsize, 'periodic'), fftsize-hopsize, fftsize);
 % parameters: stft, HOPS PER WINDOW , fftsize, 'perfect'/'smooth'
-InvDubnovSTFT = istft_catbox(DubnovSTFT, fftsize / hopsize, fftsize, 'smooth')';
-InvDubnovSTFT = InvDubnovSTFT(fftsize/2+1:fftsize/2+length(origMix));
+InvDubnovSTFT = istft_catbox(DubnovSTFT, fftsize / hopsize, fftsize, 'perfect')';
+InvDubnovSTFT = InvDubnovSTFT(fftsize+1:fftsize+length(origMix));
+toc
 
 rec_err = norm(origMix-InvDubnovSTFT)/norm(origMix);
 fprintf(['  Normalized Reconstruction Error:'...
@@ -122,7 +129,7 @@ fprintf(['  Normalized Reconstruction Error:'...
 % The 'perfect' version uses Hann on analysis and rectangular on synth.
 % The 'smooth' version uses Hann on both.
 % For this implementation to be a unitary transform, use forward window with
-% average value 0.5
+% average value 0.5 ?
 % TODO : adapt for general windows ? 
 
 
@@ -131,9 +138,11 @@ fprintf(['  Normalized Reconstruction Error:'...
 
 % ( http://www.cs.nuim.ie/~matthewh/ISTFT.m )
 disp('*** STFT, Hodgkinson implementation (periodic hann):') 
+tic
 [HodgSTFT, indices] = stft_hodg(input, hann(fftsize, 'periodic'), hopsize, fftsize);
 InvHodgSTFT = istft_hodg(HodgSTFT, indices, fftsize);
-InvHodgSTFT = InvHodgSTFT(fftsize/2+1:fftsize/2+length(origMix));
+InvHodgSTFT = InvHodgSTFT(fftsize+1:fftsize+length(origMix));
+toc
 
 rec_err = norm(origMix-InvHodgSTFT)/norm(origMix);
 fprintf(['  Normalized Reconstruction Error:'...
@@ -141,9 +150,10 @@ fprintf(['  Normalized Reconstruction Error:'...
 
 % This implementation needed a hop correction factor added after the 
 % ISTFT, to compensate for window application in the forward transform.
-% After that, it seems to be the most numerically correct implementation.
+% It already does appropriate zero-padding itself, therefore it's the only
+% one that implemented a true exact STFT from scratch.
 % For this implementation to be a unitary transform, use forward window with
-% average value 0.5
+% average value 0.5 ?
 % TODO : adapt for general windows ? 
 
 

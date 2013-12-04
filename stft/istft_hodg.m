@@ -11,7 +11,7 @@
 %     includes negative-time values. Values of x_ corresponding to negative
 %     time indices are, after inverse transformation, discarded.
 
-% Addition by Joachim Ganseman (2013): This ISTFT does not use the applied 
+% Addition by Joachim Ganseman (dec. 2013): This ISTFT does not use the applied 
 % window again, therefore only a window correction factor is necessary for
 % to compensate for the forward transform. Let's assume the forward
 % transform used a window with average value 0.5.
@@ -20,6 +20,10 @@
 
 
 function x_ = ISTFT(X_,m_,N)
+
+% JGA addition: add conjugate part of spectrogram
+ X_ = [X_; conj(X_((size(X_,1)-1):-1:2,:,:))];
+
 
 [M,chans,U] = size(X_);
 if U~=length(m_)
