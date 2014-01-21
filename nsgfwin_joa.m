@@ -26,6 +26,11 @@ function [g,shift,M] = nsgfwin_joa(fmin,fmax,bins,sr,Ls,min_win)
 % The file is heavily commented while I tried to figure out what every line
 % of code was actually doing.
 
+% NOTE: in recent versions of the NSGT toolbox (dec. 2013), this file has 
+% changed quite considerably: Generated windows are shifted, AND normalized. 
+% We need to use the same window generation function as the one used in 
+% nsgcqwin.m
+
 if nargin < 6
     min_win = 4;
     if nargin < 5
@@ -47,7 +52,7 @@ elseif length(bins) < b
     if size(bins,1) == 1
         bins=bins.'; 
     end
-    bins(find(bins<=0)) = 1;
+    bins( bins<=0 ) = 1;
     bins = [bins ; min(bins)*ones(b-length(bins),1)];
 end
                                 % 'bins' is e.g. [48 48 48 48 48]'
@@ -110,15 +115,19 @@ for ii = 1:2*(lbas+1);
     if M(ii) < min_win; 
         M(ii) = min_win;
     end 
-    g{ii} = hann(M(ii));
+    %g{ii} = hann(M(ii),'periodic');
+    %JOA: dec 2013 change: use winfun from toolbox
 end
+        g = arrayfun(@(x) winfuns('hann',x)/sqrt(x),...
+        M,'UniformOutput',0);
 
 % create windows for 0 and Nyquist frequencies
 for kk = [1,lbas+2]
     if M(kk) > M(kk+1);    
         g{kk} = ones(M(kk),1);     
         g{kk}((floor(M(kk)/2)-floor(M(kk+1)/2)+1):(floor(M(kk)/2)+...
-        ceil(M(kk+1)/2))) = hann(M(kk+1));
+        ceil(M(kk+1)/2))) = winfuns('hann',M(kk+1)); %hann(M(kk+1),'periodic');
+            %JOA: dec 2013, changed to winfuns here too.
     end
 end
 

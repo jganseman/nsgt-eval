@@ -22,6 +22,10 @@
 % added a correction factor after the ISTFT. Those implementations are for
 % the moment only guaranteed to work with Hann windows.
 
+% for more on windowed STFTs and the properties that windows must adhere to:
+% http://www.katjaas.nl/FFTwindow/FFTwindow.html
+% http://www.katjaas.nl/FFTwindow/FFTwindow&filtering.html
+
 
 %%
 clear;
@@ -31,7 +35,8 @@ addpath(genpath('./'));     % add subdirectories to path
 %% Parameters
 
 fftsize = 1024;
-hopsize = fftsize / 4;
+hopsize = fftsize / 4;      % 75% is a must if STFT coefs are going to be 
+                            % changed -> needs also window at synthesis
 
 bins_per_octave = 48;       % make this a multiple of 12 for music
 
@@ -56,6 +61,8 @@ input = [ zeros(fftsize,1) ; origMix ; zeros(fftsize,1) ];
   
 disp('--- Starting ---')
 disp('--- Smaragdis and labROSA, use Hann at FFT and IFFT ---')
+% use an overlap of 75% , since we double window (at analysis and synthesis)
+
 disp('*** STFT, Smaragdis implementation (periodic Hann):')  
   
 tic
@@ -108,8 +115,9 @@ fprintf(['  Normalized Reconstruction Error:'...
 
 
 disp('--- CATbox and Hodgkinson, use Hann at FFT and rectangular at IFFT ---')
-% Now try an implementation from Dubnov's CATbox
+% The following implementations also work with a 50% overlap (unwindowed synthesis)
 
+% Now try an implementation from Dubnov's CATbox
 disp('*** STFT, CATbox implementation (periodic hann):')  
 % parameters: signal, window, overlap, fftsize
 tic

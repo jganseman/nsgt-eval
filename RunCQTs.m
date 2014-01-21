@@ -33,6 +33,13 @@ datadir = getDataDirectory();       % directory with example files
   if size(origMix, 2) > 1
      origMix = sum(origMix, 2) ./2 ; 
   end
+  
+  
+%% PADDING: the exact amount needed depends on the largest kernel element and overlap parameters
+% For now, just add a second before and after the signal. That should be
+% enough to even take care of any windows of 11025 samples with 75% overlap.
+origMix = [zeros(samplerate, 1); origMix; zeros(samplerate, 1)];
+ 
 
   
 %% Test the Klapuri CQT transform
@@ -92,7 +99,6 @@ maxfreq=minfreq*(2^nbo);
 
 assert(maxfreq == fmax);
 
-% DO THE SAME TRICK AS FOR KLAPURI:
 %x = [zeros(500,1); origMix; zeros(500,1)];
 x=origMix;
 
@@ -223,8 +229,8 @@ gd = nsdual(g,shift,M);
 
 % Plot the windows and the corresponding dual windows
 figure;
-subplot(211); plot_wins(g,shift);
-subplot(212); plot_wins(gd,shift);
+subplot(211); plot_wins(g,shift, 1);        %1: normalize display
+subplot(212); plot_wins(gd,shift, 1);
 
 % Calculate the coefficients
 c = nsgtf(s,g,shift,M);
@@ -243,6 +249,54 @@ fprintf(['NSGTF Relative reconstruction error:'...
 
 
 
+%% For a rasterized representation, re-set M (vector of hops per freq)
+% to a vector of constant values, and use the value of the highest freq
+maxwidth = M(size(M,1)/2);
+rastc = nsgtf(s,g,shift,maxwidth);
+figure;
+plotnsgtf(rastc,shift,fs,2,60);
+
+% Test reconstruction
+gd = nsdual(g,shift,maxwidth);
+s_r = nsigtf(rastc,gd,shift,Ls);
+rec_err = norm(s-s_r)/norm(s);
+fprintf(['Rasterized NSGTF Relative reconstruction error:'...
+    '   %e \n'],rec_err);
+
+
+
+%% Try the sliCQ representation instead:
+
+% it calculates a multiple of 4 frames at a time, it seems. As the
+% slice length, use the maximum hopsize (from previously)
+maxhop = ceil(length(s)/M(2)/4)*4  ;
+framesperslice = ceil(M(size(M,1)/2) / M(2)) /4 ;
+
+
+sr= samplerate;
+%slice length (samples):
+sl_len = maxhop;       % put to same length as fftsize, 1024 or something
+%transition area length (<= sl_len/2) (?)
+tr_area = sl_len/2;
+% desired number of time steps per slice
+%M=framesperslice;        % if set to 0, this will compute a 1xN vector, 1 for every freq
+            % its max value is 5464 for this particular signal
+            % If set to a constant, a rectangular matrix is created.
+[Sc,Sg,Sshift,SM,SLs,Ssl_len,Str_area] = slicq(s,fmin,fmax,bins,sl_len,tr_area,sr,framesperslice);
+% note: sliCQ has different defaults than nsgtf alone! e.g. window is
+% modified blackman harris! nsgcqwin function here called as:
+% nsgcqwin(fmin,fmax,bins,sr,sl_len,'min_win',min_win,...
+%        'Qvar',Qvar,'bwfac',4,'fractional',1,'winfun','modblackharr');
+
+s_r = islicq(Sc,Sg,Sshift,SM,SLs,Ssl_len,Str_area);
+
+rec_err = norm(s-s_r)/norm(s);
+fprintf(['SliCQ Relative reconstruction error:'...
+    '   %e \n'],rec_err);
+
+%plot
+plotslicq(Sc,Sshift,sr,fmin,fmax,bins,2,60)
+
 
 %% Use own windowfunction, to rasterize
 
@@ -260,6 +314,11 @@ Ls = length(s); % Length of signal (in samples)
 
 % Compute corresponding dual windows.
 gd = nsdual(g,shift,M);
+% Note: can result in NaN values in the dual windows. Replace them by 0:
+% EDIT: NaN resulted from the window generator having been changed: it now
+% produces windows that are normalized, so no need for this line:
+% for ii = 1:length(gd),gd{ii}(isnan(gd{ii})) = 0;end 
+
 
 % Plot the windows and the corresponding dual windows
 figure;
@@ -282,7 +341,7 @@ s_r = nsigtf(c,gd,shift,Ls);
 
 % Print relative error of reconstruction.
 rec_err = norm(s-s_r)/norm(s);
-fprintf(['NSGTF Relative reconstruction error:'...
+fprintf(['NSGTF Rast-JG Relative reconstruction error:'...
     '   %e \n'],rec_err);
 
 
