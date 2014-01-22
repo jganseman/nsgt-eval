@@ -128,6 +128,8 @@ for kk = [1,lbas+2]
         g{kk}((floor(M(kk)/2)-floor(M(kk+1)/2)+1):(floor(M(kk)/2)+...
         ceil(M(kk+1)/2))) = winfuns('hann',M(kk+1)); %hann(M(kk+1),'periodic');
             %JOA: dec 2013, changed to winfuns here too.
+        %and, normalize! 
+        g{kk} = g{kk}/sqrt(M(kk));
     end
 end
 

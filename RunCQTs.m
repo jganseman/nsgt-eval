@@ -256,6 +256,7 @@ rastc = nsgtf(s,g,shift,maxwidth);
 figure;
 plotnsgtf(rastc,shift,fs,2,60);
 
+
 % Test reconstruction
 gd = nsdual(g,shift,maxwidth);
 s_r = nsigtf(rastc,gd,shift,Ls);
@@ -269,7 +270,7 @@ fprintf(['Rasterized NSGTF Relative reconstruction error:'...
 
 % it calculates a multiple of 4 frames at a time, it seems. As the
 % slice length, use the maximum hopsize (from previously)
-maxhop = ceil(length(s)/M(2)/4)*4  ;
+maxhop = ceil(length(s)/M(2)/4)*4 ;
 framesperslice = ceil(M(size(M,1)/2) / M(2)) /4 ;
 
 
@@ -277,7 +278,7 @@ sr= samplerate;
 %slice length (samples):
 sl_len = maxhop;       % put to same length as fftsize, 1024 or something
 %transition area length (<= sl_len/2) (?)
-tr_area = sl_len/2;
+tr_area = 16;       % can be kept very low
 % desired number of time steps per slice
 %M=framesperslice;        % if set to 0, this will compute a 1xN vector, 1 for every freq
             % its max value is 5464 for this particular signal
@@ -310,10 +311,10 @@ fs=samplerate;
 Ls = length(s); % Length of signal (in samples)
 
 % Window design
-[g,shift,M] = nsgfwin_joa(fmin,fmax,bins,fs,Ls);
+[gjoa,shiftjoa,Mjoa] = nsgfwin_joa(fmin,fmax,bins,fs,Ls);
 
 % Compute corresponding dual windows.
-gd = nsdual(g,shift,M);
+gdjoa = nsdual(gjoa,shiftjoa,Mjoa);
 % Note: can result in NaN values in the dual windows. Replace them by 0:
 % EDIT: NaN resulted from the window generator having been changed: it now
 % produces windows that are normalized, so no need for this line:
@@ -322,22 +323,22 @@ gd = nsdual(g,shift,M);
 
 % Plot the windows and the corresponding dual windows
 figure;
-subplot(211); plot_wins(g,shift);
-subplot(212); plot_wins(gd,shift);
+subplot(211); plot_wins(gjoa,shiftjoa);
+subplot(212); plot_wins(gdjoa,shiftjoa);
 
 % Calculate the coefficients
-c = nsgtf(s,g,shift,M);
+cjoa = nsgtf(s,gjoa,shiftjoa,Mjoa);
 
 % Plot the resulting spectrogram
 figure;
-plotnsgtf(c,shift,fs,2,60);
+plotnsgtf(cjoa,shiftjoa,fs,2,60);
 
 % remove Nyquist frequency band, replace by zeroes
-maxbin = size(c,1)/2;
-c{maxbin+1} = zeros(length(origMix), 1);
+maxbin = size(cjoa,1)/2;
+cjoa{maxbin+1} = zeros(length(origMix), 1);
 
 % Test reconstruction
-s_r = nsigtf(c,gd,shift,Ls);
+s_r = nsigtf(cjoa,gdjoa,shiftjoa,Ls);
 
 % Print relative error of reconstruction.
 rec_err = norm(s-s_r)/norm(s);
