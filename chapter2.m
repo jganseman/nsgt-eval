@@ -7,7 +7,7 @@
 % 2. in the tex file itself, change the following:
 %     table[row sep=crcr,format=inline]{\loadedtable}; 
 
-
+clear;
 
 %%%% PART ONE: the DFT %%%%
 
@@ -15,7 +15,6 @@
 PRINTTOFILE=0;
 
 %%
-clear;
 addpath(genpath('./'));     % add subdirectories to path
 
 % Read file
