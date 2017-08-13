@@ -21,10 +21,10 @@ w1 = 2*(fmin/(fs/2)); w2 = 0.8*(fmax/(fs/2));
 [B,A] = butter(6,[w1 w2]); x = filtfilt(B,A,x); 
 
 %% CQT
-Xcqt = cqt(x,fmin,fmax,bins_per_octave,fs);
+Xcqt = cqt_11(x,fmin,fmax,bins_per_octave,fs);
 
 %***computing cqt with optional input parameters***********
- Xcqt2 = cqt(x,fmin,fmax,bins_per_octave,fs,'q',1,'atomHopFactor',0.25,'thresh',0.0005,'win','sqrt_blackmanharris');
+ Xcqt2 = cqt_11(x,fmin,fmax,bins_per_octave,fs,'q',1,'atomHopFactor',0.25,'thresh',0.0005,'win','sqrt_blackmanharris');
 
 %***computing rasterized complex coefficients***************
  Xcqt3 = cqtPerfectRast(x,fmin,fmax,bins_per_octave,fs,'q',1,'atomHopFactor',0.25,'thresh',0.0005,'win','sqrt_blackmanharris');
@@ -41,7 +41,7 @@ Xcqt = cqt(x,fmin,fmax,bins_per_octave,fs);
  Xcqt5 = cqtPerfectRast(x,fmin,fmax,bins_per_octave,fs,'kernel',K,'coeffB',B,'coeffA',A);
 
 %% inverse CQT
-y = icqt(Xcqt);
+y = icqt_11(Xcqt);
 SNR = 10*log10(sum(abs(x).^2)/sum(abs(x-y).^2)); %calculate the SNR
 
 %% plot CQT

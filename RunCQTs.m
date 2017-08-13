@@ -58,8 +58,8 @@ w1 = 2*(fmin/(fs/2)); w2 = 0.8*(fmax/(fs/2));
 [B,A] = butter(6,[w1 w2]); x = filtfilt(B,A,x); 
 
 % Calculate CQT
-KlapuriCQT = cqt(x,fmin,fmax,bins_per_octave,fs);     % more options available for hop size, tresholding, window function used
-KlapuriReverted = icqt(KlapuriCQT);
+KlapuriCQT = cqt_11(x,fmin,fmax,bins_per_octave,fs);     % more options available for hop size, tresholding, window function used
+KlapuriReverted = icqt_11(KlapuriCQT);
 %KlapuriReverted = KlapuriReverted(501:size(KlapuriReverted)-500);
 
 % display!
@@ -73,7 +73,7 @@ spectrum_plot(intCQT); colormap(jet);
 
 % calculate the perfect rasterized version
 KlapuriRast = cqtPerfectRast(x,fmin,fmax,bins_per_octave,fs);
-KlapuriRevertedRast = icqt(KlapuriRast);
+KlapuriRevertedRast = icqt_11(KlapuriRast);
 %KlapuriRevertedRast = KlapuriRevertedRast(501:size(KlapuriRevertedRast)-500);
 
 s = origMix;

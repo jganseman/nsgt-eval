@@ -43,7 +43,7 @@ signallength = length(sourceMix);
 disp('*** Running NSGTF linearity test');
 
 % use the standard windows
-[windows,shifts,windowlengths] = nsgcqwin(fmin,fmax,bins_per_octave,samplerate,signallength);
+[windows,shifts,windowlengths] = nsgcqwin_11(fmin,fmax,bins_per_octave,samplerate,signallength);
 
 % compute dual windows for the inverse transform
 dualwindows = nsdual(windows,shifts,windowlengths);
