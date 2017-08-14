@@ -207,3 +207,7 @@ for kk = [1,Lfbas+2]
         g{kk} = g{kk}/sqrt(M(kk));
     end
 end
+
+% ADDITION BY Joachim Ganseman: To set length of DC coefficient to same 
+% value as other freqs, uncomment the following line
+% M(1) = Lfbas;
