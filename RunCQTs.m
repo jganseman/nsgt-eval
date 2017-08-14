@@ -137,23 +137,21 @@ figure;
 imagesc(abs(Pradocqt)); axis xy; colormap(jet);title('Prado CQT resample');
 
 %RECONSTRUCT using several windows
-% type_fen=1;
-% y_rec_ham=cqt_inv(Pradocqt,Nfft,nbo,bins,R,minfreq,b,fs_new,fs,type_fen);
-% y_rec_ham=y_rec_ham(501:length(origMix)+500);
+type_fen=1;
+y_rec_ham=cqt_inv(Pradocqt,Nfft,nbo,bins,R,minfreq,b,fs_new,fs,type_fen);
+
 type_fen=2;
 y_rec_rect=cqt_inv(Pradocqt,Nfft,nbo,bins,R,minfreq,b,fs_new,fs,type_fen);
-    %y_rec_rect=y_rec_rect(501:length(origMix)+500);
-type_fen=3;
-% y_rec_tuk=cqt_inv(Pradocqt,Nfft,nbo,bins,R,minfreq,b,fs_new,fs,type_fen);
-% y_rec_tuk=y_rec_tuk(501:length(origMix)+500);
 
-% I've added a couple of windows
+type_fen=3;
+y_rec_tuk=cqt_inv(Pradocqt,Nfft,nbo,bins,R,minfreq,b,fs_new,fs,type_fen);
+
+%If a few windows are added in Prado's CQT toolbox
 % type_fen=4;
 % y_rec_han=cqt_inv(Pradocqt,Nfft,nbo,bins,R,minfreq,b,fs_new,fs,type_fen);
-% y_rec_han=y_rec_han(501:length(origMix)+500);
+
 % type_fen=5;
 % y_rec_blha=cqt_inv(Pradocqt,Nfft,nbo,bins,R,minfreq,b,fs_new,fs,type_fen);
-% y_rec_blha=y_rec_blha(501:length(origMix)+500);
 
 
 % Comparaison de reconstruction suivant la fenêtre utiliséée.
@@ -171,37 +169,38 @@ type_fen=3;
 % set(hleg1,'Location','NorthEast'); set(hleg1,'Interpreter','none');
 % xlabel('Avec fenêtre de Tukey');
 
-% s = origMix;
-% s_r = y_rec_ham;
-% rec_err = norm(s-s_r)/norm(s);
-% fprintf(['Prado rast Hamming error:'...
-%     '   %e \n'],rec_err);
+s = origMix;
+s_r = y_rec_ham(1:length(s));
+rec_err = norm(s-s_r)/norm(s);
+fprintf(['Prado rast Hamming error:'...
+    '   %e \n'],rec_err);
 
 s = origMix;
 s_r = y_rec_rect(1:length(s));
 rec_err = norm(s-s_r)/norm(s);
 fprintf(['Prado rast Rectangular error:'...
     '   %e \n'],rec_err);
-% 
+
+s = origMix;
+s_r = y_rec_tuk(1:length(s));
+rec_err = norm(s-s_r)/norm(s);
+fprintf(['Prado rast Tukey error:'...
+    '   %e \n'],rec_err);
+
 % s = origMix;
-% s_r = y_rec_tuk;
-% rec_err = norm(s-s_r)/norm(s);
-% fprintf(['Prado rast Tukey error:'...
-%     '   %e \n'],rec_err);
-% 
-% s = origMix;
-% s_r = y_rec_han;
+% s_r = y_rec_han(1:length(s));
 % rec_err = norm(s-s_r)/norm(s);
 % fprintf(['Prado rast Hann error:'...
 %     '   %e \n'],rec_err);
 % 
 % s = origMix;
-% s_r = y_rec_blha;
+% s_r = y_rec_blha(1:length(s));
 % rec_err = norm(s-s_r)/norm(s);
 % fprintf(['Prado rast Blackman-Harris error:'...
 %     '   %e \n'],rec_err);
 
-% --> Seems like best results are gotten with the Rectangular win
+% --> Seems like best results are gotten with the Rectangular win?
+% Close with Tukey, could be signal-dependent
 % Really wondering: is the signal also windowed before the forward
 % transform? Otherwise using a window for the backward transform seems
 % pretty pointless.
@@ -209,8 +208,8 @@ fprintf(['Prado rast Rectangular error:'...
 
 %% Test the Constant-Q Nonstationary Gabor Transform
 
-fmin = fmin; % Minimum desired frequency (in Hz)
-fmax = fmax;              
+%fmin = fmin; % Minimum desired frequency (in Hz)
+%fmax = fmax;              
 bins = bins_per_octave; %bins = [12; 24; 36; 48; 12]; 
 
 %[s,fs] = wavread('glockenspiel.wav'); name = 'Glockenspiel';
@@ -222,7 +221,7 @@ Ls = length(s); % Length of signal (in samples)
 %  Define a set of windows for the nonstationary Gabor transform with
 %  resolution evolving over frequency. In particular, the centers of the
 %  windows correspond to geometrically spaced center frequencies.
-[g,shift,M] = nsgcqwin(fmin,fmax,bins,fs,Ls);
+[g,shift,M] = nsgcqwin_11(fmin,fmax,bins,fs,Ls);
 
 % Compute corresponding dual windows.
 gd = nsdual(g,shift,M);
@@ -237,7 +236,7 @@ c = nsgtf(s,g,shift,M);
 
 % Plot the resulting spectrogram
 figure;
-plotnsgtf(c,shift,fs,2,60);
+plotnsgtf(c,shift,fs,fmin,fmax,B,2,60);
 
 % Test reconstruction
 s_r = nsigtf(c,gd,shift,Ls);
@@ -346,6 +345,63 @@ fprintf(['NSGTF Rast-JG Relative reconstruction error:'...
     '   %e \n'],rec_err);
 
 
+
+%% Test Schörkhuber's 2013 rasterization update to Constant-Q NSGT
+%   Usage:  Xcq = cqt(x, B, fs, fmin, fmax, varargin)
+
+s=origMix; 
+
+% Plot the windows and the corresponding dual windows
+%figure;
+%subplot(211); plot_wins(g,shift, 1);        %1: normalize display
+%subplot(212); plot_wins(gd,shift, 1);
+
+% Calculate the coefficients
+cschork = cqt(s, bins_per_octave, samplerate, fmin, fmax, ...
+    'rasterize', 'full', 'phasemode', 'local', 'gamma', 0);
+
+%Note: resulting structure contains separate fields for DC and Nyquist
+%components. For actual comparison with Ganseman2012, put these to 0 ?
+
+% Plot the resulting spectrogram
+figure;
+%plotnsgtf(cschork.c,cschork.shift,samplerate,cschork.fmin,cschork.fmax,cschork.B);
+% code copied from cqt2013 toolbox demo
+imagesc(20*log10(abs(flipud(cschork.c))+eps));
+hop = Ls/size(cschork.c,2);
+xtickVec = 0:round(fs/hop):size(cschork.c,2)-1;
+set(gca,'XTick',xtickVec);
+ytickVec = 0:bins_per_octave:size(cschork.c,1)-1;
+set(gca,'YTick',ytickVec);
+ytickLabel = round(fmin * 2.^( (size(cschork.c,1)-ytickVec)/bins_per_octave));
+set(gca,'YTickLabel',ytickLabel);
+xtickLabel = 0 : length(xtickVec) ;
+set(gca,'XTickLabel',xtickLabel);
+xlabel('time [s]', 'FontSize', 12, 'Interpreter','latex'); 
+ylabel('frequency [Hz]', 'FontSize', 12, 'Interpreter','latex');
+set(gca, 'FontSize', 10);
+
+
+% Test reconstruction
+[s_r, invfilterbank] = icqt(cschork);
+
+% Print relative error of reconstruction.
+rec_err = norm(s-s_r)/norm(s);
+fprintf(['CQNSG-13 Rasterized Relative reconstruction error, plus DC and Nyq:'...
+    '   %e \n'],rec_err);
+
+% Now remove DC and Nyq from reconstruction
+cschork.cNyq = zeros(size(cschork.cNyq));
+[s_r, invfilterbank] = icqt(cschork);
+rec_err = norm(s-s_r)/norm(s);
+fprintf(['CQNSG-13 Rasterized Relative reconstruction error, plus DC minus Nyq:'...
+    '   %e \n'],rec_err);
+
+cschork.cDC = zeros(size(cschork.cDC));
+[s_r, invfilterbank] = icqt(cschork);
+rec_err = norm(s-s_r)/norm(s);
+fprintf(['CQNSG-13 Rasterized Relative reconstruction error, minus DC and Nyq:'...
+    '   %e \n'],rec_err);
 
 
 % 

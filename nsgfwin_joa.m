@@ -123,7 +123,7 @@ end
 
 % create windows for 0 and Nyquist frequencies
 for kk = [1,lbas+2]
-    if M(kk) > M(kk+1);    
+    if M(kk) > M(kk+1)    
         g{kk} = ones(M(kk),1);     
         g{kk}((floor(M(kk)/2)-floor(M(kk+1)/2)+1):(floor(M(kk)/2)+...
         ceil(M(kk+1)/2))) = winfuns('hann',M(kk+1)); %hann(M(kk+1),'periodic');
